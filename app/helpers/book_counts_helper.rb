@@ -1,0 +1,2 @@
+module BookCountsHelper
+end

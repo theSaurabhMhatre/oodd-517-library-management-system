@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @book_count.book %>
+</p>
+
+<p>
+  <strong>Library:</strong>
+  <%= @book_count.library %>
+</p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @book_count.count %>
+</p>
+
+<%= link_to 'Edit', edit_book_count_path(@book_count) %> |
+<%= link_to 'Back', book_counts_path %>

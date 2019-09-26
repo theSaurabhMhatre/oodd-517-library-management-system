@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @book_history.book %>
+</p>
+
+<p>
+  <strong>Library:</strong>
+  <%= @book_history.library %>
+</p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @book_history.student %>
+</p>
+
+<p>
+  <strong>Action:</strong>
+  <%= @book_history.action %>
+</p>
+
+<%= link_to 'Edit', edit_book_history_path(@book_history) %> |
+<%= link_to 'Back', book_histories_path %>
