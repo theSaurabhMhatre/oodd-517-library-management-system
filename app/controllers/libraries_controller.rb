@@ -1,6 +1,6 @@
 class LibrariesController < ApplicationController
   before_action :set_library, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize, only: [:edit, :update, :destroy]
   # GET /libraries
   # GET /libraries.json
   def index
