@@ -1,6 +1,8 @@
 class CreateLibrarians < ActiveRecord::Migration[5.2]
   def change
     create_table :librarians do |t|
+      t.references :university, foreign_key: true
+      t.references :library, foreign_key: true
       t.string :email
       t.string :name
       t.string :password

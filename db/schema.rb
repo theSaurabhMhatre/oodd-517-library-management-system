@@ -70,12 +70,16 @@ ActiveRecord::Schema.define(version: 2019_09_26_220743) do
   end
 
   create_table "librarians", force: :cascade do |t|
+    t.integer "university_id"
+    t.integer "library_id"
     t.string "email"
     t.string "name"
     t.string "password"
     t.integer "is_approved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["library_id"], name: "index_librarians_on_library_id"
+    t.index ["university_id"], name: "index_librarians_on_university_id"
   end
 
   create_table "libraries", force: :cascade do |t|
