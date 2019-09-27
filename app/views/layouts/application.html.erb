@@ -10,6 +10,16 @@
   </head>
 
   <body>
+    <div id="container">
+      <div id="admin_header">
+        <% if current_admin %>
+          Logged in as <%= current_admin.email %>
+          <%= link_to "Logout", logout_path %>
+        <% else %>
+          <%= link_to "Login", login_path %>
+        <% end %>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>

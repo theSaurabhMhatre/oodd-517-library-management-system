@@ -1,6 +1,6 @@
 class BookRequestsController < ApplicationController
   before_action :set_book_request, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize
   # GET /book_requests
   # GET /book_requests.json
   def index

@@ -1,5 +1,6 @@
 class LibrariansController < ApplicationController
   before_action :set_librarian, only: [:show, :edit, :update, :destroy]
+  before_action :authorize
 
   # GET /librarians
   # GET /librarians.json

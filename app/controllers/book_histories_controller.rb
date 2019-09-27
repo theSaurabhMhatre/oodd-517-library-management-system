@@ -1,6 +1,6 @@
 class BookHistoriesController < ApplicationController
   before_action :set_book_history, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize
   # GET /book_histories
   # GET /book_histories.json
   def index
