@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'student_home_page/index'
+  get 'librarian_home_page/index'
+  get 'admin_home_page/index'
   get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'

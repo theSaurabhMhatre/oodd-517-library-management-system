@@ -1,0 +1,2 @@
+module AdminHomePageHelper
+end
