@@ -23,17 +23,22 @@
 
   <div class="field">
     <%= form.label :password %>
-    <%= form.text_field :password %>
+    <%= form.password_field :password %>
   </div>
 
   <div class="field">
     <%= form.label :edu_level %>
-    <%= form.text_field :edu_level %>
+    <select name="student[edu_level]">
+      <option value = ""></option>
+      <option value = "undergraduate">Undergraduate</option>
+      <option value = "graduate">Graduate</option>
+      <option value = "phd_student">PhD Student</option>
+    </select>
   </div>
 
   <div class="field">
-    <%= form.label :book_limit %>
-    <%= form.number_field :book_limit %>
+    <%= form.label :university %>
+    <%= select("student", "university_id", University.all.collect{ |u| [ u.name, u.id] }) %>
   </div>
 
   <div class="actions">
