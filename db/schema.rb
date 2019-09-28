@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_220743) do
     t.integer "library_id"
     t.string "email"
     t.string "name"
-    t.string "password"
+    t.string "password_digest"
     t.integer "is_approved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_220743) do
     t.integer "university_id"
     t.string "email"
     t.string "name"
-    t.string "password"
+    t.string "password_digest"
     t.string "edu_level"
     t.integer "book_limit"
     t.datetime "created_at", null: false

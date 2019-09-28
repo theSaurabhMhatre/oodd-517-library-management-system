@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
     <%= form.label :edu_level %>
     <select name="student[edu_level]">
       <option value = ""></option>
@@ -38,7 +43,7 @@
 
   <div class="field">
     <%= form.label :university %>
-    <%= select("student", "university_id", University.all.collect{ |u| [ u.name, u.id] }) %>
+    <%= form.collection_select :university_id, University.all, :id, :name %>
   </div>
 
   <div class="actions">

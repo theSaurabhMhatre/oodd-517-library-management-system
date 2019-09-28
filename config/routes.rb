@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'
+
   resources :admins
   resources :book_requests
   resources :universities
@@ -17,4 +18,12 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   # root "students#index"
   root 'home#index'
+
+
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
+
+  get 'javascripts/dynamic_libraries'
+
 end
