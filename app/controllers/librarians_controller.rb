@@ -16,6 +16,7 @@ class LibrariansController < ApplicationController
   # GET /librarians/new
   def new
     @librarian = Librarian.new
+    @librarian.is_approved = 0
   end
 
   # GET /librarians/1/edit
