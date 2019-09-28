@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  TYPE_STUDENT = "student"
+  TYPE_LIBRARIAN = "librarian"
+  TYPE_ADMIN = "admin"
   # modification to allow js files to be generated and requested dynamically
   # modifications starts
   protect_from_forgery
@@ -11,16 +14,23 @@ class ApplicationController < ActionController::Base
   end
   #modification ends
 
-  def current_admin
-    if session[:admin_id]
-      @current_admin ||= Admin.find(session[:admin_id])
+  def current_user
+    if session[:user_id]
+      case session[:user_type]
+      when TYPE_STUDENT
+        @current_user ||= Student.find(session[:user_id])
+      when TYPE_LIBRARIAN
+        @current_user ||= Librarian.find(session[:user_id])
+      when TYPE_ADMIN
+        @current_user ||= Admin.find(session[:user_id])
+      end
     else
-      @current_admin = nil
+      @current_user = nil
     end
   end
-  helper_method :current_admin
+  helper_method :current_user
 
   def authorize
-    redirect_to login_url if current_admin.nil?
+    redirect_to login_url if current_user.nil?
   end
 end

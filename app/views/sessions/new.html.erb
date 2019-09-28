@@ -12,12 +12,12 @@
   <div class="field">
     <label for="user_type">Select your affiliation with Libraries</label>
     <select name="user_type">
-      <option value = 1>Student</option>
-      <option value = 2>Librarian</option>
-      <option value = 3>Admin</option>
+      <option value = "student">Student</option>
+      <option value = "librarian">Librarian</option>
+      <option value = "admin">Admin</option>
     </select>
   </div>
-
+  <% current_user %>
   <div class="actions">
     <%= submit_tag "Login" %>
   </div>
