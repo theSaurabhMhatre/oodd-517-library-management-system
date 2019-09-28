@@ -1,4 +1,6 @@
 class Student < ApplicationRecord
+  has_secure_password
+
   UNDERGRADUATE = "undergraduate"
   GRADUATE = "graduate"
   PHD_STUDENT = "phd_student"

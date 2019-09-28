@@ -4,7 +4,7 @@ class CreateStudents < ActiveRecord::Migration[5.2]
       t.references :university, foreign_key: true
       t.string :email
       t.string :name
-      t.string :password
+      t.string :password_digest
       t.string :edu_level
       t.integer :book_limit
 
