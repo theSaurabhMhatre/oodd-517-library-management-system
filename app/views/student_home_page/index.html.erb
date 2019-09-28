@@ -1,0 +1,22 @@
+<h1>Library Management System - Student Home Page </h1>
+
+<div><%= link_to 'List of Libraries', libraries_path %> </div>
+<br>
+<div><%= link_to 'Edit Profile', edit_student_path(:id) %> </div> <!-- Student ID assigned to student-->
+<br>
+<div> <%= link_to 'List of Books', books_path %> </div> <!--Without Edit Destroy Option-->
+<br>
+<div><%= link_to 'Book Hold Request', book_request_path(:id) %> </div>
+<br>
+<div> <%= link_to 'Checkout / Return Book', book_history_path(:id) %> </div>
+
+<div> <%= link_to 'List of Bookmarks', new_book_path %> </div>
+<br>
+<div><%= link_to 'List of Books', books_path %> </div>
+<br>
+
+<!-- Search through books-->
+<!--list of bookmarks-->
+<!--Overdue Fines-->
+
+

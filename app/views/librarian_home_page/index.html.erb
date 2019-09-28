@@ -1,0 +1,19 @@
+<h1>Library Management System - Librarian Home Page </h1>
+
+<div><%= link_to 'Edit Profile', edit_librarian_path(1) %> </div> <!-- Id of librarian-->
+<br>
+<div><%= link_to 'Edit Library Attributes', edit_library_path(1) %> </div> <!-- Lib ID assigned to librarian-->
+<br>
+<div> <%= link_to 'Add / Remove Books', books_path %> </div>
+<br>
+<div><%= link_to 'Book Hold Requests', book_requests_path %> </div>
+<br>
+<div> <%= link_to 'Checked Out Books', book_histories_path %> </div>
+
+<div> <%= link_to 'Create Books', new_book_path %> </div>
+<br>
+<div><%= link_to 'List of Books', books_path %> </div>
+<br>
+
+<!-- Checkedout books ? Borrowing History-->
+<!--list of students with books overdue-->
