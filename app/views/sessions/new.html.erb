@@ -9,6 +9,14 @@
     <%= label_tag :password %>
     <%= password_field_tag :password %>
   </div>
+  <div class="field">
+    <label for="user_type">Select your affiliation with Libraries</label>
+    <select name="user_type">
+      <option value = 1>Student</option>
+      <option value = 2>Librarian</option>
+      <option value = 3>Admin</option>
+    </select>
+  </div>
 
   <div class="actions">
     <%= submit_tag "Login" %>
