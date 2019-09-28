@@ -1,0 +1,26 @@
+var libraries = new Array();
+<% for library in @libraries -%>
+libraries.push(new Array(<%= library.university_id %>, '<%= library.name.to_s %>', <%= library.id %>));
+<% end -%>
+
+function fetchLibraries() {
+    var ele = document.getElementById('librarian_university_id');
+    var university_id = ele.options[ele.selectedIndex].value;
+    document.getElementById('librarian_library_id').innerHTML = "";
+    for (var index = 0; index < libraries.length; index++) {
+        var library = libraries[index];
+        if (library[0] == university_id) {
+            document.getElementById("librarian_library_id").innerHTML += "<option value='" + library[2] + "'>" + library[1] + "</option>";
+        }
+    }
+    if (document.getElementById("librarian_library_id").options.length) {
+        $('#library_field').show();
+    } else {
+        $('#library_field').hide();
+    }
+}
+
+$(document).ready(function () {
+    document.getElementById('librarian_university_id').addEventListener("change", fetchLibraries);
+    fetchLibraries();
+});

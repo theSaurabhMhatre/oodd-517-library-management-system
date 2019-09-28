@@ -63,13 +63,14 @@ class LibrariansController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_librarian
-      @librarian = Librarian.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def librarian_params
-      params.require(:librarian).permit(:email, :name, :password, :is_approved)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_librarian
+    @librarian = Librarian.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def librarian_params
+    params.require(:librarian).permit(:email, :name, :password, :password_confirmation, :is_approved, :university_id, :library_id)
+  end
 end

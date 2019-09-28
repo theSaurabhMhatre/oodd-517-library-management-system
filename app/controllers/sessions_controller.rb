@@ -1,8 +1,12 @@
 class SessionsController < ApplicationController
   def new
+    if session[:admin_id]!= nil
+      redirect_to root_url
+    end
   end
 
   def create
+
     admin = Admin.find_by_email(params[:email])
     if admin && admin.authenticate(params[:password])
       session[:admin_id] = admin.id

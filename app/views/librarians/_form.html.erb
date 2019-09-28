@@ -1,12 +1,14 @@
+<script src="/javascripts/dynamic_libraries.js"></script>
+
 <%= form_with(model: librarian, local: true) do |form| %>
   <% if librarian.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(librarian.errors.count, "error") %> prohibited this librarian from being saved:</h2>
 
       <ul>
-      <% librarian.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% librarian.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -23,12 +25,28 @@
 
   <div class="field">
     <%= form.label :password %>
-    <%= form.text_field :password %>
+    <%= form.password_field :password %>
   </div>
 
   <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <!--We need not show this to the user, remove later-->
+  <div class="field">
     <%= form.label :is_approved %>
     <%= form.number_field :is_approved %>
+  </div>
+
+  <div class="field">
+    <%= form.label :university_id %>
+    <%= form.collection_select :university_id, University.all, :id, :name, :include_blank => true %>
+  </div>
+
+  <div class="field" id="library_field" style="display: none">
+    <%= form.label :library_id %>
+    <%= form.collection_select :library_id, Library.all, :id, :name %>
   </div>
 
   <div class="actions">
