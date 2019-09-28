@@ -11,9 +11,9 @@
 
   <body>
     <div id="container">
-      <div id="admin_header">
-        <% if current_admin %>
-          Logged in as <%= current_admin.email %>
+      <div>
+        <% if current_user %>
+          Logged in as <%= current_user.email %>
           <%= link_to "Logout", logout_path %>
         <% end %>
       </div>
