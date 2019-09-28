@@ -20,9 +20,13 @@
         <td><%= library.location %></td>
         <td><%= library.max_days %></td>
         <td><%= library.overdue_fine %></td>
-        <td><%= link_to 'Show', library %></td>
-        <td><%= link_to 'Edit', edit_library_path(library) %></td>
-        <td><%= link_to 'Destroy', library, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+          <td><%= link_to 'Issue book', books_path(:from => ApplicationController::TYPE_STUDENT, :library_id => library.id) %></td>
+        <% else %>
+          <td><%= link_to 'Show', library %></td>
+          <td><%= link_to 'Edit', edit_library_path(library) %></td>
+          <td><%= link_to 'Destroy', library, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +34,6 @@
 
 <br>
 
-<%= link_to 'New Library', new_library_path %>
+<% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+  <%= link_to 'New Library', new_library_path %>
+<% end %>

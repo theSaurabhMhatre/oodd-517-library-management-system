@@ -26,14 +26,18 @@ class BookCountsController < ApplicationController
   # POST /book_counts.json
   def create
     @book_count = BookCount.new(book_count_params)
-
+    book_exists = BookCount.exists?(:library_id => book_count_params[:library_id], :book_id => book_count_params[:book_id])
     respond_to do |format|
-      if @book_count.save
-        format.html { redirect_to @book_count, notice: 'Book count was successfully created.' }
-        format.json { render :show, status: :created, location: @book_count }
+      if book_exists
+        format.html { redirect_to @book_count, notice: 'This book is already present in the library.' }
       else
-        format.html { render :new }
-        format.json { render json: @book_count.errors, status: :unprocessable_entity }
+        if @book_count.save
+          format.html { redirect_to @book_count, notice: 'Book count was successfully created.' }
+          format.json { render :show, status: :created, location: @book_count }
+        else
+          format.html { render :new }
+          format.json { render json: @book_count.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

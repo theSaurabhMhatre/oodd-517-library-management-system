@@ -16,6 +16,11 @@ class BookRequestsController < ApplicationController
   # GET /book_requests/new
   def new
     @book_request = BookRequest.new
+    if(params[:from] != nil and params[:from] == ApplicationController::TYPE_STUDENT)
+      BookCount.check_if_available(params[:book_id], current_user);
+      @book_request.book_id = params[:book_id]
+      @book_request.student_id = session[:user_id]
+    end
   end
 
   # GET /book_requests/1/edit

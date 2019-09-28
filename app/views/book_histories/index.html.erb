@@ -16,9 +16,9 @@
   <tbody>
     <% @book_histories.each do |book_history| %>
       <tr>
-        <td><%= book_history.book %></td>
-        <td><%= book_history.library %></td>
-        <td><%= book_history.student %></td>
+        <td><%= book_history.book.title %></td>
+        <td><%= book_history.library.name %></td>
+        <td><%= book_history.student.email %></td>
         <td><%= book_history.action %></td>
         <td><%= link_to 'Show', book_history %></td>
         <td><%= link_to 'Edit', edit_book_history_path(book_history) %></td>

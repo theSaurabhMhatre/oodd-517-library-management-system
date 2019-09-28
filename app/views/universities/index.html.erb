@@ -28,4 +28,7 @@
 
 <br>
 
-<%= link_to 'New University', new_university_path %>
+<% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+  <%= link_to 'New University', new_university_path %>
+<% end %>
+
