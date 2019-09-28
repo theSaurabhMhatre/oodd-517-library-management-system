@@ -33,8 +33,10 @@
         <td><%= book.summary %></td>
         <td><%= book.is_special %></td>
         <td><%= link_to 'Show', book %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+          <td><%= link_to 'Edit', edit_book_path(book) %></td>
+          <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -42,4 +44,6 @@
 
 <br>
 
-<%= link_to 'New Book', new_book_path %>
+<% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+  <%= link_to 'New Book', new_book_path %>
+<% end %>

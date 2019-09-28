@@ -6,29 +6,25 @@ class SessionsController < ApplicationController
   end
 
   def create
-    show_not_approved_flash = false;
     case params[:user_type]
     when TYPE_STUDENT
       user = Student.find_by_email(params[:email])
     when TYPE_LIBRARIAN
       user = Librarian.find_by_email(params[:email])
-      if(user.is_approved == 0)
-        user = nil
-        show_not_approved_flash = true;
-      end
     when TYPE_ADMIN
       user = Admin.find_by_email(params[:email])
     end
     if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      session[:user_type] = params[:user_type]
-      redirect_to root_url, notice: "Logged in!"
-    else
-      if(params[:user_type] == TYPE_LIBRARIAN and show_not_approved_flash)
+      if(params[:user_type] == TYPE_LIBRARIAN and user.is_approved == 0)
         flash.now[:alert] = "You have not been approved by the admin yet"
+        render "new"
       else
-        flash.now[:alert] = "Email or password is invalid"
+        session[:user_id] = user.id
+        session[:user_type] = params[:user_type]
+        redirect_to root_url, notice: "Logged in!"
       end
+    else
+      flash.now[:alert] = "Email or password is invalid"
       render "new"
     end
   end

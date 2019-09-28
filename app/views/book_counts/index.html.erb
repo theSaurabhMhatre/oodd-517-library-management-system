@@ -15,8 +15,8 @@
   <tbody>
     <% @book_counts.each do |book_count| %>
       <tr>
-        <td><%= book_count.book %></td>
-        <td><%= book_count.library %></td>
+        <td><%= book_count.book.title %></td>
+        <td><%= book_count.library.name %></td>
         <td><%= book_count.count %></td>
         <td><%= link_to 'Show', book_count %></td>
         <td><%= link_to 'Edit', edit_book_count_path(book_count) %></td>

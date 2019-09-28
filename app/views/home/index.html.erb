@@ -1,6 +1,15 @@
 <h1>Library Management System</h1>
-<%# <p>Please select your Libraries affiliation</p> %>
-<%= link_to "My account", login_path %>
-<%= link_to "Libraries", libraries_path %>
-<%= link_to "Books", books_path %>
-<%= link_to "Our Staff", librarians_path %>
+
+<%if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+  <%= link_to "Universities", universities_url %>
+  <%= link_to "Libraries", libraries_url %>
+  <%= link_to "Librarians", librarians_url %>
+  <%= link_to "Books", books_url %>
+  <%= link_to "Student", students_url %>
+  <%= link_to "Add Books to Libraries", book_counts_url %>
+<% end %>
+
+<%if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+  <%= link_to "Libraries", libraries_url %>
+  <%= link_to "Books", books_url %>
+<% end %>
