@@ -6,9 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    puts "######################################"
-    puts params[:type]
-    puts "######################################"
+
     admin = Admin.find_by_email(params[:email])
     if admin && admin.authenticate(params[:password])
       session[:admin_id] = admin.id
