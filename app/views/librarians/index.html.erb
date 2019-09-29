@@ -23,6 +23,9 @@
         <td><%= link_to 'Show', librarian %></td>
         <td><%= link_to 'Edit', edit_librarian_path(librarian) %></td>
         <td><%= link_to 'Destroy', librarian, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+          <td><%= link_to 'Approve', approve_librarian_path(librarian) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
