@@ -4,7 +4,7 @@ class CreateBookRequests < ActiveRecord::Migration[5.2]
       t.references :book, foreign_key: true
       t.references :library, foreign_key: true
       t.references :student, foreign_key: true
-      t.string :type
+      t.string :request_type
 
       t.timestamps
     end

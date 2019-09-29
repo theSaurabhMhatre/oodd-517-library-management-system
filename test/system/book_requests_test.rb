@@ -17,7 +17,7 @@ class BookRequestsTest < ApplicationSystemTestCase
     fill_in "Book", with: @book_request.book_id
     fill_in "Library", with: @book_request.library_id
     fill_in "Student", with: @book_request.student_id
-    fill_in "Type", with: @book_request.type
+    fill_in "Type", with: @book_request.request_type
     click_on "Create Book request"
 
     assert_text "Book request was successfully created"
@@ -31,7 +31,7 @@ class BookRequestsTest < ApplicationSystemTestCase
     fill_in "Book", with: @book_request.book_id
     fill_in "Library", with: @book_request.library_id
     fill_in "Student", with: @book_request.student_id
-    fill_in "Type", with: @book_request.type
+    fill_in "Type", with: @book_request.request_type
     click_on "Update Book request"
 
     assert_text "Book request was successfully updated"

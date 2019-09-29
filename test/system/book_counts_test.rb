@@ -15,7 +15,7 @@ class BookCountsTest < ApplicationSystemTestCase
     click_on "New Book Count"
 
     fill_in "Book", with: @book_count.book_id
-    fill_in "Count", with: @book_count.count
+    fill_in "Book Count", with: @book_count.book_copies
     fill_in "Library", with: @book_count.library_id
     click_on "Create Book count"
 
@@ -28,7 +28,7 @@ class BookCountsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Book", with: @book_count.book_id
-    fill_in "Count", with: @book_count.count
+    fill_in "Book copies", with: @book_count.book_copies
     fill_in "Library", with: @book_count.library_id
     click_on "Update Book count"
 
