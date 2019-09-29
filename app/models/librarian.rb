@@ -20,4 +20,8 @@ class Librarian < ApplicationRecord
             :presence => true
   validates :library_id,
             :presence => true
+
+  def get_approved
+    self[:is_approved] = 1
+  end
 end

@@ -53,6 +53,12 @@ class LibrariansController < ApplicationController
     end
   end
 
+  def approve
+    @librarian = Librarian.find(params[:id])
+    @librarian.update_column(:is_approved,1)
+    redirect_to librarians_url
+  end
+
   # DELETE /librarians/1
   # DELETE /librarians/1.json
   def destroy
