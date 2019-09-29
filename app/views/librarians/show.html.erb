@@ -20,5 +20,10 @@
   <%= @librarian.is_approved %>
 </p>
 
+<p>
+  <strong>Library ID:</strong>
+  <%= @librarian.library_id %>
+</p>
+
 <%= link_to 'Edit', edit_librarian_path(@librarian) %> |
 <%= link_to 'Back', librarians_path %>
