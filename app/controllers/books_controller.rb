@@ -5,11 +5,14 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    if(params[:from] != nil and params[:from] == ApplicationController::TYPE_STUDENT)
-      if(params[:from] != nil and params[:from] == ApplicationController::TYPE_STUDENT)
+    if(session[:user_type] == ApplicationController::TYPE_STUDENT)
+      if(params[:library_id] != nil)
+        lib = Library.find(params[:library_id])
         book_ids = BookCount.where(:library_id => params[:library_id]).map {|x| x.book_id};
         @books = Book.find(book_ids)
       end
+    else
+      @books = Book.all
     end
   end
 

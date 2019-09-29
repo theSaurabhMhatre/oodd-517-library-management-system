@@ -17,7 +17,7 @@
       <tr>
         <td><%= book_count.book.title %></td>
         <td><%= book_count.library.name %></td>
-        <td><%= book_count.count %></td>
+        <td><%= book_count.book_copies %></td>
         <td><%= link_to 'Show', book_count %></td>
         <td><%= link_to 'Edit', edit_book_count_path(book_count) %></td>
         <td><%= link_to 'Destroy', book_count, method: :delete, data: { confirm: 'Are you sure?' } %></td>

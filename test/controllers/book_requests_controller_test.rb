@@ -17,7 +17,7 @@ class BookRequestsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create book_request" do
     assert_difference('BookRequest.count') do
-      post book_requests_url, params: { book_request: { book_id: @book_request.book_id, library_id: @book_request.library_id, student_id: @book_request.student_id, type: @book_request.type } }
+      post book_requests_url, params: { book_request: { book_id: @book_request.book_id, library_id: @book_request.library_id, student_id: @book_request.student_id, request_type: @book_request.request_type } }
     end
 
     assert_redirected_to book_request_url(BookRequest.last)
@@ -34,7 +34,7 @@ class BookRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update book_request" do
-    patch book_request_url(@book_request), params: { book_request: { book_id: @book_request.book_id, library_id: @book_request.library_id, student_id: @book_request.student_id, type: @book_request.type } }
+    patch book_request_url(@book_request), params: { book_request: { book_id: @book_request.book_id, library_id: @book_request.library_id, student_id: @book_request.student_id, request_type: @book_request.request_type } }
     assert_redirected_to book_request_url(@book_request)
   end
 

@@ -6,13 +6,27 @@ class BookCount < ApplicationRecord
             :presence => true
   validates :library_id,
             :presence => true
-  validates :count,
+  validates :book_copies,
             :presence => true,
-            :numericality => {greater_than: 0}
+            :numericality => {greater_than: 0},
+            :on => :create
 
-  def self.check_if_available(book_id)
-    library_ids = Library.where(:university_id => student.university_id).map {|x| x.id }
-    book_count = BookCount.where(:book_id => book_id, :library_id => library_ids).map {|x| x.count}
-    puts ""
+  def self.check_if_available?(book_id, library_id)
+    book_count = BookCount.where(:book_id => book_id, :library_id => library_id).first
+    if (book_count.book_copies > 0)
+      return true
+    else
+      return false
+    end
+  end
+
+  def self.book_count_decrement(book_id, library_id)
+    book_count = BookCount.where(:book_id => book_id, :library_id => library_id).first
+    book_count.update(:book_copies => book_count.book_copies - 1)
+  end
+
+  def self.book_count_increment(book_id, library_id)
+    book_count = BookCount.where(:book_id => book_id, :library_id => library_id).first
+    book_count.update(:book_copies => book_count.book_copies + 1)
   end
 end

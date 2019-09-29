@@ -74,6 +74,6 @@ class BookCountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_count_params
-      params.require(:book_count).permit(:book_id, :library_id, :count)
+      params.require(:book_count).permit(:book_id, :library_id, :book_copies)
     end
 end

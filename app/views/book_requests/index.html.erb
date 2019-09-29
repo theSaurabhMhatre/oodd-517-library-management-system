@@ -19,7 +19,7 @@
         <td><%= book_request.book.title %></td>
         <td><%= book_request.library.name %></td>
         <td><%= book_request.student.email %></td>
-        <td><%= book_request.type %></td>
+        <td><%= book_request.request_type %></td>
         <td><%= link_to 'Show', book_request %></td>
         <td><%= link_to 'Edit', edit_book_request_path(book_request) %></td>
         <td><%= link_to 'Destroy', book_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
