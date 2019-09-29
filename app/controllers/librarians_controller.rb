@@ -44,7 +44,7 @@ class LibrariansController < ApplicationController
   def update
     respond_to do |format|
       if @librarian.update(librarian_params)
-        format.html { redirect_to @librarian, notice: 'Librarian was successfully updated.' }
+        format.html { redirect_to root_url, notice: 'Librarian was successfully updated.' }
         format.json { render :show, status: :ok, location: @librarian }
       else
         format.html { render :edit }
