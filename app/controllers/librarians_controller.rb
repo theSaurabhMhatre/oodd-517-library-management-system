@@ -1,6 +1,6 @@
 class LibrariansController < ApplicationController
   before_action :set_librarian, only: [:show, :edit, :update, :destroy]
-  before_action :authorize
+  before_action :authorize, only: [:index, :show, :edit, :update, :destroy]
 
   # GET /librarians
   # GET /librarians.json
@@ -16,6 +16,7 @@ class LibrariansController < ApplicationController
   # GET /librarians/new
   def new
     @librarian = Librarian.new
+    @librarian.is_approved = 0
   end
 
   # GET /librarians/1/edit
@@ -50,6 +51,12 @@ class LibrariansController < ApplicationController
         format.json { render json: @librarian.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def approve
+    @librarian = Librarian.find(params[:id])
+    @librarian.update_column(:is_approved,1)
+    redirect_to librarians_url
   end
 
   # DELETE /librarians/1

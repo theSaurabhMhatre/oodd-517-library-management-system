@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   resources :book_histories
   resources :books
   resources :students
-  resources :librarians
+  resources :librarians do
+    member do
+      get 'approve'
+    end
+  end
   resources :libraries
   resources :sessions, only: [:new, :create, :destroy]
   get 'login', to: 'sessions#new', as: 'login'
