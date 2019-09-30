@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   resources :librarians do
     member do
       get 'approve'
-      get 'admin_edit'
-      post 'admin_update'
     end
   end
   resources :libraries

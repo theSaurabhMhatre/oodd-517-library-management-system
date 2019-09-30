@@ -21,13 +21,14 @@ class LibrariansController < ApplicationController
 
   # GET /librarians/1/edit
   def edit
+    @without_password = params[:without_password]
   end
 
   # POST /librarians
   # POST /librarians.json
   def create
     @librarian = Librarian.new(librarian_params)
-
+    @librarian[:is_approved] = 0
     respond_to do |format|
       if @librarian.save
         format.html { redirect_to @librarian, notice: 'Librarian was successfully created.' }
@@ -56,20 +57,6 @@ class LibrariansController < ApplicationController
   def approve
     @librarian = Librarian.find(params[:id])
     @librarian.update_column(:is_approved,1)
-    redirect_to librarians_url
-  end
-
-  def admin_edit
-    @librarian = Librarian.find(params[:id])
-  end
-
-  def admin_update
-    @librarian = Librarian.find(params[:id])
-    puts "#########################"
-    puts params[:email]
-    puts "#########################"
-    @librarian.update_column(:name,params[:name])
-    @librarian.update_column(:email,params[:email])
     redirect_to librarians_url
   end
 
