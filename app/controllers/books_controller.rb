@@ -5,7 +5,6 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all      # Added this because books was not displaying for admin
     if(params[:from] != nil and params[:from] == ApplicationController::TYPE_STUDENT)
       if(params[:from] != nil and params[:from] == ApplicationController::TYPE_STUDENT)
         book_ids = BookCount.where(:library_id => params[:library_id]).map {|x| x.book_id};
