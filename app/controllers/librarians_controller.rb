@@ -59,6 +59,20 @@ class LibrariansController < ApplicationController
     redirect_to librarians_url
   end
 
+  def admin_edit
+    @librarian = Librarian.find(params[:id])
+  end
+
+  def admin_update
+    @librarian = Librarian.find(params[:id])
+    puts "#########################"
+    puts params[:email]
+    puts "#########################"
+    @librarian.update_column(:name,params[:name])
+    @librarian.update_column(:email,params[:email])
+    redirect_to librarians_url
+  end
+
   # DELETE /librarians/1
   # DELETE /librarians/1.json
   def destroy
