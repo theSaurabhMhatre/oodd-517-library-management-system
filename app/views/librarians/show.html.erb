@@ -10,14 +10,29 @@
   <%= @librarian.name %>
 </p>
 
-<p>
-  <strong>Password:</strong>
-  <%= @librarian.password %>
-</p>
+<!-- Added condition so that admin does not see this when he lists librarians -->
+<% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+  <p>
+    <strong>Password:</strong>
+    <%= @librarian.password %>
+  </p>
+<% end %>
 
 <p>
   <strong>Is approved:</strong>
   <%= @librarian.is_approved %>
+</p>
+
+<p>
+  <strong> Library: </strong>
+  <% @library = Library.find(@librarian.library_id) %>
+  <%= @library.name %>
+</p>
+
+<p>
+  <strong> University: </strong>
+  <% @university = University.find(@librarian.university_id) %>
+  <%= @university.name %>
 </p>
 
 <%= link_to 'Edit', edit_librarian_path(@librarian) %> |

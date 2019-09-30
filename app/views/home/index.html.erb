@@ -1,12 +1,13 @@
 <h1>Library Management System</h1>
 
 <%if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-  <%= link_to "Universities", universities_url %>
-  <%= link_to "Libraries", libraries_url %>
-  <%= link_to "Librarians", librarians_url %>
-  <%= link_to "Books", books_url %>
-  <%= link_to "Student", students_url %>
-  <%= link_to "Add Books to Libraries", book_counts_url %>
+  <br> <div> <%= link_to "Edit Profile", edit_admin_path(session[:user_id]) %></div>
+  <br> <div> <%= link_to "Librarians", librarians_url %> </div>
+  <br> <div> <%= link_to "Students ", students_path %></div>
+  <br> <div> <%= link_to "Libraries", libraries_url %> </div>
+  <br> <div> <%= link_to "Books", books_path %> </div>
+  <br> <div> <%=  link_to "Book hold requests", book_requests_url %> </div>
+  <%= link_to "Add Book counts to Libraries", book_counts_url %>
 <% end %>
 
 <%if session[:user_type] == ApplicationController::TYPE_STUDENT %>
