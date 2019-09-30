@@ -4,10 +4,10 @@ one:
   book: one
   library: one
   student: one
-  type: 
+  request_type:
 
 two:
   book: two
   library: two
   student: two
-  type: 
+  request_type:

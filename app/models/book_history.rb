@@ -15,4 +15,13 @@ class BookHistory < ApplicationRecord
   validates :action,
             :presence => true,
             :inclusion => {in: [ISSUED, RETURNED]}
+
+  def self.issue_book(book_id, library_id, user_id)
+    BookHistory.create(:book_id => book_id, :library_id => library_id, :student_id => user_id, :action => ISSUED)
+  end
+
+  def self.return_book(book_id, library_id, user_id)
+    book = BookHistory.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :action => ISSUED)
+    book.update(:action => RETURNED);
+  end
 end

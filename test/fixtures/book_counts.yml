@@ -3,9 +3,9 @@
 one:
   book: one
   library: one
-  count: 1
+  book_copies: 1
 
 two:
   book: two
   library: two
-  count: 1
+  book_copies: 1

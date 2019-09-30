@@ -16,13 +16,15 @@ class Student < ApplicationRecord
   validates :name,
             :presence => true
   validates :password,
-            :presence => true
+            :presence => true,
+            :on => :create
   validates :edu_level,
             :presence => true,
             :inclusion => {in: [UNDERGRADUATE, GRADUATE, PHD_STUDENT]}
   validates :book_limit,
             :presence => true,
-            :numericality => {greater_than: 0}
+            :numericality => {greater_than: 0},
+            :on => :create
   validates :university_id,
             :presence => true
 
@@ -35,5 +37,24 @@ class Student < ApplicationRecord
     when PHD_STUDENT
       self.book_limit = 6
     end
+  end
+
+  def self.can_borrow(student_id)
+    student = Student.find(student_id)
+    if(student.book_limit > 0)
+      return true
+    else
+      return false
+    end
+  end
+
+  def self.decrement_book_limit(student_id)
+    student = Student.find(student_id)
+    student.update(:book_limit => student.book_limit - 1)
+  end
+
+  def self.increment_book_limit(student_id)
+    student = Student.find(student_id)
+    student.update(:book_limit => student.book_limit + 1)
   end
 end

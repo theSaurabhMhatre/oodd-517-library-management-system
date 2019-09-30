@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_220743) do
   create_table "book_counts", force: :cascade do |t|
     t.integer "book_id"
     t.integer "library_id"
-    t.integer "count"
+    t.integer "book_copies"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_book_counts_on_book_id"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_220743) do
     t.integer "book_id"
     t.integer "library_id"
     t.integer "student_id"
-    t.string "type"
+    t.string "request_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_book_requests_on_book_id"

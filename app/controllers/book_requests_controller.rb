@@ -15,11 +15,50 @@ class BookRequestsController < ApplicationController
 
   # GET /book_requests/new
   def new
-    @book_request = BookRequest.new
-    if(params[:from] != nil and params[:from] == ApplicationController::TYPE_STUDENT)
-      BookCount.check_if_available(params[:book_id], current_user);
-      @book_request.book_id = params[:book_id]
-      @book_request.student_id = session[:user_id]
+    if(session[:user_type] == ApplicationController::TYPE_STUDENT)
+      # request has come from user
+      if(params[:library_id] != nil and params[:request_type] != nil)
+        if params[:request_type] == BookRequest::IS_BOOKMARK
+          val = BookRequest.bookmark_book(session[:user_id], params[:book_id], params[:library_id])
+          if(val == 1)
+            check = 5
+          else
+            check = 6
+          end
+        else
+          check = BookRequest.checkout_book(session[:user_id], params[:book_id], params[:library_id])
+        end
+        respond_to do |format|
+          case check
+          when 0
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Max number of books already issued' }
+          when 1
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book request pending with admin' }
+          when 2
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book checked out' }
+          when 3
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book unavailable, created a hold request' }
+          when 4
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already checked out' }
+          when 5
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book bookmarked' }
+          when 6
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already bookmarked' }
+          end
+        end
+      end
+    else
+      # request not from user
+      @book_request = BookRequest.new
+      respond_to do |format|
+        if @book_request.save
+          format.html { redirect_to libraries_path, notice: 'Book request' }
+          format.json { render :show, status: :created, location: @book_request }
+        else
+          format.html { render :new }
+          format.json { render json: @book_request.errors, status: :unprocessable_entity }
+        end
+      end
     end
   end
 
@@ -75,6 +114,6 @@ class BookRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_request_params
-      params.require(:book_request).permit(:book_id, :library_id, :student_id, :type)
+      params.require(:book_request).permit(:book_id, :library_id, :student_id, :request_type)
     end
 end

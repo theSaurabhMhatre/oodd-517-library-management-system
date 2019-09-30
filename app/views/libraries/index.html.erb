@@ -21,7 +21,7 @@
         <td><%= library.max_days %></td>
         <td><%= library.overdue_fine %></td>
         <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-          <td><%= link_to 'Issue book', books_path(:from => ApplicationController::TYPE_STUDENT, :library_id => library.id) %></td>
+          <td><%= link_to 'Browse books', books_path(:library_id => library.id) %></td>
         <% else %>
           <td><%= link_to 'Show', library %></td>
           <td><%= link_to 'Edit', edit_library_path(library) %></td>
