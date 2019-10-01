@@ -43,6 +43,7 @@ class AdminsController < ApplicationController
   def update
     respond_to do |format|
       if @admin.update(admin_params)
+        @admin.save
         format.html { redirect_to @admin, notice: 'Admin was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin }
       else
@@ -70,6 +71,6 @@ class AdminsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_params
-      params.require(:admin).permit(:email, :name, :password, :password_confirmation)
+      params.require(:admin).permit(:email, :name, :password)
     end
 end
