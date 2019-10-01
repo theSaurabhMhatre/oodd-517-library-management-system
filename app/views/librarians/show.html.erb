@@ -11,13 +11,14 @@
 </p>
 
 <p>
-  <strong>Password:</strong>
-  <%= @librarian.password %>
+  <strong>Is approved:</strong>
+  <%= @librarian.is_approved %>
 </p>
 
 <p>
-  <strong>Is approved:</strong>
-  <%= @librarian.is_approved %>
+  <strong> Library: </strong>
+  <% @library = Library.find(@librarian.library_id) %>
+  <%= @library.name %>
 </p>
 
 <p>

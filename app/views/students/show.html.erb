@@ -9,10 +9,17 @@
   <strong>Name:</strong>
   <%= @student.name %>
 </p>
-
+<% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
 <p>
   <strong>Password:</strong>
   <%= @student.password %>
+</p>
+<%end %>
+
+<p>
+  <strong>University:</strong>
+  <% @university = University.find(@student.university_id) %>
+  <%= @university.name %>
 </p>
 
 <p>
