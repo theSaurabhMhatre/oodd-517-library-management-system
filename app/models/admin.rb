@@ -7,4 +7,7 @@ class Admin < ApplicationRecord
             :format => {with: /\A([\w\d_\.])+@(\w)+\.(\w)+\z/}
   validates :name,
             :presence => true
+  validates :password,
+            :presence => true,
+            :on => :create
 end

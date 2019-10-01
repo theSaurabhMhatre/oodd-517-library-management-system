@@ -26,5 +26,13 @@
   <%= @librarian.library_id %>
 </p>
 
+<p>
+  <strong> University: </strong>
+  <% @university = University.find(@librarian.university_id)
+  %>
+  <%= @university.name %>
+</p>
+
+
 <%= link_to 'Edit', edit_librarian_path(@librarian) %> |
 <%= link_to 'Back', librarians_path %>
