@@ -5,7 +5,19 @@ class BookHistoriesController < ApplicationController
   # GET /book_histories
   # GET /book_histories.json
   def index
-    @book_histories = BookHistory.all
+    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+      if (params[:request_type] != nil and params[:request_type] == BookHistory::ISSUED)
+        # request from user for checked out books
+        @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ISSUED)
+      else
+        # if parameter not specified, redirect to home page saying invalid request
+        # TODO: check if msg can be displayed
+        redirect_to root_path
+      end
+    else
+      # request not from user
+      @book_histories = BookHistory.all
+    end
   end
 
   # GET /book_histories/1
@@ -55,6 +67,7 @@ class BookHistoriesController < ApplicationController
   # DELETE /book_histories/1
   # DELETE /book_histories/1.json
   def destroy
+    # TODO: should admin or librarian be allowed to perform this action?
     @book_history.destroy
     respond_to do |format|
       format.html { redirect_to book_histories_url, notice: 'Book history was successfully destroyed.' }
@@ -62,14 +75,33 @@ class BookHistoriesController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book_history
-      @book_history = BookHistory.find(params[:id])
+  # get /book_histories/1/return
+  def return_book
+    @book_history = BookHistory.find(params[:id])
+    book_id = @book_history.book_id;
+    library_id = @book_history.library_id
+    # increment students book_limit
+    Student.increment_book_limit(session[:user_id])
+    # increment availability of book in book_count
+    BookCount.book_count_increment(book_id, library_id)
+    BookHistory.return_book(book_id, library_id, session[:user_id])
+    # check if there are any holds for this book
+    BookRequest.check_hold(book_id, library_id)
+    respond_to do |format|
+      format.html { redirect_to book_histories_url(:request_type => BookHistory::ISSUED), notice: 'Book returned successfully.' }
+      format.json { head :no_content }
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_history_params
-      params.require(:book_history).permit(:book_id, :library_id, :student_id, :action)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book_history
+    @book_history = BookHistory.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_history_params
+    params.require(:book_history).permit(:book_id, :library_id, :student_id, :action)
+  end
 end

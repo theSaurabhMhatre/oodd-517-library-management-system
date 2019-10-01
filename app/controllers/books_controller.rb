@@ -10,6 +10,10 @@ class BooksController < ApplicationController
         lib = Library.find(params[:library_id])
         book_ids = BookCount.where(:library_id => params[:library_id]).map {|x| x.book_id};
         @books = Book.find(book_ids)
+      else
+        # if parameter not specified, redirect to home page saying invalid request
+        # TODO: check if msg can be displayed
+        redirect_to libraries_path
       end
     else
       @books = Book.all

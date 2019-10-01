@@ -24,4 +24,9 @@ class BookHistory < ApplicationRecord
     book = BookHistory.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :action => ISSUED)
     book.update(:action => RETURNED);
   end
+
+  def self.fetch_checked_out_books(user_id, request_type)
+    book_history = BookHistory.where(:student_id => user_id, :action => request_type)
+    return book_history
+  end
 end

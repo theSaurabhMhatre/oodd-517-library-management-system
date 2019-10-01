@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'book_histories/:id/return', to: 'book_histories#return_book'
 
   root 'home#index'
 
@@ -23,9 +24,6 @@ Rails.application.routes.draw do
   get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'
-  get 'student_home_page/index'
-  get 'librarian_home_page/index'
-  get 'admin_home_page/index'
 
   get 'javascripts/dynamic_libraries'
 

@@ -4,27 +4,31 @@
 
 <table>
   <thead>
-    <tr>
-      <th>Book</th>
-      <th>Library</th>
-      <th>Student</th>
-      <th>Type</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Book</th>
+    <th>Library</th>
+    <th>Student</th>
+    <th>Type</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @book_requests.each do |book_request| %>
-      <tr>
-        <td><%= book_request.book.title %></td>
-        <td><%= book_request.library.name %></td>
-        <td><%= book_request.student.email %></td>
-        <td><%= book_request.request_type %></td>
-        <td><%= link_to 'Show', book_request %></td>
-        <td><%= link_to 'Edit', edit_book_request_path(book_request) %></td>
-        <td><%= link_to 'Destroy', book_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <% @book_requests.each do |book_request| %>
+    <tr>
+      <td><%= book_request.book.title %></td>
+      <td><%= book_request.library.name %></td>
+      <td><%= book_request.student.email %></td>
+      <td><%= book_request.request_type %></td>
+      <td><%= link_to 'Show', book_request %></td>
+      <td><%= link_to 'Edit', edit_book_request_path(book_request) %></td>
+      <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+        <td><%= link_to 'Destroy', "/book_requests/#{book_request.id}?request_type=" + params[:request_type], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <% else %>
+        <td><%= link_to 'Destroy', book_request, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <% end %>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 
