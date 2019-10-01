@@ -21,13 +21,14 @@ class LibrariansController < ApplicationController
 
   # GET /librarians/1/edit
   def edit
+    @without_password = params[:without_password]
   end
 
   # POST /librarians
   # POST /librarians.json
   def create
     @librarian = Librarian.new(librarian_params)
-
+    @librarian[:is_approved] = 0
     respond_to do |format|
       if @librarian.save
         format.html { redirect_to @librarian, notice: 'Librarian was successfully created.' }

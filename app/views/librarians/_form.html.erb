@@ -22,22 +22,17 @@
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
+  <% if @without_password == nil %>
+    <div class="field">
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <!--We need not show this to the user, remove later-->
-  <div class="field">
-    <%= form.label :is_approved %>
-    <%= form.number_field :is_approved %>
-  </div>
+    <div class="field">
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :university_id %>

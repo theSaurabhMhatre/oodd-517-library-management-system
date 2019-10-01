@@ -11,11 +11,13 @@ class Librarian < ApplicationRecord
   validates :name,
             :presence => true
   validates :password,
-            :presence => true
+            :presence => true,
+            :on => :create
   # 0: not approved; 1: approved
   validates :is_approved,
             :presence => true,
-            :inclusion => {in: [0,1]}
+            :inclusion => {in: [0,1]},
+            :on => :create
   validates :university_id,
             :presence => true
   validates :library_id,
