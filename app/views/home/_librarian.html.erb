@@ -1,3 +1,7 @@
 <div> <%= link_to "Edit profile", edit_librarian_path(current_user) %> </div>
 <br>
 <div> <%= link_to "View book requests", book_requests_path %> </div>
+<br>
+<div> <%= link_to "Change "+Library.find(current_user.library_id).name + " Policies", edit_library_path(Library.find(current_user.library_id)) %> </div>
+<br>
+<div> <%= link_to ("View Books in "+Library.find(current_user.library_id).name), books_path %> </div>

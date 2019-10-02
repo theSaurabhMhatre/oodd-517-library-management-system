@@ -11,15 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location %>
-  </div>
+  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+    <div class="field">
+      <%= form.label :location %>
+      <%= form.text_field :location %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :max_days %>
@@ -31,10 +35,12 @@
     <%= form.text_field :overdue_fine %>
   </div>
 
-  <div class="field">
-    <%= form.label :university %>
-    <%= form.collection_select :university_id, University.all, :id, :name %>
-  </div>
+  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+    <div class="field">
+      <%= form.label :university %>
+      <%= form.collection_select :university_id, University.all, :id, :name %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
