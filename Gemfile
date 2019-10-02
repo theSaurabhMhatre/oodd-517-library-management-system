@@ -76,3 +76,6 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 
 # Adding jQuery for UI related tasks
 gem 'jquery-rails'
+
+# Adding for book cover image
+gem 'carrierwave', '~> 0.11.2'

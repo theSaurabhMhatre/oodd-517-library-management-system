@@ -32,7 +32,7 @@
 
 <p>
   <strong>Image:</strong>
-  <%= @book.image %>
+  <%= image_tag @book.image_url.to_s %>
 </p>
 
 <p>
@@ -49,6 +49,9 @@
   <strong>Is special:</strong>
   <%= @book.is_special %>
 </p>
+
+
+
 
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>

@@ -143,6 +143,9 @@ class BookRequestsController < ApplicationController
       when 0
         format.html { redirect_to book_requests_path, :notice => "Book not available" }
       when 1
+      #  user = Student.find_by_student_id(params[:student_id])
+        @student = Student.find(params[:student_id])
+        RequestSuccessfulMailer.with(student: @student).request_successful_email.deliver_now
         format.html { redirect_to book_requests_path, :notice => "Book request accepted" }
       end
     end
