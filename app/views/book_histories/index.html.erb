@@ -20,9 +20,13 @@
         <td><%= book_history.library.name %></td>
         <td><%= book_history.student.email %></td>
         <td><%= book_history.action %></td>
-        <td><%= link_to 'Show', book_history %></td>
-        <td><%= link_to 'Edit', edit_book_history_path(book_history) %></td>
-        <td><%= link_to 'Destroy', book_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if(session[:user_type] == ApplicationController::TYPE_STUDENT) %>
+          <td><%= link_to 'Return book', "/book_histories/#{book_history.id}/return", data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+          <td><%= link_to 'Show', book_history %></td>
+          <td><%= link_to 'Edit', edit_book_history_path(book_history) %></td>
+          <td><%= link_to 'Destroy', book_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

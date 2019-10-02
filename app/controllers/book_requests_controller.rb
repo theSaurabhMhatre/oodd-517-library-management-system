@@ -5,7 +5,18 @@ class BookRequestsController < ApplicationController
   # GET /book_requests
   # GET /book_requests.json
   def index
-    @book_requests = BookRequest.all
+    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+      if (params[:request_type] != nil)
+        # request from user for checked out books
+        @book_requests = BookRequest.fetch_student_requests(session[:user_id], params[:request_type])
+      else
+        # if parameter not specified, redirect to home page saying invalid request
+        # TODO: check if msg can be displayed
+        redirect_to root_path
+      end
+    else
+      @book_requests = BookRequest.all
+    end
   end
 
   # GET /book_requests/1
@@ -15,15 +26,15 @@ class BookRequestsController < ApplicationController
 
   # GET /book_requests/new
   def new
-    if(session[:user_type] == ApplicationController::TYPE_STUDENT)
+    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
       # request has come from user
-      if(params[:library_id] != nil and params[:request_type] != nil)
+      if (params[:library_id] != nil and params[:request_type] != nil)
         if params[:request_type] == BookRequest::IS_BOOKMARK
           val = BookRequest.bookmark_book(session[:user_id], params[:book_id], params[:library_id])
-          if(val == 1)
-            check = 5
-          else
+          if (val == 1)
             check = 6
+          else
+            check = 7
           end
         else
           check = BookRequest.checkout_book(session[:user_id], params[:book_id], params[:library_id])
@@ -41,8 +52,10 @@ class BookRequestsController < ApplicationController
           when 4
             format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already checked out' }
           when 5
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book bookmarked' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book is on hold' }
           when 6
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book bookmarked' }
+          when 7
             format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already bookmarked' }
           end
         end
@@ -100,20 +113,35 @@ class BookRequestsController < ApplicationController
   # DELETE /book_requests/1.json
   def destroy
     @book_request.destroy
+    user = session[:user_type]
+    type = params[:request_type]
     respond_to do |format|
-      format.html { redirect_to book_requests_url, notice: 'Book request was successfully destroyed.' }
-      format.json { head :no_content }
+      case user
+      when ApplicationController::TYPE_STUDENT
+        case type
+        when BookRequest::IS_BOOKMARK
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_BOOKMARK), notice: 'Book request was successfully destroyed.' }
+        when BookRequest::IS_HOLD
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_HOLD), notice: 'Book request was successfully destroyed.' }
+        when BookRequest::IS_SPECIAL
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_SPECIAL), notice: 'Book request was successfully destroyed.' }
+        end
+      else
+        format.html { redirect_to book_requests_url, notice: 'Book request was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book_request
-      @book_request = BookRequest.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_request_params
-      params.require(:book_request).permit(:book_id, :library_id, :student_id, :request_type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book_request
+    @book_request = BookRequest.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_request_params
+    params.require(:book_request).permit(:book_id, :library_id, :student_id, :request_type)
+  end
 end

@@ -2,6 +2,18 @@
 
 <h1>Books</h1>
 
+<h3>Filters</h3>
+
+<%= form_with(url: filter_books_path, method: "get", :data => {:remote => false}) do %>
+  <%= label_tag(:book_title, "Title:") %>
+  <%= text_field_tag(:book_title) %>
+  <%= label_tag(:book_author, "Author:") %>
+  <%= text_field_tag(:book_author) %>
+  <%= hidden_field_tag(:library_id, value = params[:library_id]) %>
+  <br><br>
+  <%= submit_tag("Search") %>
+<% end %>
+
 <table>
   <thead>
     <tr>

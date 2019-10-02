@@ -9,6 +9,5 @@
 <% end %>
 
 <%if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-  <%= link_to "Libraries", libraries_url %>
-  <%= link_to "Books", books_url %>
+  <%= render 'student'%>
 <% end %>
