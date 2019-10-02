@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   resources :universities
   resources :book_counts
   resources :book_histories
-  resources :books
+  resources :books do
+    collection do
+      get 'filter'
+    end
+  end
   resources :students
   resources :librarians do
     member do

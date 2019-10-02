@@ -29,4 +29,13 @@ class BookCount < ApplicationRecord
     book_count = BookCount.where(:book_id => book_id, :library_id => library_id).first
     book_count.update(:book_copies => book_count.book_copies + 1)
   end
+
+  def self.check_if_book_in_use?(book_id)
+    count = BookCount.where(:book_id => book_id).count
+    if count > 0
+      return true
+    else
+      return false
+    end
+  end
 end

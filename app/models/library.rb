@@ -1,8 +1,11 @@
 class Library < ApplicationRecord
   has_one :librarian
-  has_many :book_counts
-  has_many :book_requests
-  has_many :book_histories
+  has_many :book_counts,
+           :dependent => :delete_all
+  has_many :book_requests,
+           :dependent => :delete_all
+  has_many :book_histories,
+           :dependent => :delete_all
   belongs_to :university
 
   validates :name,

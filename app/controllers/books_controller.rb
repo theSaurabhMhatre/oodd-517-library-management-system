@@ -5,18 +5,32 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    if(session[:user_type] == ApplicationController::TYPE_STUDENT)
-      if(params[:library_id] != nil)
-        lib = Library.find(params[:library_id])
-        book_ids = BookCount.where(:library_id => params[:library_id]).map {|x| x.book_id};
-        @books = Book.find(book_ids)
+    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+      if (params[:library_id] != nil)
+        @books = Book.fetch_books(params[:library_id])
       else
         # if parameter not specified, redirect to home page saying invalid request
         # TODO: check if msg can be displayed
         redirect_to libraries_path
       end
     else
-      @books = Book.all
+      @books = Book.fetch_books(nil)
+    end
+  end
+
+  def filter
+    book_name = params[:book_title].nil? ? "" : params[:book_title];
+    author_name = params[:book_author].nil? ? "" : params[:book_author];
+    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+      if (params[:library_id] != nil)
+        @books = Book.filter_books(params[:library_id], book_name, author_name)
+      else
+        # if parameter not specified, redirect to home page saying invalid request
+        # TODO: check if msg can be displayed
+        redirect_to libraries_path
+      end
+    else
+      @books = Book.filter_books(nil, book_name, author_name)
     end
   end
 
@@ -67,21 +81,29 @@ class BooksController < ApplicationController
   # DELETE /books/1
   # DELETE /books/1.json
   def destroy
-    @book.destroy
-    respond_to do |format|
-      format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
-      format.json { head :no_content }
+    check = Book.check_if_in_use(@book.id)
+    if check == false
+      respond_to do |format|
+        format.html { redirect_to books_url, notice: 'Book is in use, cannot be deleted' }
+      end
+    else
+      @book.destroy
+      respond_to do |format|
+        format.html { redirect_to books_url, notice: 'Book was successfully deleted' }
+        format.json { head :no_content }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book
-      @book = Book.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_params
-      params.require(:book).permit(:isbn, :title, :author, :language, :published, :edition, :image, :subject, :summary, :is_special)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_params
+    params.require(:book).permit(:isbn, :title, :author, :language, :published, :edition, :image, :subject, :summary, :is_special)
+  end
 end

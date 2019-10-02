@@ -123,6 +123,8 @@ class BookRequestsController < ApplicationController
           format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_BOOKMARK), notice: 'Book request was successfully destroyed.' }
         when BookRequest::IS_HOLD
           format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_HOLD), notice: 'Book request was successfully destroyed.' }
+        when BookRequest::IS_SPECIAL
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_SPECIAL), notice: 'Book request was successfully destroyed.' }
         end
       else
         format.html { redirect_to book_requests_url, notice: 'Book request was successfully destroyed.' }
