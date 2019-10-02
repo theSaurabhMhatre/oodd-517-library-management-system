@@ -63,13 +63,14 @@ class LibrariesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_library
-      @library = Library.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def library_params
-      params.require(:library).permit(:name, :location, :max_days, :overdue_fine, :university_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_library
+    @library = Library.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def library_params
+    params.require(:library).permit(:name, :location, :max_days, :overdue_fine, :university_id)
+  end
 end

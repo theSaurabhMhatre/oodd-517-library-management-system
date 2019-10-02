@@ -4,29 +4,29 @@
 
 <table>
   <thead>
-    <tr>
-      <th>Email</th>
-      <th>Name</th>
-      <th>Password</th>
-      <th>Edu level</th>
-      <th>Book limit</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th>Password</th>
+    <th>Edu level</th>
+    <th>Book limit</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @students.each do |student| %>
-      <tr>
-        <td><%= student.email %></td>
-        <td><%= student.name %></td>
-        <td><%= student.password %></td>
-        <td><%= student.edu_level %></td>
-        <td><%= student.book_limit %></td>
-        <td><%= link_to 'Show', student %></td>
-        <td><%= link_to 'Edit', edit_student_path(student) %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <% @students.each do |student| %>
+    <tr>
+      <td><%= student.email %></td>
+      <td><%= student.name %></td>
+      <td><%= student.password %></td>
+      <td><%= student.edu_level %></td>
+      <td><%= student.book_limit %></td>
+      <td><%= link_to 'Show', student %></td>
+      <td><%= link_to 'Edit', edit_student_path(student) %></td>
+      <td><%= link_to 'Destroy', student, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 

@@ -35,10 +35,10 @@
       <td><%= link_to 'Show', book %></td>
       <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       <% else %>
-        <td><%= link_to 'Issue book', new_book_request_url(:request_type => BookRequest::IS_NORMAL,:book_id => book.id,:library_id => params[:library_id]) %></td>
-        <td><%= link_to 'Bookmark book', new_book_request_url(:request_type => BookRequest::IS_BOOKMARK,:book_id => book.id,:library_id => params[:library_id]) %></td>
+        <td><%= link_to 'Issue book', new_book_request_url(:request_type => BookRequest::IS_NORMAL, :book_id => book.id, :library_id => params[:library_id]) %></td>
+        <td><%= link_to 'Bookmark book', new_book_request_url(:request_type => BookRequest::IS_BOOKMARK, :book_id => book.id, :library_id => params[:library_id]) %></td>
       <% end %>
     </tr>
   <% end %>

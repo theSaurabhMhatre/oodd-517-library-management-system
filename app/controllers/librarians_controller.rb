@@ -5,7 +5,11 @@ class LibrariansController < ApplicationController
   # GET /librarians
   # GET /librarians.json
   def index
-    @librarians = Librarian.all
+    if (session[:user_type] == ApplicationController::TYPE_ADMIN)
+      @librarians = Librarian.all
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /librarians/1
@@ -56,7 +60,7 @@ class LibrariansController < ApplicationController
 
   def approve
     @librarian = Librarian.find(params[:id])
-    @librarian.update_column(:is_approved,1)
+    @librarian.update_column(:is_approved, 1)
     redirect_to librarians_url
   end
 

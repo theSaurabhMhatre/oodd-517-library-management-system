@@ -1,13 +1,13 @@
 <h1>Library Management System</h1>
 
-<%if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-  <%= render 'admin'%>
+<% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+  <%= render 'admin' %>
 <% end %>
 
-<%if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+<% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
   <%= render 'librarian', librarian: @librarian %>
 <% end %>
 
-<%if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-  <%= render 'student'%>
+<% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+  <%= render 'student' %>
 <% end %>

@@ -16,7 +16,7 @@ class Librarian < ApplicationRecord
   # 0: not approved; 1: approved
   validates :is_approved,
             :presence => true,
-            :inclusion => {in: [0,1]},
+            :inclusion => {in: [0, 1]},
             :on => :create
   validates :university_id,
             :presence => true

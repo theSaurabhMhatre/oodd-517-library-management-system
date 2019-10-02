@@ -4,9 +4,9 @@
       <h2><%= pluralize(book_history.errors.count, "error") %> prohibited this book_history from being saved:</h2>
 
       <ul>
-      <% book_history.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% book_history.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

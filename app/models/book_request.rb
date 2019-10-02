@@ -20,7 +20,7 @@ class BookRequest < ApplicationRecord
 
   def self.bookmark_book(user_id, book_id, library_id)
     count = BookRequest.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :request_type => IS_BOOKMARK).count
-    if(count == 0)
+    if (count == 0)
       BookRequest.create(:book_id => book_id, :library_id => library_id, :student_id => user_id, :request_type => IS_BOOKMARK)
       return 1
     else
@@ -36,19 +36,19 @@ class BookRequest < ApplicationRecord
   # 5: book on hold
   def self.checkout_book(user_id, book_id, library_id)
     check = Student.can_borrow(user_id)
-    if(check == false)
+    if (check == false)
       return 0
     end
     check = BookCount.check_if_available?(book_id, library_id)
-    if(check)
+    if (check)
       checked_out = BookHistory.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :action => BookHistory::ISSUED).count
       on_hold = BookRequest.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :request_type => BookRequest::IS_HOLD).count
-      if(checked_out > 0)
+      if (checked_out > 0)
         return 4
       elsif (on_hold > 0)
         return 5
       end
-      if(Book.find(book_id).is_special == Book::IS_SPECIAL)
+      if (Book.find(book_id).is_special == Book::IS_SPECIAL)
         # TODO: decrement book count and book limit if admin approves
         BookRequest.create(:book_id => book_id, :library_id => library_id, :student_id => user_id, :request_type => IS_SPECIAL)
         return 1
@@ -66,7 +66,7 @@ class BookRequest < ApplicationRecord
       checked_out = BookHistory.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :action => BookHistory::ISSUED).count
       if (checked_out > 0)
         return 4
-      elsif(count == 0)
+      elsif (count == 0)
         BookRequest.create(:book_id => book_id, :library_id => library_id, :student_id => user_id, :request_type => IS_HOLD)
       end
       return 3
@@ -76,7 +76,7 @@ class BookRequest < ApplicationRecord
   def self.complete_hold_request(book_id, library_id)
     book_requests = BookRequest.where(:book_id => book_id, :library_id => library_id, :request_type => BookRequest::IS_HOLD).order(:created_at)
     for book_request in book_requests
-      if(Student.can_borrow(book_request.student_id))
+      if (Student.can_borrow(book_request.student_id))
         BookHistory.issue_book(book_id, library_id, book_request.student_id)
         Student.decrement_book_limit(book_request.student_id)
         BookCount.book_count_decrement(book_id, library_id)
@@ -88,7 +88,7 @@ class BookRequest < ApplicationRecord
 
   def self.check_hold(book_id, library_id)
     hold_count = BookRequest.where(:book_id => book_id, :library_id => library_id).count
-    if(hold_count > 0)
+    if (hold_count > 0)
       BookRequest.complete_hold_request(book_id, library_id)
     end
   end
@@ -105,5 +105,29 @@ class BookRequest < ApplicationRecord
     else
       return false
     end
+  end
+
+  # 1: approved
+  # 0: book unavailable
+  def self.approve_special_request(book_request)
+    if BookCount.check_if_available?(book_request.book_id, book_request.library_id)
+      BookRequest.destroy(book_request.id)
+      BookHistory.issue_book(book_request.book_id, book_request.library_id, book_request.student_id)
+      BookCount.book_count_decrement(book_request.book_id, book_request.library_id)
+      Student.decrement_book_limit(book_request.student_id)
+      return 1
+    else
+      return 0
+    end
+  end
+
+  def self.reject_special_request(book_request)
+    BookRequest.destroy(book_request.id)
+  end
+
+  def self.fetch_requests_by_librarian(user_id)
+    library_id = Librarian.find(user_id)
+    book_requests = BookRequest.where(:library_id => library_id, :request_type => [BookRequest::IS_SPECIAL, BookRequest::IS_HOLD])
+    return book_requests
   end
 end

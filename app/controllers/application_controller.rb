@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   def js_request?
     request.format.js?
   end
+
   #modification ends
 
   def current_user
@@ -28,6 +29,7 @@ class ApplicationController < ActionController::Base
       @current_user = nil
     end
   end
+
   helper_method :current_user
 
   def authorize
