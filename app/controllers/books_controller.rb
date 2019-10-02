@@ -19,18 +19,16 @@ class BooksController < ApplicationController
   end
 
   def filter
-    book_name = params[:book_title].nil? ? "" : params[:book_title];
-    author_name = params[:book_author].nil? ? "" : params[:book_author];
     if (session[:user_type] == ApplicationController::TYPE_STUDENT)
       if (params[:library_id] != nil)
-        @books = Book.filter_books(params[:library_id], book_name, author_name)
+        @books = Book.filter_books(params)
       else
         # if parameter not specified, redirect to home page saying invalid request
         # TODO: check if msg can be displayed
         redirect_to libraries_path
       end
     else
-      @books = Book.filter_books(nil, book_name, author_name)
+      @books = Book.filter_books(params)
     end
   end
 

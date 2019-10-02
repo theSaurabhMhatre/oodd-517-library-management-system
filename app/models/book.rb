@@ -43,17 +43,25 @@ class Book < ApplicationRecord
     return books
   end
 
-  def self.filter_books(library_id, book_title, book_author)
-    if (library_id.nil?)
-      books = Book.where("title like :title and author like :author",
+  def self.filter_books(params)
+    library_id = params[:library_id]
+    book_title = params[:book_title].nil? ? "" : params[:book_title]
+    book_subject = params[:book_subject].nil? ? "" : params[:book_subject]
+    pub_date_start = params[:pub_date_start].nil? ? "" : params[:pub_date_start]
+    pub_date_end = params[:pub_date_end].nil? ? "" : params[:pub_date_end]
+    book_author = params[:book_author].nil? ? "" : params[:book_author]
+    if (library_id.nil? || library_id.empty?)
+      books = Book.where("title like :title and author like :author and subject like :subject",
                          :title => "%#{book_title}%",
-                         :author => "%#{book_author}%")
+                         :author => "%#{book_author}%",
+                         :subject => "%#{book_subject}%")
     else
       book_ids = BookCount.where(:library_id => library_id).map { |x| x.book_id };
-      books = Book.where("id in (:book_ids) and title like :title and author like :author",
+      books = Book.where("id in (:book_ids) and title like :title and author like :author and subject like :subject",
                          :book_ids => book_ids,
                          :title => "%#{book_title}%",
-                         :author => "%#{book_author}%")
+                         :author => "%#{book_author}%",
+                         :subject => "%#{book_subject}%")
     end
     return books;
   end

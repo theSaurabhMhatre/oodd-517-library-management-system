@@ -21,6 +21,7 @@
     <%= form.text_field :name %>
   </div>
 
+  <% if @without_password == nil %>
   <div class="field">
     <%= form.label :password %>
     <%= form.password_field :password %>
@@ -30,9 +31,10 @@
     <%= form.label :password_confirmation %>
     <%= form.password_field :password_confirmation %>
   </div>
+  <% end %>
 
-  <!--Show only to students and when creating profile-->
-  <% if session[:user_id] == nil || session[:user_type] == ApplicationController::TYPE_STUDENT %>
+  <!--Show only to admin and when creating profile-->
+  <% if session[:user_id] == nil || session[:user_type] == ApplicationController::TYPE_ADMIN %>
     <div class="field">
       <%= form.label :edu_level %>
       <select name="student[edu_level]">

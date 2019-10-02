@@ -34,10 +34,13 @@
     </div>
   <% end %>
 
+  <!--Show only to admin and when creating profile-->
+  <% if session[:user_id] == nil || session[:user_type] == ApplicationController::TYPE_ADMIN %>
   <div class="field">
     <%= form.label :university_id %>
     <%= form.collection_select :university_id, University.all, :id, :name, :include_blank => true %>
   </div>
+  <% end %>
 
   <div class="field" id="library_field" style="display: none">
     <%= form.label :library_id %>
