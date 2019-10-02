@@ -1,4 +1,4 @@
-<%= form_with(model: @librarian, local: true, :url => admin_update_librarian_path(@librarian), :html => { :method => :post } ) do |form| %>
+<%= form_with(model: @librarian, local: true, :url => admin_update_librarian_path(@librarian), :html => {:method => :post}) do |form| %>
   <% if @librarian.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@librarian.errors.count, "error") %> prohibited this librarian from being saved:</h2>

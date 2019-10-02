@@ -4,9 +4,9 @@
       <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
 
       <ul>
-      <% book.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -59,8 +59,8 @@
   <div class="field">
     <%= form.label :is_special %>
     <select name="book[is_special]">
-      <option value = "no" selected>No</option>
-      <option value = "yes">Yes</option>
+      <option value="no" selected>No</option>
+      <option value="yes">Yes</option>
     </select>
   </div>
 

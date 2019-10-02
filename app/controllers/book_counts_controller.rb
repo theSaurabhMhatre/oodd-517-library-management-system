@@ -67,13 +67,14 @@ class BookCountsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book_count
-      @book_count = BookCount.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_count_params
-      params.require(:book_count).permit(:book_id, :library_id, :book_copies)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book_count
+    @book_count = BookCount.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_count_params
+    params.require(:book_count).permit(:book_id, :library_id, :book_copies)
+  end
 end

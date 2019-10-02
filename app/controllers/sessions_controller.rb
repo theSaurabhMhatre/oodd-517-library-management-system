@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    if session[:user_id]!= nil
+    if session[:user_id] != nil
       redirect_to root_url
     end
   end
@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       user = Admin.find_by_email(params[:email])
     end
     if user && user.authenticate(params[:password])
-      if(params[:user_type] == TYPE_LIBRARIAN and user.is_approved == 0)
+      if (params[:user_type] == TYPE_LIBRARIAN and user.is_approved == 0)
         flash.now[:alert] = "You have not been approved by the admin yet"
         render "new"
       else

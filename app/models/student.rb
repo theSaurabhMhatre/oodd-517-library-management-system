@@ -41,7 +41,7 @@ class Student < ApplicationRecord
 
   def self.can_borrow(student_id)
     student = Student.find(student_id)
-    if(student.book_limit > 0)
+    if (student.book_limit > 0)
       return true
     else
       return false

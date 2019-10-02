@@ -5,7 +5,11 @@ class UniversitiesController < ApplicationController
   # GET /universities
   # GET /universities.json
   def index
-    @universities = University.all
+    if (session[:user_type] == ApplicationController::TYPE_ADMIN)
+      @universities = University.all
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /universities/1
@@ -63,13 +67,14 @@ class UniversitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_university
-      @university = University.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def university_params
-      params.require(:university).permit(:name, :city, :state)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_university
+    @university = University.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def university_params
+    params.require(:university).permit(:name, :city, :state)
+  end
 end

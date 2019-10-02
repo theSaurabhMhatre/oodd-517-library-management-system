@@ -4,9 +4,9 @@
       <h2><%= pluralize(book_count.errors.count, "error") %> prohibited this book_count from being saved:</h2>
 
       <ul>
-      <% book_count.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% book_count.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

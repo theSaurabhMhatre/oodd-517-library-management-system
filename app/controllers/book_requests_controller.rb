@@ -14,7 +14,9 @@ class BookRequestsController < ApplicationController
         # TODO: check if msg can be displayed
         redirect_to root_path
       end
-    else
+    elsif (session[:user_type] == ApplicationController::TYPE_LIBRARIAN)
+      @book_requests = BookRequest.fetch_requests_by_librarian(session[:user_id])
+    elsif (session[:user_type] == ApplicationController::TYPE_ADMIN)
       @book_requests = BookRequest.all
     end
   end
@@ -130,6 +132,27 @@ class BookRequestsController < ApplicationController
         format.html { redirect_to book_requests_url, notice: 'Book request was successfully destroyed.' }
         format.json { head :no_content }
       end
+    end
+  end
+
+  def approve
+    book_request = BookRequest.find(params[:book_request])
+    check = BookRequest.approve_special_request(book_request)
+    respond_to do |format|
+      case check
+      when 0
+        format.html { redirect_to book_requests_path, :notice => "Book not available" }
+      when 1
+        format.html { redirect_to book_requests_path, :notice => "Book request accepted" }
+      end
+    end
+  end
+
+  def reject
+    book_request = BookRequest.find(params[:book_request])
+    BookRequest.reject_special_request(book_request)
+    respond_to do |format|
+      format.html { redirect_to book_requests_path, :notice => "Book request rejected" }
     end
   end
 

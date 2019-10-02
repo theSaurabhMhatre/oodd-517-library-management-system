@@ -5,7 +5,11 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+      redirect_to root_path
+    else
+      @students = Student.all
+    end
   end
 
   # GET /students/1
@@ -66,13 +70,14 @@ class StudentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student
-      @student = Student.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def student_params
-      params.require(:student).permit(:email, :name, :password, :edu_level, :book_limit, :university_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_student
+    @student = Student.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def student_params
+    params.require(:student).permit(:email, :name, :password, :edu_level, :book_limit, :university_id)
+  end
 end

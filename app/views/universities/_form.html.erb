@@ -4,9 +4,9 @@
       <h2><%= pluralize(university.errors.count, "error") %> prohibited this university from being saved:</h2>
 
       <ul>
-      <% university.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% university.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

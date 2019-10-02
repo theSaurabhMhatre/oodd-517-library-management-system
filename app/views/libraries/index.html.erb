@@ -4,31 +4,31 @@
 
 <table>
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Max days</th>
-      <th>Overdue fine</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Max days</th>
+    <th>Overdue fine</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @libraries.each do |library| %>
-      <tr>
-        <td><%= library.name %></td>
-        <td><%= library.location %></td>
-        <td><%= library.max_days %></td>
-        <td><%= library.overdue_fine %></td>
-        <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-          <td><%= link_to 'Browse books', books_path(:library_id => library.id) %></td>
-        <% else %>
-          <td><%= link_to 'Show', library %></td>
-          <td><%= link_to 'Edit', edit_library_path(library) %></td>
-          <td><%= link_to 'Destroy', library, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
+  <% @libraries.each do |library| %>
+    <tr>
+      <td><%= library.name %></td>
+      <td><%= library.location %></td>
+      <td><%= library.max_days %></td>
+      <td><%= library.overdue_fine %></td>
+      <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+        <td><%= link_to 'Browse books', books_path(:library_id => library.id) %></td>
+      <% else %>
+        <td><%= link_to 'Show', library %></td>
+        <td><%= link_to 'Edit', edit_library_path(library) %></td>
+        <td><%= link_to 'Destroy', library, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <% end %>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 

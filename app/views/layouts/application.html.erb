@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>LibraryManagementSystem</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>LibraryManagementSystem</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <div id="container">
-      <div>
-        <% if current_user %>
-          Logged in as <%= current_user.email %>
-          <%= link_to "Logout", logout_path %>
-          <%= link_to "Homepage", home_index_path %>
-        <% end %>
-      </div>
-    </div>
-    <%= yield %>
-  </body>
+<body>
+<div id="container">
+  <div>
+    <% if current_user %>
+      Logged in as <%= current_user.email %>
+      <%= link_to "Logout", logout_path %>
+      <%= link_to "Homepage", home_index_path %>
+    <% end %>
+  </div>
+</div>
+<%= yield %>
+</body>
 </html>

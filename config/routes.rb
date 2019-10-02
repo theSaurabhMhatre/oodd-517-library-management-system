@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
 
   resources :admins
-  resources :book_requests
+  resources :book_requests do
+    collection do
+      post 'approve'
+      post 'reject'
+    end
+  end
   resources :universities
   resources :book_counts
   resources :book_histories

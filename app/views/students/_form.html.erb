@@ -4,9 +4,9 @@
       <h2><%= pluralize(student.errors.count, "error") %> prohibited this student from being saved:</h2>
 
       <ul>
-      <% student.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% student.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -31,20 +31,23 @@
     <%= form.password_field :password_confirmation %>
   </div>
 
-  <div class="field">
-    <%= form.label :edu_level %>
-    <select name="student[edu_level]">
-      <option value = ""></option>
-      <option value = "undergraduate">Undergraduate</option>
-      <option value = "graduate">Graduate</option>
-      <option value = "phd_student">PhD Student</option>
-    </select>
-  </div>
+  <!--Show only to students and when creating profile-->
+  <% if session[:user_id] == nil || session[:user_type] == ApplicationController::TYPE_STUDENT %>
+    <div class="field">
+      <%= form.label :edu_level %>
+      <select name="student[edu_level]">
+        <option value=""></option>
+        <option value="undergraduate">Undergraduate</option>
+        <option value="graduate">Graduate</option>
+        <option value="phd_student">PhD Student</option>
+      </select>
+    </div>
 
-  <div class="field">
-    <%= form.label :university %>
-    <%= form.collection_select :university_id, University.all, :id, :name %>
-  </div>
+    <div class="field">
+      <%= form.label :university %>
+      <%= form.collection_select :university_id, University.all, :id, :name %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

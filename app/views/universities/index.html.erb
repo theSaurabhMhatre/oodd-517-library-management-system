@@ -4,25 +4,25 @@
 
 <table>
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>City</th>
-      <th>State</th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th>State</th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @universities.each do |university| %>
-      <tr>
-        <td><%= university.name %></td>
-        <td><%= university.city %></td>
-        <td><%= university.state %></td>
-        <td><%= link_to 'Show', university %></td>
-        <td><%= link_to 'Edit', edit_university_path(university) %></td>
-        <td><%= link_to 'Destroy', university, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <% @universities.each do |university| %>
+    <tr>
+      <td><%= university.name %></td>
+      <td><%= university.city %></td>
+      <td><%= university.state %></td>
+      <td><%= link_to 'Show', university %></td>
+      <td><%= link_to 'Edit', edit_university_path(university) %></td>
+      <td><%= link_to 'Destroy', university, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 
