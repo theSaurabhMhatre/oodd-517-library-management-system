@@ -43,7 +43,7 @@ class LibrariesController < ApplicationController
   def update
     respond_to do |format|
       if @library.update(library_params)
-        format.html { redirect_to @library, notice: 'Library was successfully updated.' }
+        format.html { redirect_to root_url, notice: 'Library was successfully updated.' }
         format.json { render :show, status: :ok, location: @library }
       else
         format.html { render :edit }
