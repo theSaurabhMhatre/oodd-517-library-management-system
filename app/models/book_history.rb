@@ -44,12 +44,12 @@ class BookHistory < ApplicationRecord
     libraries = Library.where(:id => library_ids)
     libraries.each do |library|
       if(args.length > 0)
-        overdue_books = BookHistory.where("student_id = :student_id and library_id = :library_id and created_at < :max_days",
+        overdue_books = BookHistory.where("student_id = :student_id and library_id = :library_id and created_at < :max_days and action = 'issued'",
                                           :student_id => args[0],
                                           :library_id => library.id,
                                           :max_days => (Time.now - library.max_days * 86400))
       else
-        overdue_books = BookHistory.where("library_id = :library_id and created_at < :max_days",
+        overdue_books = BookHistory.where("library_id = :library_id and created_at < :max_days and action = 'issued'",
                                           :library_id => library.id,
                                           :max_days => (Time.now - library.max_days * 86400))
       end
