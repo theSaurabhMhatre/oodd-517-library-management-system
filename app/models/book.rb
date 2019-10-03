@@ -47,21 +47,25 @@ class Book < ApplicationRecord
     library_id = params[:library_id]
     book_title = params[:book_title].nil? ? "" : params[:book_title]
     book_subject = params[:book_subject].nil? ? "" : params[:book_subject]
-    pub_date_start = params[:pub_date_start].nil? ? "" : params[:pub_date_start]
-    pub_date_end = params[:pub_date_end].nil? ? "" : params[:pub_date_end]
+    pub_date_start = params[:pub_date_start].empty? ? Time.local(1970, 1, 1) : params[:pub_date_start]
+    pub_date_end = params[:pub_date_end].empty? ? Time.now : params[:pub_date_end]
     book_author = params[:book_author].nil? ? "" : params[:book_author]
     if (library_id.nil? || library_id.empty?)
-      books = Book.where("title like :title and author like :author and subject like :subject",
+      books = Book.where("title like :title and author like :author and subject like :subject and published >= :start and published <= :end",
                          :title => "%#{book_title}%",
                          :author => "%#{book_author}%",
-                         :subject => "%#{book_subject}%")
+                         :subject => "%#{book_subject}%",
+                         :start => pub_date_start,
+                         :end => pub_date_end)
     else
       book_ids = BookCount.where(:library_id => library_id).map { |x| x.book_id };
-      books = Book.where("id in (:book_ids) and title like :title and author like :author and subject like :subject",
+      books = Book.where("id in (:book_ids) and title like :title and author like :author and subject like :subject and published >= :start and published <= :end",
                          :book_ids => book_ids,
                          :title => "%#{book_title}%",
                          :author => "%#{book_author}%",
-                         :subject => "%#{book_subject}%")
+                         :subject => "%#{book_subject}%",
+                         :start => pub_date_start,
+                         :end => pub_date_end)
     end
     return books;
   end

@@ -6,7 +6,7 @@ class LibrariansController < ApplicationController
   # GET /librarians.json
   def index
     if (session[:user_type] == ApplicationController::TYPE_ADMIN)
-      @librarians = Librarian.all
+      @librarians = Librarian.where(:is_approved => 0)
     else
       redirect_to root_path
     end

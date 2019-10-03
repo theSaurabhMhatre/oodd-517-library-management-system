@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Overdue Details</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Library</th>
+    <th>Book</th>
+    <% if session[:user_type] != ApplicationController::TYPE_STUDENT %>
+      <th>Student</th>
+    <% end %>
+    <th>Overdue days</th>
+    <th>Overdue Fine</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @overdue_fines.each do |overdue_fine| %>
+    <tr>
+      <td> <%= overdue_fine[0] %> </td>
+      <td> <%= overdue_fine[1] %> </td>
+      <% if session[:user_type] != ApplicationController::TYPE_STUDENT %>
+        <td> <%= overdue_fine[4] %> </td>
+      <% end %>
+      <td> <%= overdue_fine[2] %> </td>
+      <td> <%= overdue_fine[3] %> </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

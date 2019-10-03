@@ -1,14 +1,18 @@
 <br>
 <div> <%= link_to "Edit Profile", edit_admin_path(session[:user_id]) %> </div>
 <br>
-<div> <%= link_to "Librarians", librarians_url %> </div>
+<div> <%= link_to "Create New librarians/Approve Librarians", librarians_url %> </div>
 <br>
-<div> <%= link_to "Students ", students_path %> </div>
+<div> <%= link_to "View/Add Students", students_path %> </div>
 <br>
-<div> <%= link_to "Libraries", libraries_url %> </div>
+<div> <%= link_to "View/Add Libraries", libraries_url %> </div>
 <br>
-<div> <%= link_to "Books", books_path %> </div>
+<div> <%= link_to "View/Add Books", books_path %> </div>
 <br>
-<div> <%= link_to "Book requests", book_requests_url %> </div>
+<div> <%= link_to "View Book requests", book_requests_url %> </div>
 <br>
-<div> <%= link_to "Add Book counts to Libraries", book_counts_url %> </div>
+<div> <%= link_to "View Book Histories", book_histories_url %> </div>
+<br>
+<div> <%= link_to "Add Books to Libraries", book_counts_url %> </div>
+<br>
+<div> <%= link_to "View overdue fines", overdue_fines_book_histories_path() %> </div>
