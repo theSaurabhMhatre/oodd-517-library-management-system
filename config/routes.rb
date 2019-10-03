@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   end
   resources :universities
   resources :book_counts
-  resources :book_histories
+  resources :book_histories do
+    collection do
+      get 'overdue_fines'
+    end
+  end
   resources :books do
     collection do
       get 'filter'
@@ -28,6 +32,10 @@ Rails.application.routes.draw do
   get 'book_histories/:id/return', to: 'book_histories#return_book'
 
   root 'home#index'
+  # redirecting all undefined routes to homepage for now
+  # this prevents the javascript file from being dynamically generated
+  # will have to search for another alternative
+  # get '*path', to: 'home#index'
 
   get 'home/index'
   get 'sessions/new'

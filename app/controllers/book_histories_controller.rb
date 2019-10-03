@@ -93,6 +93,19 @@ class BookHistoriesController < ApplicationController
     end
   end
 
+
+  def overdue_fines
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
+      @overdue_fines = BookHistory.overdue_books_for_system()
+    when ApplicationController::TYPE_LIBRARIAN
+      @overdue_fines = BookHistory.overdue_books_for_library(current_user.library_id)
+    when ApplicationController::TYPE_STUDENT
+      @overdue_fines = BookHistory.overdue_books_for_student(session[:user_id])
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

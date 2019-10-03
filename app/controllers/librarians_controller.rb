@@ -6,7 +6,7 @@ class LibrariansController < ApplicationController
   # GET /librarians.json
   def index
     if (session[:user_type] == ApplicationController::TYPE_ADMIN)
-      @librarians = Librarian.all
+      @librarians = Librarian.where(:is_approved => 0)
     else
       redirect_to root_path
     end
@@ -25,7 +25,10 @@ class LibrariansController < ApplicationController
 
   # GET /librarians/1/edit
   def edit
-    @without_password = params[:without_password]
+    if (session[:user_type] == ApplicationController::TYPE_ADMIN)
+      @without_password = 1
+      @edit_librarian_errors = params[:edit_librarian_errors]
+    end
   end
 
   # POST /librarians
@@ -52,7 +55,7 @@ class LibrariansController < ApplicationController
         format.html { redirect_to root_url, notice: 'Librarian was successfully updated.' }
         format.json { render :show, status: :ok, location: @librarian }
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_librarian_path(@librarian,:edit_librarian_errors => @librarian.errors.full_messages) }
         format.json { render json: @librarian.errors, status: :unprocessable_entity }
       end
     end

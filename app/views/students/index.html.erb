@@ -7,7 +7,7 @@
   <tr>
     <th>Email</th>
     <th>Name</th>
-    <th>Password</th>
+    <!-- <th>Password</th> No Need to show this attribute-->
     <th>Edu level</th>
     <th>Book limit</th>
     <th colspan="3"></th>
@@ -19,11 +19,15 @@
     <tr>
       <td><%= student.email %></td>
       <td><%= student.name %></td>
-      <td><%= student.password %></td>
+      <!-- <td>< student.password ></td> No Need to show this attribute-->
       <td><%= student.edu_level %></td>
       <td><%= student.book_limit %></td>
       <td><%= link_to 'Show', student %></td>
-      <td><%= link_to 'Edit', edit_student_path(student) %></td>
+      <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+        <td><%= link_to 'Edit', edit_student_path(student, :without_password => 1) %></td>
+      <% else %>
+        <td><%= link_to 'Edit', edit_student_path(student) %></td>
+      <% end %>
       <td><%= link_to 'Destroy', student, method: :delete, data: {confirm: 'Are you sure?'} %></td>
     </tr>
   <% end %>

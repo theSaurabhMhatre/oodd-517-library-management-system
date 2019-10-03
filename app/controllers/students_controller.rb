@@ -24,6 +24,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1/edit
   def edit
+    @without_password = params[:without_password]
   end
 
   # POST /students
