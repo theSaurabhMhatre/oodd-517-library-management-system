@@ -16,10 +16,19 @@
     <%= form.collection_select :book_id, Book.all, :id, :title, :include_blank => true %>
   </div>
 
-  <div class="field">
+  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+    <div class="field">
     <%= form.label :library_id %>
     <%= form.collection_select :library_id, Library.all, :id, :name, :include_blank => true %>
   </div>
+  <% end %>
+
+  <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+    <div class="field">
+      <%= form.label :library_id %>
+      <%= form.collection_select :library_id, Library.where(:id => current_user.library_id), :id, :name, :include_blank => true %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :book_copies %>
