@@ -45,21 +45,20 @@
     </div>
   <% end %>
 
-  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-    <div class="field">
-      <%= form.label :university_id %>
-      <%= form.collection_select :university_id, University.all, :id, :name, :include_blank => true %>
-    </div>
-
-    <div class="field" id="library_field" style="display: none">
-      <%= form.label :library_id %>
-      <%= form.collection_select :library_id, Library.all, :id, :name, :include_blank => true %>
-    </div>
-  <% else %>
+  <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
     <div class="field">
       <%= form.label :library_id %>
       <%= form.collection_select :library_id, librarian.university.libraries, :id, :name, :include_blank => true %>
     </div>
+  <% else %>
+      <div class="field">
+        <%= form.label :university_id %>
+        <%= form.collection_select :university_id, University.all, :id, :name, :include_blank => true %>
+      </div>
+      <div class="field" id="library_field" style="display: none">
+        <%= form.label :library_id %>
+        <%= form.collection_select :library_id, Library.all, :id, :name, :include_blank => true %>
+      </div>
   <% end %>
 
   <div class="actions">
