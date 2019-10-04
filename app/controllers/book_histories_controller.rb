@@ -14,6 +14,8 @@ class BookHistoriesController < ApplicationController
         # TODO: check if msg can be displayed
         redirect_to root_path
       end
+    elsif (session[:user_type] == ApplicationController::TYPE_LIBRARIAN)
+      @book_histories = BookHistory.where(:library_id => current_user.library_id)
     else
       # request not from user
       @book_histories = BookHistory.all
