@@ -76,3 +76,6 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 
 # Adding jQuery for UI related tasks
 gem 'jquery-rails'
+
+gem 'bootstrap-sass'
+gem "bootstrap_form", "~> 4.0"
