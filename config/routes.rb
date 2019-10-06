@@ -44,4 +44,10 @@ Rails.application.routes.draw do
 
   get 'javascripts/dynamic_libraries'
 
+  get '/privacy' => "privacy#show"
+
+    # Routes for Google authentication
+  get 'auth/:provider/callback', to: 'sessions#googleAuth'
+  get 'auth/failure', to: redirect('/')
+
 end
