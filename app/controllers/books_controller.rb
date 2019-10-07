@@ -97,17 +97,19 @@ class BooksController < ApplicationController
   # DELETE /books/1
   # DELETE /books/1.json
   def destroy
-    check = Book.check_if_in_use(@book.id)
-    if check == false
-      respond_to do |format|
-        format.html { redirect_to books_url, notice: 'Book is in use, cannot be deleted' }
-      end
-    else
-      @book.destroy
-      respond_to do |format|
-        format.html { redirect_to books_url, notice: 'Book was successfully deleted' }
-        format.json { head :no_content }
-      end
+    #=begin
+    # not using this because the requirement is to delete books and all associated info
+    #check = Book.check_if_in_use(@book.id)
+    #if check == false
+    #  respond_to do |format|
+    #    format.html { redirect_to books_url, notice: 'Book is in use, cannot be deleted' }
+    #  end
+    #end
+    #=end
+    Book.delete_book(params[:id])
+    respond_to do |format|
+      format.html { redirect_to books_url, notice: 'Book was successfully deleted' }
+      format.json { head :no_content }
     end
   end
 

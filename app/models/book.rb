@@ -70,6 +70,12 @@ class Book < ApplicationRecord
     return books;
   end
 
+  def self.delete_book(book_id)
+    # increment student book_limits
+    BookHistory.increment_student_limits_by_book_issued(book_id)
+    Book.destroy(book_id)
+  end
+
   def self.check_if_in_use(book_id)
     if (BookHistory.check_if_book_in_use?(book_id) or
         BookRequest.check_if_book_in_use?(book_id) or

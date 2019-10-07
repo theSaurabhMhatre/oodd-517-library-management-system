@@ -106,4 +106,13 @@ class BookHistory < ApplicationRecord
       return false
     end
   end
+
+  # this method will increment student book_limits before deleting a book
+  # in case the book being deleted is issued by the student
+  def self.increment_student_limits_by_book_issued(book_id)
+    book_histories = BookHistory.where(:book_id => book_id, :action => BookHistory::ISSUED)
+    for book_history in book_histories
+      Student.increment_book_limit(book_history.student_id)
+    end
+  end
 end

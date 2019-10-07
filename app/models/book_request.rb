@@ -112,7 +112,7 @@ class BookRequest < ApplicationRecord
     return book_requests
   end
 
-  def self.check_if_book_in_use(book_id)
+  def self.check_if_book_in_use?(book_id)
     count = BookRequest.where(:book_id => book_id).count
     if count > 0
       return true
