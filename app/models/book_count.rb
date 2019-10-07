@@ -38,4 +38,9 @@ class BookCount < ApplicationRecord
       return false
     end
   end
+
+  def self.fetch_book_counts_by_library(library_id)
+    book_counts = BookCount.where(:library_id => library_id)
+    return book_counts
+  end
 end

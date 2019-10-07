@@ -5,7 +5,16 @@ class BookCountsController < ApplicationController
   # GET /book_counts
   # GET /book_counts.json
   def index
-    @book_counts = BookCount.all
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_LIBRARIAN
+      @book_counts = BookCount.fetch_book_counts_by_library(@current_user.library_id)
+    when ApplicationController::TYPE_ADMIN
+      @book_counts = BookCount.all
+    end
   end
 
   # GET /book_counts/1

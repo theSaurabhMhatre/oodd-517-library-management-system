@@ -5,21 +5,63 @@ class LibrariesController < ApplicationController
   # GET /libraries
   # GET /libraries.json
   def index
-    @libraries = Library.all
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      @libraries = Library.where(:university_id => current_user.university_id)
+    when ApplicationController::TYPE_LIBRARIAN
+      # TODO: what exactly needs to be done here?
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_ADMIN
+      @libraries = Library.all
+    end
   end
 
   # GET /libraries/1
   # GET /libraries/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any library
+    else
+      check = Library.check_if_authorised(user_type, current_user.id, params[:id]);
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    end
   end
 
   # GET /libraries/new
   def new
-    @library = Library.new
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
+      @library = Library.new
+    else
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    end
   end
 
   # GET /libraries/1/edit
   def edit
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_LIBRARIAN
+      check = Library.check_if_authorised(user_type, current_user.id, params[:id]);
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can edit any library
+    end
   end
 
   # POST /libraries

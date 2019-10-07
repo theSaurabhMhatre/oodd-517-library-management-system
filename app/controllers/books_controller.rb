@@ -5,12 +5,14 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
       if (params[:library_id] != nil)
         @books = Book.fetch_books(params[:library_id])
       else
         # if parameter not specified, redirect to home page saying invalid request
-        # TODO: check if msg can be displayed
+        flash[:notice] = "Please select a library to browse books"
         redirect_to libraries_path
       end
     else
@@ -19,12 +21,13 @@ class BooksController < ApplicationController
   end
 
   def filter
-    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
       if (params[:library_id] != nil)
         @books = Book.filter_books(params)
       else
-        # if parameter not specified, redirect to home page saying invalid request
-        # TODO: check if msg can be displayed
+        flash[:notice] = "Invalid request"
         redirect_to libraries_path
       end
     else
@@ -39,11 +42,26 @@ class BooksController < ApplicationController
 
   # GET /books/new
   def new
-    @book = Book.new
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] = "Invalid request"
+      redirect_to root_path
+    else
+      @book = Book.new
+    end
   end
 
   # GET /books/1/edit
   def edit
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] = "Invalid request"
+      redirect_to root_path
+    else
+      # let admin or librarian edit the book
+    end
   end
 
   # POST /books

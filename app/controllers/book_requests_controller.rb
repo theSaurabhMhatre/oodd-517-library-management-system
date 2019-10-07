@@ -5,19 +5,20 @@ class BookRequestsController < ApplicationController
   # GET /book_requests
   # GET /book_requests.json
   def index
-    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
       if (params[:request_type] != nil)
         # request from user for checked out books
         @book_requests = BookRequest.fetch_student_requests(session[:user_id], params[:request_type])
       else
-        # if parameter not specified, redirect to home page saying invalid request
-        # TODO: check if msg can be displayed
+        flash[:notice] = "Invalid request"
         redirect_to root_path
       end
-    elsif (session[:user_type] == ApplicationController::TYPE_LIBRARIAN)
+    when ApplicationController::TYPE_LIBRARIAN
       @book_requests = BookRequest.fetch_requests_by_librarian(session[:user_id])
-    elsif (session[:user_type] == ApplicationController::TYPE_ADMIN)
-      @book_requests = BookRequest.all
+    when ApplicationController::TYPE_ADMIN
+      @book_requests = BookRequest.fetch_hold_requests
     end
   end
 
@@ -28,8 +29,9 @@ class BookRequestsController < ApplicationController
 
   # GET /book_requests/new
   def new
-    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
-      # request has come from user
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
       if (params[:library_id] != nil and params[:request_type] != nil)
         if params[:request_type] == BookRequest::IS_BOOKMARK
           val = BookRequest.bookmark_book(session[:user_id], params[:book_id], params[:library_id])
@@ -61,19 +63,14 @@ class BookRequestsController < ApplicationController
             format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already bookmarked' }
           end
         end
+      else
+        flash[:notice] = "Invalid request"
+        redirect_to libraries_path
       end
     else
-      # request not from user
-      @book_request = BookRequest.new
-      respond_to do |format|
-        if @book_request.save
-          format.html { redirect_to libraries_path, notice: 'Book request' }
-          format.json { render :show, status: :created, location: @book_request }
-        else
-          format.html { render :new }
-          format.json { render json: @book_request.errors, status: :unprocessable_entity }
-        end
-      end
+      # book requests can only be created by students
+      flash[:notice] = "Invalid request"
+      redirect_to root_path
     end
   end
 
@@ -114,13 +111,13 @@ class BookRequestsController < ApplicationController
   # DELETE /book_requests/1
   # DELETE /book_requests/1.json
   def destroy
-    @book_request.destroy
-    user = session[:user_type]
-    type = params[:request_type]
-    respond_to do |format|
-      case user
-      when ApplicationController::TYPE_STUDENT
-        case type
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      @book_request.destroy
+      request_type = params[:request_type]
+      respond_to do |format|
+        case request_type
         when BookRequest::IS_BOOKMARK
           format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_BOOKMARK), notice: 'Book request was successfully destroyed.' }
         when BookRequest::IS_HOLD
@@ -128,10 +125,11 @@ class BookRequestsController < ApplicationController
         when BookRequest::IS_SPECIAL
           format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_SPECIAL), notice: 'Book request was successfully destroyed.' }
         end
-      else
-        format.html { redirect_to book_requests_url, notice: 'Book request was successfully destroyed.' }
-        format.json { head :no_content }
       end
+    else
+      # book requests can only be destroyed by students
+      flash[:notice] = "Invalid request"
+      redirect_to root_path
     end
   end
 
