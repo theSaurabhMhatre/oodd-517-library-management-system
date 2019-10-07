@@ -1,3 +1,6 @@
+#When a user wants to sign in using google, this is the method that ensures that the user is taken to the correct OAuth Consent Screen
+#that has information like the developer's email, the app's privacy policy etc.
+#This is possible because the GOOGLE_CLIENT_ID and the GOOGLE_CLIENT_SECRET are unique to our app.
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :google_oauth2, ENV['505074681900-s0g5lp6doj2a9l5jpvnei5jg1vn1anj9.apps.googleusercontent.com'], ENV['Hbgvra6v8etxZo8ltpJY3ljy']
+  provider :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV['GOOGLE_CLIENT_SECRET']
 end

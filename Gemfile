@@ -77,7 +77,5 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 # Adding jQuery for UI related tasks
 gem 'jquery-rails'
 
-#for google oauth2
+#gem for google oauth2
 gem 'omniauth-google-oauth2'
-
-gem 'omniauth', '~> 1.6', '>= 1.6.1'
