@@ -20,15 +20,51 @@ class BookCountsController < ApplicationController
   # GET /book_counts/1
   # GET /book_counts/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_LIBRARIAN
+      check = BookCount.check_if_authorised?(current_user.library_id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any book count
+    end
   end
 
   # GET /book_counts/new
   def new
-    @book_count = BookCount.new
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    else
+      # admin can see any book count
+      @book_count = BookCount.new
+    end
   end
 
   # GET /book_counts/1/edit
   def edit
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_LIBRARIAN
+      check = BookCount.check_if_authorised?(current_user.library_id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any book count
+    end
   end
 
   # POST /book_counts

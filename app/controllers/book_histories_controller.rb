@@ -11,8 +11,10 @@ class BookHistoriesController < ApplicationController
       if (params[:request_type] == BookHistory::ISSUED)
         @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ISSUED)
       else
-        flash[:notice] =  "Invalid request"
-        redirect_to root_path
+        @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ALL)
+        # TODO: is this what is expected?
+        #flash[:notice] =  "Invalid request"
+        #redirect_to root_path
       end
     when ApplicationController::TYPE_LIBRARIAN
       @book_histories = BookHistory.where(:library_id => @current_user.library_id)
@@ -24,15 +26,38 @@ class BookHistoriesController < ApplicationController
   # GET /book_histories/1
   # GET /book_histories/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      check = BookHistory.check_if_authorised?(user_type, current_user.id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_LIBRARIAN
+      check = BookHistory.check_if_authorised?(user_type, current_user.library_id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any book history
+    end
   end
 
   # GET /book_histories/new
   def new
-    @book_history = BookHistory.new
+    # nobody should be able to create a book history but students, via UI
+    # @book_history = BookHistory.new
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # GET /book_histories/1/edit
   def edit
+    # nobody should be able to edit a book history
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # POST /book_histories

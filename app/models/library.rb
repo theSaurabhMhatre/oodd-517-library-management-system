@@ -21,7 +21,7 @@ class Library < ApplicationRecord
   validates :university_id,
             :presence => true
 
-  def self.check_if_authorised(user_type, user_id, library_id);
+  def self.check_if_authorised?(user_type, user_id, library_id);
     case user_type
     when ApplicationController::TYPE_STUDENT
       libraries = Library.where(:university_id => Student.find(user_id).university_id).collect{|x| x.id};

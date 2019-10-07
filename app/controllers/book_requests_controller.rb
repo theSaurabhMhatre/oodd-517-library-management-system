@@ -25,6 +25,23 @@ class BookRequestsController < ApplicationController
   # GET /book_requests/1
   # GET /book_requests/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      check = BookRequest.check_if_authorised?(user_type, current_user.id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_LIBRARIAN
+      check = BookRequest.check_if_authorised?(user_type, current_user.library_id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any book request
+    end
   end
 
   # GET /book_requests/new
@@ -32,6 +49,7 @@ class BookRequestsController < ApplicationController
     user_type = session[:user_type]
     case user_type
     when ApplicationController::TYPE_STUDENT
+      # TODO: is this check really needed?
       if (params[:library_id] != nil and params[:request_type] != nil)
         if params[:request_type] == BookRequest::IS_BOOKMARK
           val = BookRequest.bookmark_book(session[:user_id], params[:book_id], params[:library_id])
@@ -48,7 +66,7 @@ class BookRequestsController < ApplicationController
           when 0
             format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Max number of books already issued' }
           when 1
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book request pending with admin' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book request pending with librarian' }
           when 2
             format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book checked out' }
           when 3
@@ -69,13 +87,16 @@ class BookRequestsController < ApplicationController
       end
     else
       # book requests can only be created by students
-      flash[:notice] = "Invalid request"
+      flash[:notice] =  "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
 
   # GET /book_requests/1/edit
   def edit
+    # nobody should be able to edit a book request
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # POST /book_requests
@@ -142,6 +163,8 @@ class BookRequestsController < ApplicationController
         format.html { redirect_to book_requests_path, :notice => "Book not available" }
       when 1
         format.html { redirect_to book_requests_path, :notice => "Book request accepted" }
+      when 2
+        format.html { redirect_to book_requests_path, :notice => "Student has issued max allowed books, cannot approve now" }
       end
     end
   end

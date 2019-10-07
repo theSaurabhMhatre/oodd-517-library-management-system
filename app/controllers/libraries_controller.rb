@@ -26,7 +26,7 @@ class LibrariesController < ApplicationController
     when ApplicationController::TYPE_ADMIN
       # admin can see any library
     else
-      check = Library.check_if_authorised(user_type, current_user.id, params[:id]);
+      check = Library.check_if_authorised?(user_type, current_user.id, params[:id]);
       if(check == false)
         flash[:notice] =  "You are not authorised to perform this action"
         redirect_to root_path
@@ -54,7 +54,7 @@ class LibrariesController < ApplicationController
       flash[:notice] =  "You are not authorised to perform this action"
       redirect_to root_path
     when ApplicationController::TYPE_LIBRARIAN
-      check = Library.check_if_authorised(user_type, current_user.id, params[:id]);
+      check = Library.check_if_authorised?(user_type, current_user.id, params[:id]);
       if(check == false)
         flash[:notice] =  "You are not authorised to perform this action"
         redirect_to root_path

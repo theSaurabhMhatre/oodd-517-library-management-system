@@ -1,6 +1,7 @@
 class BookHistory < ApplicationRecord
   ISSUED = "issued"
   RETURNED = "returned"
+  ALL = "all"
 
   belongs_to :book
   belongs_to :library
@@ -26,7 +27,13 @@ class BookHistory < ApplicationRecord
   end
 
   def self.fetch_checked_out_books(user_id, request_type)
-    book_history = BookHistory.where(:student_id => user_id, :action => request_type)
+    case request_type
+    when BookHistory::ISSUED
+      book_history = BookHistory.where(:student_id => user_id, :action => BookHistory::ISSUED)
+    when BookHistory::ALL
+      book_history = BookHistory.where(:student_id => user_id, :action => BookHistory::ISSUED)
+                         .or(BookHistory.where(:student_id => user_id, :action => BookHistory::RETURNED))
+    end
     return book_history
   end
 
@@ -84,5 +91,19 @@ class BookHistory < ApplicationRecord
     library_ids = Library.all.map{|x| x.id}
     overdue_details = BookHistory.overdue_detail_for_libraries(library_ids)
     return overdue_details
+  end
+
+  def self.check_if_authorised?(user_type, object_id, book_history_id)
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      count = BookHistory.where(:student_id => object_id, :id => book_history_id).count
+    when ApplicationController::TYPE_LIBRARIAN
+      count = BookHistory.where(:library_id => object_id, :id => book_history_id).count
+    end
+    if(count > 0)
+      return true
+    else
+      return false
+    end
   end
 end

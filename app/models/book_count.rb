@@ -43,4 +43,13 @@ class BookCount < ApplicationRecord
     book_counts = BookCount.where(:library_id => library_id)
     return book_counts
   end
+
+  def self.check_if_authorised?(library_id, book_count_id)
+    count = BookCount.where(:library_id => library_id, :id => book_count_id).count
+    if(count > 0)
+      return true
+    else
+      return false
+    end
+  end
 end

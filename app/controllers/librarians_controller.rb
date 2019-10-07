@@ -8,7 +8,7 @@ class LibrariansController < ApplicationController
     user_type = session[:user_type]
     case user_type
     when ApplicationController::TYPE_ADMIN
-      @librarians = Librarian.where(:is_approved => 0)
+      @librarians = Librarian.all
     else
       flash[:notice] =  "You are not authorised to perform this action"
       redirect_to root_path
