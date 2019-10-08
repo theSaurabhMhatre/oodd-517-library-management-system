@@ -11,7 +11,8 @@ class Book < ApplicationRecord
 
   validates :isbn,
             :presence => true,
-            :uniqueness => true
+            :uniqueness => true,
+            :length => {:minimum => 10, :maximum => 13}
   validates :title,
             :presence => true
   validates :author,

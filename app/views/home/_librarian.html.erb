@@ -1,8 +1,10 @@
 <div> <%= link_to "Edit profile", edit_librarian_path(current_user) %> </div>
 <br>
-<div> <%= link_to "View book requests", book_requests_path %> </div>
+<div> <%= link_to "View/Approve book hold/special requests", book_requests_path %> </div>
 <br>
 <div> <%= link_to "View/Add Books", books_path %> </div>
+<br>
+<div> <%= link_to "Change Library policies", edit_library_path(Library.find(current_user.library_id)) %> </div>
 <br>
 <div> <%= link_to "Add Books to Libraries", book_counts_url %> </div>
 <br>
