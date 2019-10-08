@@ -83,4 +83,3 @@ gem "bootstrap_form", "~> 4.0"
 
 # Required for uploading and storing cover image
 gem 'carrierwave', '~> 0.11.2'
-gem 'rmagick', '~> 2.15', '>= 2.15.4'
