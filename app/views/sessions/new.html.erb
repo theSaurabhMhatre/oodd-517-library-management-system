@@ -1,23 +1,25 @@
 <p id="alert"><%= alert %></p>
 
+<div class="entry col-xs-4 col-xs-offset-0 col-lg-4 col-lg-offset-0">
 <h2>Library Management System</h2><br>
 <h3> Login </h3> <br>
 <!-- %= form_tag sessions_path do |form| % -->
 <div class="container">
   <%= form_tag sessions_path, method: 'post', layout: :horizontal do  %>
     <div class="form-group">
-  <div class="field">
-    <%= label_tag :email %>
-    <%= text_field_tag :email %>
+  <div class="form-group">
+    <%= label_tag :Email  %>
+    <br>
+    <%= text_field_tag :email %> <br>
   </div>
-      <br>
 
-    <div class="field">
-    <%= label_tag :password %>
+
+    <div class="form-group">
+    <%= label_tag :password %><br>
     <%= password_field_tag :password %>
   </div>
     <br>
-  <div class="field">
+  <div class="form-group">
     <label for="user_type">Select your affiliation with Libraries</label>
     <select name="user_type">
       <option value="student">Student</option>
@@ -40,5 +42,5 @@
     <%= link_to "Sign up as a librarian", new_librarian_url, :class => "btn"%>
   </div>
   <br>
-
 <% end %>
+  </div>

@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<center>
 <h1>Books</h1>
 
 <h3>Filters</h3>
@@ -17,9 +17,10 @@
   <%= date_field_tag(:pub_date_end) %>
   <%= hidden_field_tag(:library_id, value = params[:library_id]) %>
   <br><br>
-  <%= submit_tag("Search") %>
+  <center>
+  <%= submit_tag"Search", class: "btn btn-success" %> </center>
 <% end %>
-
+<br>
 <table>
   <thead>
   <tr>
@@ -66,5 +67,6 @@
 <br>
 
 <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-  <%= link_to 'New Book', new_book_path %>
+  <%= link_to 'Add New Book', new_book_path , :class => "btn" %>
 <% end %>
+</center>
