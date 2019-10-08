@@ -1,5 +1,6 @@
 class Library < ApplicationRecord
-  has_one :librarian
+  has_one :librarian,
+          :dependent => :delete
   has_many :book_counts,
            :dependent => :delete_all
   has_many :book_requests,
@@ -29,5 +30,11 @@ class Library < ApplicationRecord
     when ApplicationController::TYPE_LIBRARIAN
       return Librarian.find(user_id).library_id == library_id.to_i
     end
+  end
+
+  def self.delete(library_id)
+    # increment student book limits
+    BookHistory.increment_student_limits_by_books_issued_by_library(library_id)
+    Library.destroy(library_id)
   end
 end

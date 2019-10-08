@@ -70,7 +70,7 @@ class Book < ApplicationRecord
     return books;
   end
 
-  def self.delete_book(book_id)
+  def self.delete(book_id)
     # increment student book_limits
     BookHistory.increment_student_limits_by_book_issued(book_id)
     Book.destroy(book_id)

@@ -108,9 +108,18 @@ class BookHistory < ApplicationRecord
   end
 
   # this method will increment student book_limits before deleting a book
-  # in case the book being deleted is issued by the student
+  # in case the book being deleted is issued by the student at the time of deletion
   def self.increment_student_limits_by_book_issued(book_id)
     book_histories = BookHistory.where(:book_id => book_id, :action => BookHistory::ISSUED)
+    for book_history in book_histories
+      Student.increment_book_limit(book_history.student_id)
+    end
+  end
+
+  # this method will increment student book_limits before deleting a library
+  # in case the student has books issued from the library at the time of deletion
+  def self.increment_student_limits_by_books_issued_by_library(library_id)
+    book_histories = BookHistory.where(:library_id => library_id, :action => BookHistory::ISSUED)
     for book_history in book_histories
       Student.increment_book_limit(book_history.student_id)
     end

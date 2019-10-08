@@ -144,7 +144,7 @@ class BookRequest < ApplicationRecord
   end
 
   def self.fetch_requests_by_librarian(user_id)
-    library_id = Librarian.find(user_id)
+    library_id = Librarian.find(user_id).library_id
     book_requests = BookRequest.where(:library_id => library_id, :request_type => [BookRequest::IS_SPECIAL, BookRequest::IS_HOLD])
     return book_requests
   end

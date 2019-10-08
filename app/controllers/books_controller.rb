@@ -106,7 +106,7 @@ class BooksController < ApplicationController
     #  end
     #end
     #=end
-    Book.delete_book(params[:id])
+    Book.delete(params[:id])
     respond_to do |format|
       format.html { redirect_to books_url, notice: 'Book was successfully deleted' }
       format.json { head :no_content }
