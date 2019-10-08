@@ -1,19 +1,24 @@
 <p id="notice"><%= notice %></p>
+<center>
+  <h3> Book details </h3>
+<table>
+  <tr>
+    <td colspan="2"><strong>Book:</strong></td>
+    <td> <%= @book_count.book.title %></td>
+  </tr>
 
-<p>
-  <strong>Book:</strong>
-  <%= @book_count.book.title %>
-</p>
+  <tr>
+    <td colspan="2"><strong>Library:</strong></td>
+    <td>  <%= @book_count.library.name %></td>
+  </tr>
 
-<p>
-  <strong>Library:</strong>
-  <%= @book_count.library.name %>
-</p>
+  <tr>
+    <td colspan="2"><strong>Count:</strong></td>
+    <td> <%= @book_count.book_copies %></td>
+  </tr>
 
-<p>
-  <strong>Count:</strong>
-  <%= @book_count.book_copies %>
-</p>
+</table>
 
 <%= link_to 'Edit', edit_book_count_path(@book_count) %> |
 <%= link_to 'Back', book_counts_path %>
+</center>
