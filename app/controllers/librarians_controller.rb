@@ -21,6 +21,8 @@ class LibrariansController < ApplicationController
   def new
     @librarian = Librarian.new
     @librarian.is_approved = 0
+    @google_name = params[:name]
+    @google_email = params[:email]
   end
 
   # GET /librarians/1/edit

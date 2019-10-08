@@ -20,6 +20,8 @@ class StudentsController < ApplicationController
   # GET /students/new
   def new
     @student = Student.new
+    @google_name = params[:name]
+    @google_email = params[:email]
   end
 
   # GET /students/1/edit

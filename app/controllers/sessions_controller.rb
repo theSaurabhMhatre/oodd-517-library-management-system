@@ -40,6 +40,8 @@ class SessionsController < ApplicationController
   #If there is a match, it logs in the user as the correspoding user_type.
   #If there is no match, it flashes an error and redirects the user to the login page.
   def googleAuth
+    # render html:request.env["omniauth.auth"]["info"]["name"]
+
     if Student.exists?(email: request.env["omniauth.auth"]["info"]["email"])
       user = Student.find_by_email(request.env["omniauth.auth"]["info"]["email"])
       session[:user_id] = user.id
@@ -60,9 +62,18 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       session[:user_type] = TYPE_ADMIN
       redirect_to root_url, notice: "Logged in!"
+    elsif session[:google_signup_user_type] == '1'
+      redirect_to new_student_url(:name => request.env["omniauth.auth"]["info"]["name"], :email => request.env["omniauth.auth"]["info"]["email"], :without_password => 1)
+    elsif session[:google_signup_user_type] == '2'
+      redirect_to new_librarian_url(:name => request.env["omniauth.auth"]["info"]["name"], :email => request.env["omniauth.auth"]["info"]["email"], :without_password => 1)
     else
-      flash.now[:alert] = "Our system doesn't recognize that Email"
-      render "new"
+        flash.now[:alert] = "Our system does not recognize your Google account. Try signing up."
+        render "new"
     end
+  end
+
+  def set_google_signup_user_type
+    session[:google_signup_user_type] = params[:google_signup_user_type]
+    redirect_to("/auth/google_oauth2")
   end
 end
