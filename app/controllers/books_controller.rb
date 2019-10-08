@@ -25,13 +25,25 @@ class BooksController < ApplicationController
     case user_type
     when ApplicationController::TYPE_STUDENT
       if (params[:library_id] != nil)
-        @books = Book.filter_books(params)
+        books = Book.filter_books(params)
+        if books == nil
+          flash[:notice] = "Start date has to be equal to or before end date"
+          render books_path
+        else
+          @books = books
+        end
       else
         flash[:notice] = "Invalid request"
         redirect_to libraries_path
       end
     else
-      @books = Book.filter_books(params)
+      books = Book.filter_books(params)
+      if books == nil
+        flash[:notice] = "Start date has to be equal to or before end date"
+        redirect_to books_path
+      else
+        @books = books
+      end
     end
   end
 
