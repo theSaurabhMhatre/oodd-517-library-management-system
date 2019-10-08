@@ -3,10 +3,14 @@
 <br>
 <div> <%= link_to "Libraries", libraries_url %> </div>
 <br>
-<div> <%= link_to "View checked out books", book_histories_url(:request_type => BookHistory::ISSUED) %> </div>
+<div> <%= link_to "View currently checked out books", book_histories_url(:request_type => BookHistory::ISSUED) %> </div>
+<br>
+<div> <%= link_to "View checked out books history", book_histories_url(:request_type => BookHistory::ALL) %> </div>
 <br>
 <div> <%= link_to "View bookmarked books", book_requests_url(:request_type => BookRequest::IS_BOOKMARK) %> </div>
 <br>
 <div> <%= link_to "View book hold requests", book_requests_url(:request_type => BookRequest::IS_HOLD) %> </div>
 <br>
 <div> <%= link_to "View pending special requests", book_requests_url(:request_type => BookRequest::IS_SPECIAL) %> </div>
+<br>
+<div> <%= link_to "View overdue fines", overdue_fines_book_histories_path() %> </div>

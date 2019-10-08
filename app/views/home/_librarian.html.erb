@@ -1,7 +1,16 @@
-<div> <%= link_to "Edit profile", edit_librarian_path(current_user) %> </div>
 <br>
-<div> <%= link_to "View book requests", book_requests_path %> </div>
+
+<%= link_to "Edit profile", edit_librarian_path(current_user) %>
+<center>
+  <h4> Welcome <%= current_user.name %>  </h4>
+
+<div> <%= link_to "View / Add Books", books_path %> </div>
 <br>
-<div> <%= link_to "Change "+Library.find(current_user.library_id).name + " Policies", edit_library_path(Library.find(current_user.library_id)) %> </div>
+<div> <%= link_to "Add Book Counts", book_counts_url %> </div>
+  <br>
+  <div> <%= link_to "View Book Requests", book_requests_path %> </div>
+  <br>
+<div> <%= link_to "View Book History", book_histories_url %> </div>
 <br>
-<div> <%= link_to ("View Books in "+Library.find(current_user.library_id).name), books_path %> </div>
+<div> <%= link_to "View Overdue fines", overdue_fines_book_histories_path() %> </div>
+</center>

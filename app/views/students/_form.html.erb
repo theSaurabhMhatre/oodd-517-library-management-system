@@ -39,9 +39,9 @@
       <%= form.label :edu_level %>
       <select name="student[edu_level]">
         <option value=""></option>
-        <option value="undergraduate">Undergraduate</option>
-        <option value="graduate">Graduate</option>
-        <option value="phd_student">PhD Student</option>
+        <option value="undergraduate" <%= @edu_level == "undergraduate" ? "selected" : ""%>>Undergraduate</option>
+        <option value="graduate" <%= @edu_level == "graduate" ? "selected" : ""%>>Graduate</option>
+        <option value="phd_student" <%= @edu_level == "phd_student" ? "selected" : ""%>>PhD Student</option>
       </select>
     </div>
 

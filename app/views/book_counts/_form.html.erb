@@ -1,3 +1,5 @@
+<center>
+<br>
 <%= form_with(model: book_count, local: true) do |form| %>
   <% if book_count.errors.any? %>
     <div id="error_explanation">
@@ -11,22 +13,37 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :book_id %>
-    <%= form.collection_select :book_id, Book.all, :id, :title, :include_blank => true %>
-  </div>
+  <table>
+    <tr>
+      <td><%= form.label :book_id %></td>
+      <td><%= form.collection_select :book_id, Book.all, :id, :title, :include_blank => true %></td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :library_id %>
-    <%= form.collection_select :library_id, Library.all, :id, :name, :include_blank => true %>
-  </div>
 
-  <div class="field">
-    <%= form.label :book_copies %>
-    <%= form.number_field :book_copies %>
-  </div>
+  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+    <tr>
+      <td><%= form.label :library_id %></td>
+      <td><%= form.collection_select :library_id, Library.all, :id, :name, :include_blank => true %></td>
+    </tr>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+  <% end %>
+
+  <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+    <tr>
+      <td> <%= form.label :library_id %></td>
+      <td><%= form.collection_select :library_id, Library.where(:id => current_user.library_id), :id, :name, :include_blank => true %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td><%= form.label :book_copies %></td>
+    <td><%= form.number_field :book_copies %></td>
+  </tr>
+
+  <tr>
+    <td> </td>
+    <td><%= form.submit %></td>
+  </tr>
+  <%end %>
+  </table>
+</center>

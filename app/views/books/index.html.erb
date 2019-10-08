@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
-
+<center>
 <h1>Books</h1>
 
 <h3>Filters</h3>
 
-<%= form_with(url: filter_books_path, method: "get", :data => {:remote => false}) do %>
+<%= form_with(url: filter_books_path, method: "get", :local => true) do %>
   <%= label_tag(:book_title, "Title:") %>
   <%= text_field_tag(:book_title) %>
   <%= label_tag(:book_author, "Author:") %>
@@ -17,9 +17,10 @@
   <%= date_field_tag(:pub_date_end) %>
   <%= hidden_field_tag(:library_id, value = params[:library_id]) %>
   <br><br>
-  <%= submit_tag("Search") %>
+  <center>
+  <%= submit_tag"Search", class: "btn btn-success" %> </center>
 <% end %>
-
+<br>
 <table>
   <thead>
   <tr>
@@ -53,7 +54,7 @@
       <td><%= link_to 'Show', book %></td>
       <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: {confirm: 'This will delete the book from all libraries and associated data. Are you sure?'} %></td>
       <% else %>
         <td><%= link_to 'Issue book', new_book_request_url(:request_type => BookRequest::IS_NORMAL, :book_id => book.id, :library_id => params[:library_id]) %></td>
         <td><%= link_to 'Bookmark book', new_book_request_url(:request_type => BookRequest::IS_BOOKMARK, :book_id => book.id, :library_id => params[:library_id]) %></td>
@@ -66,5 +67,6 @@
 <br>
 
 <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-  <%= link_to 'New Book', new_book_path %>
+  <%= link_to 'Add New Book', new_book_path , :class => "btn" %>
 <% end %>
+</center>

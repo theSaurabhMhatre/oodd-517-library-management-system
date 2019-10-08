@@ -5,17 +5,20 @@ class BookHistoriesController < ApplicationController
   # GET /book_histories
   # GET /book_histories.json
   def index
-    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
-      if (params[:request_type] != nil and params[:request_type] == BookHistory::ISSUED)
-        # request from user for checked out books
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      if (params[:request_type] == BookHistory::ISSUED)
         @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ISSUED)
       else
-        # if parameter not specified, redirect to home page saying invalid request
-        # TODO: check if msg can be displayed
-        redirect_to root_path
+        @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ALL)
+        # TODO: is this what is expected?
+        #flash[:notice] =  "Invalid request"
+        #redirect_to root_path
       end
-    else
-      # request not from user
+    when ApplicationController::TYPE_LIBRARIAN
+      @book_histories = BookHistory.where(:library_id => @current_user.library_id)
+    when ApplicationController::TYPE_ADMIN
       @book_histories = BookHistory.all
     end
   end
@@ -23,15 +26,38 @@ class BookHistoriesController < ApplicationController
   # GET /book_histories/1
   # GET /book_histories/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      check = BookHistory.check_if_authorised?(user_type, current_user.id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_LIBRARIAN
+      check = BookHistory.check_if_authorised?(user_type, current_user.library_id, params[:id])
+      if(check == false)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any book history
+    end
   end
 
   # GET /book_histories/new
   def new
-    @book_history = BookHistory.new
+    # nobody should be able to create a book history but students, via UI
+    # @book_history = BookHistory.new
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # GET /book_histories/1/edit
   def edit
+    # nobody should be able to edit a book history
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # POST /book_histories
@@ -90,6 +116,19 @@ class BookHistoriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to book_histories_url(:request_type => BookHistory::ISSUED), notice: 'Book returned successfully.' }
       format.json { head :no_content }
+    end
+  end
+
+
+  def overdue_fines
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
+      @overdue_fines = BookHistory.overdue_books_for_system()
+    when ApplicationController::TYPE_LIBRARIAN
+      @overdue_fines = BookHistory.overdue_books_for_library(@current_user.library_id)
+    when ApplicationController::TYPE_STUDENT
+      @overdue_fines = BookHistory.overdue_books_for_student(session[:user_id])
     end
   end
 

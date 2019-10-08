@@ -21,12 +21,13 @@
       <td><%= book_request.student.email %></td>
       <td><%= book_request.request_type %></td>
       <td><%= link_to 'Show', book_request %></td>
-      <td><%= link_to 'Edit', edit_book_request_path(book_request) %></td>
+      <!--<td><%# link_to 'Edit', edit_book_request_path(book_request) %></td>-->
       <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
         <td><%= link_to 'Destroy', "/book_requests/#{book_request.id}?request_type=" + params[:request_type], method: :delete, data: {confirm: 'Are you sure?'} %></td>
-      <% else %>
-        <td><%= link_to 'Destroy', book_request, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       <% end %>
+        <%#TODO: Is this correct? %>
+        <!--<td><%# link_to 'Destroy', book_request, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
+      <%# end %>
       <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN and book_request.request_type == BookRequest::IS_SPECIAL %>
         <td><%= link_to 'Approve request', approve_book_requests_path(:book_request => book_request), method: :post, data: {confirm: 'Are you sure?'} %></td>
         <td><%= link_to 'Reject request', reject_book_requests_path(:book_request => book_request), method: :post, data: {confirm: 'Are you sure?'} %></td>
@@ -37,5 +38,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Book Request', new_book_request_path %>
