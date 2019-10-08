@@ -5,26 +5,68 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    if (session[:user_type] == ApplicationController::TYPE_STUDENT)
-      redirect_to root_path
-    else
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
       @students = Student.all
+    else
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
     end
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      if(current_user.id != params[:id].to_i)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_LIBRARIAN
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any student
+    end
   end
 
   # GET /students/new
   def new
-    @student = Student.new
+    user_type = session[:user_type]
+    case user_type
+    when nil
+      # request to create a student by a non registered user
+      @student = Student.new
+    when ApplicationController::TYPE_ADMIN
+      # admin can create new students
+      @student = Student.new
+    else
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    end
   end
 
   # GET /students/1/edit
   def edit
-    @without_password = params[:without_password]
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      if(current_user.id != params[:id].to_i)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_LIBRARIAN
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_ADMIN
+      # admin can edit any student
+      # TODO: what to do about the book limit when edu_level is updated?
+      @edu_level = Student.find(params[:id]).edu_level
+      @without_password = 1
+    end
   end
 
   # POST /students

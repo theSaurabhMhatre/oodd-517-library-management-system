@@ -23,11 +23,7 @@
       <td><%= student.edu_level %></td>
       <td><%= student.book_limit %></td>
       <td><%= link_to 'Show', student %></td>
-      <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-        <td><%= link_to 'Edit', edit_student_path(student, :without_password => 1) %></td>
-      <% else %>
-        <td><%= link_to 'Edit', edit_student_path(student) %></td>
-      <% end %>
+      <td><%= link_to 'Edit', edit_student_path(student) %></td>
       <td><%= link_to 'Destroy', student, method: :delete, data: {confirm: 'Are you sure?'} %></td>
     </tr>
   <% end %>

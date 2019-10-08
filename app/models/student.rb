@@ -18,7 +18,7 @@ class Student < ApplicationRecord
   validates :password,
             :presence => true,
             :format => {:with => /\A(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[[:^alnum:]])/,
-                        :message => "must contain at least one lowercase alphabet, one uppercase alphabet, one digit and one special character"},
+                        :message => "must contain at least one lowercase alphabet, one uppercase alphabet, one digit and one special character and the minimum length should be 8 characters"},
             :on => :create
   validates :edu_level,
             :presence => true,
