@@ -1,16 +1,13 @@
+<div> <%= link_to "Edit profile", edit_librarian_path(current_user) %> </div>
 <br>
-
-<%= link_to "Edit profile", edit_librarian_path(current_user) %>
-<center>
-  <h4> Welcome <%= current_user.name %>  </h4>
-
-<div> <%= link_to "View / Add Books", books_path %> </div>
+<div> <%= link_to "View/Approve book hold/special requests", book_requests_path %> </div>
 <br>
-<div> <%= link_to "Add Book Counts", book_counts_url %> </div>
-  <br>
-  <div> <%= link_to "View Book Requests", book_requests_path %> </div>
-  <br>
-<div> <%= link_to "View Book History", book_histories_url %> </div>
+<div> <%= link_to "View/Add Books", books_path %> </div>
 <br>
-<div> <%= link_to "View Overdue fines", overdue_fines_book_histories_path() %> </div>
-</center>
+<div> <%= link_to "Change Library policies", edit_library_path(Library.find(current_user.library_id)) %> </div>
+<br>
+<div> <%= link_to "Add Books to Libraries", book_counts_url %> </div>
+<br>
+<div> <%= link_to "View Book Histories", book_histories_url %> </div>
+<br>
+<div> <%= link_to "View overdue fines", overdue_fines_book_histories_path() %> </div>

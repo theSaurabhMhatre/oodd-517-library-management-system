@@ -124,4 +124,13 @@ class BookHistory < ApplicationRecord
       Student.increment_book_limit(book_history.student_id)
     end
   end
+
+  # this will increment book counts for libraries from which
+  # the student being deleted might have issued books
+  def self.increment_book_counts_by_student(student_id)
+    book_histories = BookHistory.where(:student_id => student_id, :action => BookHistory::ISSUED)
+    for book_history in book_histories
+      BookCount.book_count_increment(book_history.book_id, book_history.library_id)
+    end
+  end
 end
