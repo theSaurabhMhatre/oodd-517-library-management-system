@@ -26,7 +26,7 @@
   <% end %>
 
   <% if session[:user_id] == nil %>
-    <%= link_to "Continue with Google", set_google_signup_user_type_url(:google_signup_user_type => 2) %>
+    <%= link_to "Sign up with Google", set_google_signup_user_type_url(:google_signup_user_type => 2) %>
     <br>
     -----------or-----------
     <br>
@@ -34,12 +34,12 @@
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email, value: @google_email %>
+    <%= form.text_field :email, value: (librarian.email.nil? ? @google_email : librarian.email)%>
   </div>
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name, value: @google_name %>
+    <%= form.text_field :name, value: (librarian.name.nil? ? @google_name : librarian.name)%>
   </div>
   <% if @without_password == nil %>
     <div class="field">
