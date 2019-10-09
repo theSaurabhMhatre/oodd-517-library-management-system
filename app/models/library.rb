@@ -1,6 +1,6 @@
 class Library < ApplicationRecord
-  has_one :librarian,
-          :dependent => :delete
+  has_many :librarians,
+           :dependent => :delete_all
   has_many :book_counts,
            :dependent => :delete_all
   has_many :book_requests,

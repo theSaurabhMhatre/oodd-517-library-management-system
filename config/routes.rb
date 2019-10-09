@@ -41,7 +41,14 @@ Rails.application.routes.draw do
   get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'
+  get 'set_google_signup_user_type', to: 'sessions#set_google_signup_user_type'
 
   get 'javascripts/dynamic_libraries'
+
+  get '/privacy' => "privacy#show"
+
+    # Routes for Google authentication
+  get 'auth/:provider/callback', to: 'sessions#googleAuth'
+  get 'auth/failure', to: redirect('/')
 
 end

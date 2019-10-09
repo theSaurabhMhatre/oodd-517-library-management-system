@@ -14,12 +14,12 @@ It consists of following user types -
 The following features have been implemented so far:
 
 ### Login Page
--   The student, librarian and the admin can login through the same page by using login credentials and selecting user type
--   This pages also provides two seperate links for signing up as either a student or librarian (the librarian will have to be approved by the admin before he/she can log in after signing up)
+-   Students, librarians and the admin can login through the same page by either using their login credentials or with their google account.
+-   This pages also provides two seperate links for signing up as either a student or librarian (the librarian will have to be approved by the admin before he/she can log in after signing up).
 
 # Admin
 
-### Admin Homepage –
+### Admin Homepage
 Below are the details of the various links available on the home page when the admin logs in:
 
 1.	Edit Profile – Allows the admin to update his email, username and password

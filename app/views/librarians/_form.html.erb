@@ -1,5 +1,6 @@
 <script src="/javascripts/dynamic_libraries.js"></script>
 
+<div onmousemove="setLibrary()">
 <%= form_with(model: librarian, local: true) do |form| %>
   <% if librarian.errors.any? %>
     <div id="error_explanation">
@@ -24,14 +25,21 @@
     </div>
   <% end %>
 
+  <% if session[:user_id] == nil %>
+    <%= link_to "Continue with Google", set_google_signup_user_type_url(:google_signup_user_type => 2) %>
+    <br>
+    -----------or-----------
+    <br>
+  <% end %>
+
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, value: @google_email %>
   </div>
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, value: @google_name %>
   </div>
   <% if @without_password == nil %>
     <div class="field">
@@ -65,3 +73,6 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<input type="hidden" id="library_id" value="<%= @library_id.to_i %>">
+</div>

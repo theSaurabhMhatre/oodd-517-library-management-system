@@ -40,6 +40,9 @@ class LibrariansController < ApplicationController
     when nil
       # request to create a librarian by a non registered user
       @librarian = Librarian.new
+      @librarian.is_approved = 0
+      @google_name = params[:name]
+      @google_email = params[:email]
     when ApplicationController::TYPE_ADMIN
       @librarian = Librarian.new
       @librarian.is_approved = 0
@@ -56,11 +59,13 @@ class LibrariansController < ApplicationController
     when ApplicationController::TYPE_ADMIN
       @without_password = 1
       @edit_librarian_errors = params[:edit_librarian_errors]
+      @library_id = Librarian.find(params[:id]).library_id
     when ApplicationController::TYPE_LIBRARIAN
       if(current_user.id != params[:id].to_i)
         flash[:notice] =  "You are not authorised to perform this action"
         redirect_to root_path
       end
+      @library_id = Librarian.find(params[:id]).library_id
     when ApplicationController::TYPE_STUDENT
       flash[:notice] =  "You are not authorised to perform this action"
       redirect_to root_path
