@@ -47,7 +47,8 @@ class SessionsController < ApplicationController
         session[:user_type] = TYPE_STUDENT
         redirect_to root_url, notice: "Logged in!"
       else
-        redirect_to new_student_url(:name => request.env["omniauth.auth"]["info"]["name"], :email => request.env["omniauth.auth"]["info"]["email"], :without_password => 1), notice: "You dont have a student account. Please sign up."
+        flash[:notice] = "You dont have a student account. Please sign up."
+        redirect_to new_student_url(:name => request.env["omniauth.auth"]["info"]["name"], :email => request.env["omniauth.auth"]["info"]["email"], :without_password => 1)
       end
     elsif session[:google_signup_user_type] == '4'
       if Librarian.exists?(email: request.env["omniauth.auth"]["info"]["email"])
