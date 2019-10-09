@@ -3,6 +3,12 @@ var libraries = new Array();
 libraries.push(new Array(<%= library.university_id %>, '<%= library.name.to_s %>', <%= library.id %>));
 <% end -%>
 
+function setLibrary(){
+    var ele = document.getElementById("library_id").value;
+    var dropdown = document.getElementById("librarian_library_id");
+    dropdown.value = ele;
+}
+
 function fetchLibraries() {
     var ele = document.getElementById('librarian_university_id');
     var university_id = ele.options[ele.selectedIndex].value;
