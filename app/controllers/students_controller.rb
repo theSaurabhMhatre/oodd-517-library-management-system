@@ -40,6 +40,8 @@ class StudentsController < ApplicationController
     when nil
       # request to create a student by a non registered user
       @student = Student.new
+      @google_name = params[:name]
+      @google_email = params[:email]
     when ApplicationController::TYPE_ADMIN
       # admin can create new students
       @student = Student.new
