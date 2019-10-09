@@ -51,6 +51,5 @@ RSpec.describe LibrariesController, type: :controller do
     if session[:user_type].equal?"student" then (flash[:notice].equal?"You are not authorised to perform this action")
     end
   end
-
 end
 
