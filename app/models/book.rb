@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
+  mount_uploader :image, ImageUploader
+
   IS_SPECIAL = "yes"
   IS_NOT_SPECIAL = "no"
 

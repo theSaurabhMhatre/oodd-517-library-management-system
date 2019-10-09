@@ -1,6 +1,10 @@
 <p id="alert"><%= alert %></p>
-<h1>Login</h1>
+<h1>Sign in </h1>
+
 <%= form_tag sessions_path do |form| %>
+  <%= link_to "Continue with Google", set_google_signup_user_type_url(google_signup_user_type = 3) %>
+  <br>
+  <br>
   <div class="field">
     <%= label_tag :email %>
     <%= text_field_tag :email %>

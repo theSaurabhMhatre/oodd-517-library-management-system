@@ -32,7 +32,7 @@
 
 <p>
   <strong>Image:</strong>
-  <%= @book.image %>
+  <%= image_tag @book.image_url, :height => 250, :width => 175 if @book.image? %>
 </p>
 
 <p>

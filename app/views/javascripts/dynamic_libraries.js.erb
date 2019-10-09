@@ -3,10 +3,15 @@ var libraries = new Array();
 libraries.push(new Array(<%= library.university_id %>, '<%= library.name.to_s %>', <%= library.id %>));
 <% end -%>
 
+var libraryValueSet = false;
+
 function setLibrary(){
-    var ele = document.getElementById("library_id").value;
-    var dropdown = document.getElementById("librarian_library_id");
-    dropdown.value = ele;
+  if(libraryValueSet == false){
+      var ele = document.getElementById("library_id").value;
+      var dropdown = document.getElementById("librarian_library_id");
+      dropdown.value = ele;
+      libraryValueSet = true;
+  }
 }
 
 function fetchLibraries() {
