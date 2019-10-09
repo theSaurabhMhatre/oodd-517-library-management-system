@@ -64,8 +64,8 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "oodd-517-library-management-system_#{Rails.env}"
 
   config.action_mailer.delivery_method = :smtp
-  host = 'localhost:3000'
-  config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
+  host = 'enigmatic-badlands-15021.herokuapp.com'
+  config.action_mailer.default_url_options = { :host => 'enigmatic-badlands-15021.herokuapp.com', protocol: 'http' }
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {

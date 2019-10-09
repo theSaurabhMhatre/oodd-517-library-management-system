@@ -5,25 +5,28 @@ class UniversitiesController < ApplicationController
   # GET /universities
   # GET /universities.json
   def index
-    if (session[:user_type] == ApplicationController::TYPE_ADMIN)
-      @universities = University.all
-    else
-      redirect_to root_path
-    end
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # GET /universities/1
   # GET /universities/1.json
   def show
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # GET /universities/new
   def new
-    @university = University.new
+    # @university = University.new
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # GET /universities/1/edit
   def edit
+    flash[:notice] =  "You are not authorised to perform this action"
+    redirect_to root_path
   end
 
   # POST /universities
