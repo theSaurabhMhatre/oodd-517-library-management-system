@@ -40,6 +40,9 @@ class LibrariansController < ApplicationController
     when nil
       # request to create a librarian by a non registered user
       @librarian = Librarian.new
+      @librarian.is_approved = 0
+      @google_name = params[:name]
+      @google_email = params[:email]
     when ApplicationController::TYPE_ADMIN
       @librarian = Librarian.new
       @librarian.is_approved = 0
