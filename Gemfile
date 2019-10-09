@@ -77,7 +77,16 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 # Adding jQuery for UI related tasks
 gem 'jquery-rails'
 
+#gem for google oauth2
+gem 'omniauth-google-oauth2'
+
+# Adding this for image uploads
+gem 'carrierwave', '~> 0.11.2'
+
 #Adding for RSpec testing
 gem 'rspec-rails', ">= 2.0.0.beta"
 gem 'mocha', '~> 1.2', '>= 1.2.1'
 gem 'rails-controller-testing', '~> 0.0.3'
+gem 'shoulda', '~> 3.5'
+gem 'shoulda-callback-matchers', '~> 1.1', '>= 1.1.3'
+
