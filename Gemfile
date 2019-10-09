@@ -80,3 +80,4 @@ gem 'jquery-rails'
 #Adding for RSpec testing
 gem 'rspec-rails', ">= 2.0.0.beta"
 gem 'mocha', '~> 1.2', '>= 1.2.1'
+gem 'rails-controller-testing', '~> 0.0.3'
