@@ -69,7 +69,9 @@ class BookHistory < ApplicationRecord
         if(args.length == 0)
           overdue_detail.push(Student.find(book.student_id).name)
         end
-        overdue_details.push(overdue_detail)
+        if(overdue_detail[2] > 0)
+          overdue_details.push(overdue_detail)
+        end
       end
     end
     return overdue_details
