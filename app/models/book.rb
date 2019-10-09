@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
+  mount_uploader :image, ImageUploader
+
   IS_SPECIAL = "yes"
   IS_NOT_SPECIAL = "no"
 
@@ -11,7 +13,8 @@ class Book < ApplicationRecord
 
   validates :isbn,
             :presence => true,
-            :uniqueness => true
+            :uniqueness => true,
+            :length => {:minimum => 10, :maximum => 13}
   validates :title,
             :presence => true
   validates :author,
@@ -50,30 +53,50 @@ class Book < ApplicationRecord
     pub_date_start = params[:pub_date_start].empty? ? Time.local(1970, 1, 1) : params[:pub_date_start]
     pub_date_end = params[:pub_date_end].empty? ? Time.now : params[:pub_date_end]
     book_author = params[:book_author].nil? ? "" : params[:book_author]
+    check = Book.dates_valid?(pub_date_start, pub_date_end)
+    if(check == false)
+      return nil
+    end
     if (library_id.nil? || library_id.empty?)
-      books = Book.where("title like :title and author like :author and subject like :subject and published >= :start and published <= :end",
-                         :title => "%#{book_title}%",
-                         :author => "%#{book_author}%",
-                         :subject => "%#{book_subject}%",
+      books = Book.where("lower(title) like :title and lower(author) like :author and lower(subject) like :subject and published >= :start and published <= :end",
+                         :title => "%#{book_title.downcase}%",
+                         :author => "%#{book_author.downcase}%",
+                         :subject => "%#{book_subject.downcase}%",
                          :start => pub_date_start,
                          :end => pub_date_end)
     else
       book_ids = BookCount.where(:library_id => library_id).map { |x| x.book_id };
-      books = Book.where("id in (:book_ids) and title like :title and author like :author and subject like :subject and published >= :start and published <= :end",
+      books = Book.where("id in (:book_ids) and lower(title) like :title and lower(author) like :author and lower(subject) like :subject and published >= :start and published <= :end",
                          :book_ids => book_ids,
-                         :title => "%#{book_title}%",
-                         :author => "%#{book_author}%",
-                         :subject => "%#{book_subject}%",
+                         :title => "%#{book_title.downcase}%",
+                         :author => "%#{book_author.downcase}%",
+                         :subject => "%#{book_subject.downcase}%",
                          :start => pub_date_start,
                          :end => pub_date_end)
     end
     return books;
   end
 
+  def self.delete(book_id)
+    # increment student book_limits
+    BookHistory.increment_student_limits_by_book_issued(book_id)
+    Book.destroy(book_id)
+  end
+
   def self.check_if_in_use(book_id)
     if (BookHistory.check_if_book_in_use?(book_id) or
         BookRequest.check_if_book_in_use?(book_id) or
         BookCount.check_if_book_in_use?(book_id))
+      return false
+    else
+      return true
+    end
+  end
+
+  def self.dates_valid?(pub_date_start, pub_date_end)
+    start_date = Date.parse(pub_date_start.to_s)
+    end_date = Date.parse(pub_date_end.to_s)
+    if start_date > end_date
       return false
     else
       return true

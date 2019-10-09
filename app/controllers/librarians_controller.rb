@@ -5,9 +5,12 @@ class LibrariansController < ApplicationController
   # GET /librarians
   # GET /librarians.json
   def index
-    if (session[:user_type] == ApplicationController::TYPE_ADMIN)
-      @librarians = Librarian.where(:is_approved => 0)
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
+      @librarians = Librarian.all
     else
+      flash[:notice] =  "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
@@ -15,21 +18,57 @@ class LibrariansController < ApplicationController
   # GET /librarians/1
   # GET /librarians/1.json
   def show
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    when ApplicationController::TYPE_LIBRARIAN
+      if(current_user.id != params[:id].to_i)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+    when ApplicationController::TYPE_ADMIN
+      # admin can see any librarian
+    end
   end
 
   # GET /librarians/new
   def new
-    @librarian = Librarian.new
-    @librarian.is_approved = 0
-    @google_name = params[:name]
-    @google_email = params[:email]
+    user_type = session[:user_type]
+    case user_type
+    when nil
+      # request to create a librarian by a non registered user
+      @librarian = Librarian.new
+      @librarian.is_approved = 0
+      @google_name = params[:name]
+      @google_email = params[:email]
+    when ApplicationController::TYPE_ADMIN
+      @librarian = Librarian.new
+      @librarian.is_approved = 0
+    else
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
+    end
   end
 
   # GET /librarians/1/edit
   def edit
-    if (session[:user_type] == ApplicationController::TYPE_ADMIN)
+    user_type = session[:user_type]
+    case user_type
+    when ApplicationController::TYPE_ADMIN
       @without_password = 1
       @edit_librarian_errors = params[:edit_librarian_errors]
+      @library_id = Librarian.find(params[:id]).library_id
+    when ApplicationController::TYPE_LIBRARIAN
+      if(current_user.id != params[:id].to_i)
+        flash[:notice] =  "You are not authorised to perform this action"
+        redirect_to root_path
+      end
+      @library_id = Librarian.find(params[:id]).library_id
+    when ApplicationController::TYPE_STUDENT
+      flash[:notice] =  "You are not authorised to perform this action"
+      redirect_to root_path
     end
   end
 

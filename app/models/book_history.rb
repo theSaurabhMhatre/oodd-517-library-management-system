@@ -1,6 +1,7 @@
 class BookHistory < ApplicationRecord
   ISSUED = "issued"
   RETURNED = "returned"
+  ALL = "all"
 
   belongs_to :book
   belongs_to :library
@@ -26,7 +27,13 @@ class BookHistory < ApplicationRecord
   end
 
   def self.fetch_checked_out_books(user_id, request_type)
-    book_history = BookHistory.where(:student_id => user_id, :action => request_type)
+    case request_type
+    when BookHistory::ISSUED
+      book_history = BookHistory.where(:student_id => user_id, :action => BookHistory::ISSUED)
+    when BookHistory::ALL
+      book_history = BookHistory.where(:student_id => user_id, :action => BookHistory::ISSUED)
+                         .or(BookHistory.where(:student_id => user_id, :action => BookHistory::RETURNED))
+    end
     return book_history
   end
 
@@ -84,5 +91,46 @@ class BookHistory < ApplicationRecord
     library_ids = Library.all.map{|x| x.id}
     overdue_details = BookHistory.overdue_detail_for_libraries(library_ids)
     return overdue_details
+  end
+
+  def self.check_if_authorised?(user_type, object_id, book_history_id)
+    case user_type
+    when ApplicationController::TYPE_STUDENT
+      count = BookHistory.where(:student_id => object_id, :id => book_history_id).count
+    when ApplicationController::TYPE_LIBRARIAN
+      count = BookHistory.where(:library_id => object_id, :id => book_history_id).count
+    end
+    if(count > 0)
+      return true
+    else
+      return false
+    end
+  end
+
+  # this method will increment student book_limits before deleting a book
+  # in case the book being deleted is issued by the student at the time of deletion
+  def self.increment_student_limits_by_book_issued(book_id)
+    book_histories = BookHistory.where(:book_id => book_id, :action => BookHistory::ISSUED)
+    for book_history in book_histories
+      Student.increment_book_limit(book_history.student_id)
+    end
+  end
+
+  # this method will increment student book_limits before deleting a library
+  # in case the student has books issued from the library at the time of deletion
+  def self.increment_student_limits_by_books_issued_by_library(library_id)
+    book_histories = BookHistory.where(:library_id => library_id, :action => BookHistory::ISSUED)
+    for book_history in book_histories
+      Student.increment_book_limit(book_history.student_id)
+    end
+  end
+
+  # this will increment book counts for libraries from which
+  # the student being deleted might have issued books
+  def self.increment_book_counts_by_student(student_id)
+    book_histories = BookHistory.where(:student_id => student_id, :action => BookHistory::ISSUED)
+    for book_history in book_histories
+      BookCount.book_count_increment(book_history.book_id, book_history.library_id)
+    end
   end
 end

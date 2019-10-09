@@ -79,3 +79,6 @@ gem 'jquery-rails'
 
 #gem for google oauth2
 gem 'omniauth-google-oauth2'
+
+# Adding this for image uploads
+gem 'carrierwave', '~> 0.11.2'

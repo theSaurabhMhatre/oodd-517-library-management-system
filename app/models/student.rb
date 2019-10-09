@@ -5,8 +5,10 @@ class Student < ApplicationRecord
   GRADUATE = "graduate"
   PHD_STUDENT = "phd_student"
 
-  has_many :book_requests
-  has_many :book_histories
+  has_many :book_requests,
+           :dependent => :delete_all
+  has_many :book_histories,
+           :dependent => :delete_all
   belongs_to :university
 
   validates :email,
@@ -18,7 +20,7 @@ class Student < ApplicationRecord
   validates :password,
             :presence => true,
             :format => {:with => /\A(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[[:^alnum:]])/,
-                        :message => "must contain at least one lowercase alphabet, one uppercase alphabet, one digit and one special character"},
+                        :message => "must contain at least one lowercase alphabet, one uppercase alphabet, one digit and one special character and the minimum length should be 8 characters"},
             :on => :create
   validates :edu_level,
             :presence => true,
@@ -58,5 +60,11 @@ class Student < ApplicationRecord
   def self.increment_book_limit(student_id)
     student = Student.find(student_id)
     student.update(:book_limit => student.book_limit + 1)
+  end
+
+  def self.delete(student_id)
+    # increment book counts
+    BookHistory.increment_book_counts_by_student(student_id)
+    Student.destroy(student_id)
   end
 end
