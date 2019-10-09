@@ -1,5 +1,6 @@
 <script src="/javascripts/dynamic_libraries.js"></script>
 
+<div onmousemove="setLibrary()">
 <%= form_with(model: librarian, local: true) do |form| %>
   <% if librarian.errors.any? %>
     <div id="error_explanation">
@@ -65,3 +66,6 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<input type="hidden" id="library_id" value="<%= @library_id.to_i %>">
+</div>
