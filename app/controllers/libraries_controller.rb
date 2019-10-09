@@ -5,6 +5,7 @@ class LibrariesController < ApplicationController
   # GET /libraries
   # GET /libraries.json
   def index
+    render plain: "ok"
     user_type = session[:user_type]
     case user_type
     when ApplicationController::TYPE_STUDENT
