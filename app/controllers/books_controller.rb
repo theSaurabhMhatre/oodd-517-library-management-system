@@ -73,6 +73,7 @@ class BooksController < ApplicationController
       redirect_to root_path
     else
       # let admin or librarian edit the book
+      @is_special = Book.find(params[:id]).is_special
     end
   end
 

@@ -56,13 +56,25 @@
     <%= form.text_area :summary %>
   </div>
 
-  <div class="field">
-    <%= form.label :is_special %>
-    <select name="book[is_special]">
-      <option value="no" selected>No</option>
-      <option value="yes">Yes</option>
-    </select>
-  </div>
+  <% if @is_special == nil %>
+    <div class="field">
+      <%= form.label :is_special %>
+      <select name="book[is_special]">
+        <option value=""></option>
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= form.label :is_special %>
+      <select name="book[is_special]">
+        <option value=""></option>
+        <option value="no" <%= @is_special == "no" ? "selected" : "" %>>No</option>
+        <option value="yes" <%= @is_special == "yes" ? "selected" : "" %>>Yes</option>
+      </select>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
