@@ -18,7 +18,7 @@ class BookRequestsController < ApplicationController
     when ApplicationController::TYPE_LIBRARIAN
       @book_requests = BookRequest.fetch_requests_by_librarian(session[:user_id])
     when ApplicationController::TYPE_ADMIN
-      @book_requests = BookRequest.fetch_hold_requests
+      @book_requests = BookRequest.fetch_special_and_hold_requests
     end
   end
 

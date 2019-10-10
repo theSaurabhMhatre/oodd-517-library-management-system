@@ -135,4 +135,35 @@ class BookHistory < ApplicationRecord
       BookCount.book_count_increment(book_history.book_id, book_history.library_id)
     end
   end
+
+  def self.fetch_book_history_by_student(student_id, params)
+    if (params[:request_type] == BookHistory::ISSUED)
+      book_histories = BookHistory.fetch_checked_out_books(student_id, BookHistory::ISSUED)
+    else
+      book_histories = BookHistory.fetch_checked_out_books(student_id, BookHistory::ALL)
+    end
+    return book_histories
+  end
+
+  def self.fetch_book_history_by_librarian(librarian_id, params)
+    if (params[:request_type] == BookHistory::ISSUED)
+      book_histories = BookHistory.where(:library_id => Librarian.find(librarian_id).library_id, :action => BookHistory::ISSUED)
+    elsif (params[:book_id] != nil)
+      book_histories = BookHistory.where(:library_id => Librarian.find(librarian_id).library_id, :book_id => params[:book_id])
+    else
+      book_histories = BookHistory.where(:library_id => Librarian.find(librarian_id).library_id)
+    end
+    return book_histories
+  end
+
+  def self.fetch_book_history_by_admin(params)
+    if (params[:request_type] == BookHistory::ISSUED)
+      book_histories = BookHistory.where(:action => BookHistory::ISSUED)
+    elsif (params[:book_id] != nil)
+      book_histories = BookHistory.where(:book_id => params[:book_id])
+    else
+      book_histories = BookHistory.all
+    end
+    return book_histories
+  end
 end
