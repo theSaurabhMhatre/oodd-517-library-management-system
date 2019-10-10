@@ -9,7 +9,9 @@
 <br>
 <div> <%= link_to "View/Add Books", books_path %> </div>
 <br>
-<div> <%= link_to "View Book requests", book_requests_url %> </div>
+<div> <%= link_to "View/Approve book hold/special requests", book_requests_url %> </div>
+<br>
+<div> <%= link_to "View currently checked out books", book_histories_url(:request_type => BookHistory::ISSUED) %> </div>
 <br>
 <div> <%= link_to "View Book Histories", book_histories_url %> </div>
 <br><%# TODO: can remove the link below %>

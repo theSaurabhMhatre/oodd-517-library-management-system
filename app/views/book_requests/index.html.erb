@@ -28,7 +28,7 @@
         <%#TODO: Is this correct? %>
         <!--<td><%# link_to 'Destroy', book_request, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
       <%# end %>
-      <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN and book_request.request_type == BookRequest::IS_SPECIAL %>
+      <% if (session[:user_type] == ApplicationController::TYPE_LIBRARIAN or session[:user_type] == ApplicationController::TYPE_ADMIN) and book_request.request_type == BookRequest::IS_SPECIAL %>
         <td><%= link_to 'Approve request', approve_book_requests_path(:book_request => book_request), method: :post, data: {confirm: 'Are you sure?'} %></td>
         <td><%= link_to 'Reject request', reject_book_requests_path(:book_request => book_request), method: :post, data: {confirm: 'Are you sure?'} %></td>
       <% end %>

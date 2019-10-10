@@ -8,18 +8,11 @@ class BookHistoriesController < ApplicationController
     user_type = session[:user_type]
     case user_type
     when ApplicationController::TYPE_STUDENT
-      if (params[:request_type] == BookHistory::ISSUED)
-        @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ISSUED)
-      else
-        @book_histories = BookHistory.fetch_checked_out_books(session[:user_id], BookHistory::ALL)
-        # TODO: is this what is expected?
-        #flash[:notice] =  "Invalid request"
-        #redirect_to root_path
-      end
+      @book_histories = BookHistory.fetch_book_history_by_student(session[:user_id], params)
     when ApplicationController::TYPE_LIBRARIAN
-      @book_histories = BookHistory.where(:library_id => @current_user.library_id)
+      @book_histories = BookHistory.fetch_book_history_by_librarian(session[:user_id], params)
     when ApplicationController::TYPE_ADMIN
-      @book_histories = BookHistory.all
+      @book_histories = BookHistory.fetch_book_history_by_admin(params)
     end
   end
 

@@ -2,7 +2,9 @@
 <h1>Sign in </h1>
 
 <%= form_tag sessions_path do |form| %>
-  <%= link_to "Continue with Google", set_google_signup_user_type_url(google_signup_user_type = 3) %>
+  <%= link_to "Sign in with Google as Student", set_google_signup_user_type_url(:google_signup_user_type => 3) %>
+  <br>
+  <%= link_to "Sign in with Google as Librarian", set_google_signup_user_type_url(:google_signup_user_type => 4) %>
   <br>
   <br>
   <div class="field">

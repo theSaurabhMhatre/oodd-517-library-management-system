@@ -152,8 +152,9 @@ class BookRequest < ApplicationRecord
     return book_requests
   end
 
-  def self.fetch_hold_requests
+  def self.fetch_special_and_hold_requests
     book_requests = BookRequest.where(:request_type => BookRequest::IS_HOLD)
+                        .or(BookRequest.where(:request_type => BookRequest::IS_SPECIAL))
     return book_requests
   end
 
