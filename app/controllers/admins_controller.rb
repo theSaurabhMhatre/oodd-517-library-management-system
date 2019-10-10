@@ -1,6 +1,6 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: [:show, :edit, :update, :destroy]
-  # before_action :authorize
+  before_action :authorize
 
   # GET /admins
   # GET /admins.json
@@ -44,7 +44,7 @@ class AdminsController < ApplicationController
     respond_to do |format|
       if @admin.update(admin_params)
         @admin.save
-        format.html { redirect_to @admin, notice: 'Admin was successfully updated.' }
+        format.html { redirect_to root_url, notice: 'Admin was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin }
       else
         format.html { render :edit }

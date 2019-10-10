@@ -79,7 +79,7 @@ class LibrariansController < ApplicationController
     @librarian[:is_approved] = 0
     respond_to do |format|
       if @librarian.save
-        format.html { redirect_to @librarian, notice: 'Librarian was successfully created.' }
+        format.html { redirect_to root_url, notice: 'Librarian was successfully created.' }
         format.json { render :show, status: :created, location: @librarian }
       else
         format.html { render :new }

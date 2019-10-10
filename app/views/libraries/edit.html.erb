@@ -7,6 +7,5 @@
 <%= render 'form', library: @library %>
 
 <%= link_to 'Show', @library %>
-<% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-  | <%= link_to 'Back', libraries_path %>
+
 <% end %>
