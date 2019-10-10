@@ -26,8 +26,7 @@ RSpec.describe Library, type: :model do
     end
   end
 
-  describe "if delete function is called then, it calls bookHistory and Library" do
-    @BookHistory.equal?true
+  describe "if delete function is called then, it calls BookHistory and Library" do
     @library.equal?true
   end
 end
