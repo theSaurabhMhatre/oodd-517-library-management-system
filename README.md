@@ -3,6 +3,10 @@
 Admin email: admin@lib.edu
 
 Admin password: Admin@123
+
+Note 1: Image uploads work as expected and are visible in the show book link. However, due to the read only nature of the Heroku File System, the images get cleaned up after every reboot of the dyno and so the uploaded files are lost. We have also brought this to the notice of our mentor. Kindly take this into consideration when reviewing. Thanks!
+
+Note 2: At and given time, a student is allowed to see books associated with only one library. Thus, there is no separate link to browse books on the student home page, a student has to always browse books only by library. The association between books and libraries can be found in the Add Books to Libraries link, which is visible to the admin and librarians. Thanks!
  
 This is a simple application to simulate the various operations that can be performed in a library.
 It consists of following user types - 
