@@ -6,11 +6,13 @@ Admin password: Admin@123
 
 Please read the following notes about things which we feel are not very obvious regarding our UI:
 
-Note 1: Image uploads work as expected and are visible in the show book link. However, due to the read only nature of the Heroku File System, the images get cleaned up after every reboot of the dyno and so the uploaded files are lost. We have also brought this to the notice of our mentor. Kindly take this into consideration when reviewing. Thanks!
+Note 1: Creating a new book does not associate the book with a library. There is a separate link provided for admins and librarians to add books to libraries, where the number of copies of those books can be specified along with the library the book is to be added to. We did this to enable n-to-m relationship between libraries and books. The reason to handle count of books and the association between libraries and books this way was so that the same book could be added to multiple libraries. This would not have been possible had we associated the books directly with a library since books have a constraint of the ISBN being unique.
 
-Note 2: At any given time, a student is allowed to see books associated with only one library. Thus, there is no separate link to browse books on the student home page, a student has to always browse books only by library. The association between books and libraries can be found in the Add Books to Libraries link, which is visible to the admin and librarians. Thanks!
+Note 2: Image uploads work as expected and are visible in the show book link. However, due to the read only nature of the Heroku File System, the images get cleaned up after every reboot of the dyno and so the uploaded files are lost. We have also brought this to the notice of our mentor. Kindly take this into consideration when reviewing. Thanks!
 
-Note 3: The view book hold request on the student home page shows all the holds requests that the logged in student currently has. For a librarian it shows all the hold requests for books in the library which the librarian is associated with and for the admin, it shows holds requests across all libraries for all books.
+Note 3: At any given time, a student is allowed to see books associated with only one library. Thus, there is no separate link to browse books on the student home page, a student has to always browse books only by library. The association between books and libraries can be found in the Add Books to Libraries link, which is visible to the admin and librarians. Thanks!
+
+Note 4: The view book hold request on the student home page shows all the holds requests that the logged in student currently has. For a librarian it shows all the hold requests for books in the library which the librarian is associated with and for the admin, it shows holds requests across all libraries for all books.  
  
 This is a simple application to simulate the various operations that can be performed in a library.
 It consists of following user types - 
