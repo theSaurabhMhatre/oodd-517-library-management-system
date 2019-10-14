@@ -4,15 +4,22 @@ Admin email: admin@lib.edu
 
 Admin password: Admin@123
 
-Please read the following notes about things which we feel are not very obvious regarding our UI:
+#### Please read the following notes about things which we feel are not very obvious regarding our UI:
 
-Note 1: Creating a new book does not associate the book with a library. There is a separate link provided for admins and librarians to add books to libraries, where the number of copies of those books can be specified along with the library the book is to be added to. We did this to enable n-to-m relationship between libraries and books. The reason to handle count of books and the association between libraries and books this way was so that the same book could be added to multiple libraries. This would not have been possible had we associated the books directly with a library since books have a constraint of the ISBN being unique.
+#### Note 1:
+Creating a new book does not associate the book with a library. There is a separate link provided for admins and librarians to add books to libraries, where the number of copies of those books can be specified along with the library the book is to be added to. We did this to enable n-to-m relationship between libraries and books. The reason to handle count of books and the association between libraries and books this way was so that the same book could be added to multiple libraries. This would not have been possible had we associated the books directly with a library since books have a constraint of the ISBN being unique.
 
-Note 2: Image uploads work as expected and are visible in the show book link. However, due to the read only nature of the Heroku File System, the images get cleaned up after every reboot of the dyno and so the uploaded files are lost. We have also brought this to the notice of our mentor. Kindly take this into consideration when reviewing. Thanks!
+#### Note 2:
+Image uploads work as expected and are visible in the show book link. However, due to the read only nature of the Heroku File System, the images get cleaned up after every reboot of the dyno and so the uploaded files are lost. We have also brought this to the notice of our mentor. Kindly take this into consideration when reviewing. Thanks!
 
-Note 3: At any given time, a student is allowed to see books associated with only one library. Thus, there is no separate link to browse books on the student home page, a student has to always browse books only by library. The association between books and libraries can be found in the Add Books to Libraries link, which is visible to the admin and librarians. Thanks!
+#### Note 3:
+At any given time, a student is allowed to see books associated with only one library. Thus, there is no separate link to browse books on the student home page, a student has to always browse books only by library. The association between books and libraries can be found in the Add Books to Libraries link, which is visible to the admin and librarians. Thanks!
 
-Note 4: The view book hold request on the student home page shows all the holds requests that the logged in student currently has. For a librarian it shows all the hold requests for books in the library which the librarian is associated with and for the admin, it shows holds requests across all libraries for all books.  
+#### Note 4:
+The view book hold request on the student home page shows all the holds requests that the logged in student currently has. For a librarian it shows all the hold requests for books in the library which the librarian is associated with and for the admin, it shows holds requests across all libraries for all books.  
+ 
+#### Note 5:
+Kindly refer to the end of the file for information about edge cases handling. Thanks! 
  
 This is a simple application to simulate the various operations that can be performed in a library.
 It consists of following user types - 
@@ -125,3 +132,15 @@ Below are the details of the various links available on the home page when the a
 
 7. View overdue fines
 - Shows books which are overdue and the associated fines
+
+#### Edge cases handling:
+
+#### Deleting a book:
+When a book is deleted, it is assumed that all the copies have been returned manually. Deleting a book deletes pending special/hold requests and bookmarks if any for the book being deleted and also increments the book limit of the students who had the book issued at the time of deletion of the book. This also deletes the associations the book has with any and all libraries present. All the history corresponding to the book is also deleted as it would lead to foreign key violations otherwise.
+
+#### Deleting a student:
+When a student is deleted, it is assumed that the books held by the student at the time of deletion are returned manually. Deleting a student thus, increments the count of the books if any being held by the student at the time of deletion in the corresponding libraries. Any pending special/hold requests and bookmarks corresponding to the student are also deleted. All the history corresponding to the student is also deleted as it would lead to foreign key violations otherwise.
+
+#### Deleting a library:
+When a library is deleted, all the books associated with the library as deleted. It is assumed that all books issued by this library to students are returned manually. Thus, deleting a library increments the book limit of the students who had books issued at the time of deletion. Further, the librarians associated with the library are also deleted and the history corresponding to all books associated with the library is also deleted. Again, this is done as it would lead to foreign key violations otherwise.
+Note: Deleting a library does not delete the books present in the library, it just the associations of those books with the library allowing the books to be present in other libraies. This is another reason for not associating a book directly with a library.
