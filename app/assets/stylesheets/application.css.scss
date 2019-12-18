@@ -48,3 +48,10 @@
   display: block;
   text-align: center;
 }
+
+.field_with_errors {
+  padding: 2px !important;
+  background-color: red !important;
+  border-radius: 5px !important;
+  display: block !important;
+}
