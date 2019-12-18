@@ -1,15 +1,19 @@
-<h1>Library Management System</h1>
+<h1 align="center">Library Management System</h1>
 
-<p id="notice"><%= notice %></p>
+<div class="login-margins-15 card" style="margin-top: 0">
+  <% if notice != nil %>
+    <h6 id="alert" class="login-margins-30 alert alert-danger" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-  <%= render 'admin' %>
-<% end %>
+  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+    <%= render 'admin' %>
+  <% end %>
 
-<% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-  <%= render 'librarian', librarian: @librarian %>
-<% end %>
+  <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+    <%= render 'librarian', librarian: @librarian %>
+  <% end %>
 
-<% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-  <%= render 'student' %>
-<% end %>
+  <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+    <%= render 'student' %>
+  <% end %>
+</div>
