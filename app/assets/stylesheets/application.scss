@@ -21,7 +21,14 @@
   margin-right: 15%;
 }
 
-.login-margins {
+.login-margins-15 {
+  margin-top: 8%;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 1em;
+}
+
+.login-margins-30 {
   margin-top: 8%;
   margin-left: 30%;
   margin-right: 30%;
@@ -29,7 +36,7 @@
 }
 
 @media screen and (max-width: 992px) {
-  .login-margins {
+  .login-margins-30 {
     margin-top: 8%;
     margin-left: 0%;
     margin-right: 0%;
@@ -51,7 +58,28 @@
 
 .field_with_errors {
   padding: 2px !important;
-  background-color: red !important;
+  background-color: white !important;
   border-radius: 5px !important;
   display: block !important;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }

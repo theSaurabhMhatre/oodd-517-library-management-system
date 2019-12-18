@@ -1,15 +1,39 @@
-<div> <%= link_to "Edit profile", edit_librarian_path(current_user) %> </div>
+<%= link_to "Edit profile",
+            edit_librarian_path(current_user),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View/Approve book hold/special requests", book_requests_path %> </div>
+<%= link_to "View/Approve book hold/special requests",
+            book_requests_path,
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View/Add Books", books_path %> </div>
+<%= link_to "View/Add Books",
+            books_path,
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "Change Library policies", edit_library_path(Library.find(current_user.library_id)) %> </div>
+<%= link_to "Change Library policies",
+            edit_library_path(Library.find(current_user.library_id)),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "Add Books to Libraries", book_counts_url %> </div>
+<%= link_to "Add Books to Libraries",
+            book_counts_url,
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View currently checked out books", book_histories_url(:request_type => BookHistory::ISSUED) %> </div>
+<%= link_to "View currently checked out books",
+            book_histories_url(:request_type => BookHistory::ISSUED),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View Book Histories", book_histories_url %> </div>
+<%= link_to "View Book Histories",
+            book_histories_url,
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View overdue fines", overdue_fines_book_histories_path() %> </div>
+<%= link_to "View overdue fines",
+            overdue_fines_book_histories_path(),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>

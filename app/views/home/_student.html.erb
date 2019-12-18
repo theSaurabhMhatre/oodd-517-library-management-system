@@ -1,16 +1,39 @@
+<%= link_to "Edit profile",
+            edit_student_url(current_user),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "Edit profile", edit_student_url(current_user) %> </div>
+<%= link_to "Libraries",
+            libraries_url,
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "Libraries", libraries_url %> </div>
+<%= link_to "View currently checked out books",
+            book_histories_url(:request_type => BookHistory::ISSUED),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View currently checked out books", book_histories_url(:request_type => BookHistory::ISSUED) %> </div>
+<%= link_to "View checked out books history",
+            book_histories_url(:request_type => BookHistory::ALL),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View checked out books history", book_histories_url(:request_type => BookHistory::ALL) %> </div>
+<%= link_to "View bookmarked books",
+            book_requests_url(:request_type => BookRequest::IS_BOOKMARK),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View bookmarked books", book_requests_url(:request_type => BookRequest::IS_BOOKMARK) %> </div>
+<%= link_to "View book hold requests",
+            book_requests_url(:request_type => BookRequest::IS_HOLD),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View book hold requests", book_requests_url(:request_type => BookRequest::IS_HOLD) %> </div>
+<%= link_to "View pending special requests",
+            book_requests_url(:request_type => BookRequest::IS_SPECIAL),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
 <br>
-<div> <%= link_to "View pending special requests", book_requests_url(:request_type => BookRequest::IS_SPECIAL) %> </div>
-<br>
-<div> <%= link_to "View overdue fines", overdue_fines_book_histories_path() %> </div>
+<%= link_to "View overdue fines",
+            overdue_fines_book_histories_path(),
+            class: "btn btn-primary btn-block",
+            style: "color: #ffffff;" %>
