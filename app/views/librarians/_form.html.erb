@@ -1,78 +1,79 @@
 <script src="/javascripts/dynamic_libraries.js"></script>
 
 <div onmousemove="setLibrary()">
-<%= form_with(model: librarian, local: true) do |form| %>
-  <% if librarian.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(librarian.errors.count, "error") %> prohibited this librarian from being saved:</h2>
 
-      <ul>
-        <% librarian.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+  <%= form_with(model: librarian, local: true) do |form| %>
+    <div class="login-margins" style="margin-top: 0%">
+      <% if librarian.errors.any? %>
+        <h2 align="center"><%= pluralize(librarian.errors.count, "error") %></h2>
+        <ul class="list-group">
+          <% librarian.errors.full_messages.each do |message| %>
+            <li id="alert" class="list-group-item list-group-item-danger" style="text-align: center"><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <% if @edit_librarian_errors != nil %>
+        <div id="error_explanation">
+          <h2 align="center"><%= pluralize(@edit_librarian_errors.count, "error") %></h2>
+          <ul class="list-group">
+            <% @edit_librarian_errors.each do |message| %>
+              <li id="alert" class="list-group-item list-group-item-danger" style="text-align: center"><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if session[:user_id] == nil %>
+        <%= link_to "Sign up with Google",
+                    set_google_signup_user_type_url(:google_signup_user_type => 2),
+                    class: "btn btn-primary btn-block",
+                    style: "color: #ffffff;" %>
+      <% end %>
+
+      <div class="form-group">
+
+        <%= form.label :your_email, nil, class: "center-align" %>
+        <%= form.text_field :email, value: (librarian.email.nil? ? @google_email : librarian.email), class: "form-control" %>
+
+
+        <%= form.label :your_name, nil, class: "center-align" %>
+        <%= form.text_field :name, value: (librarian.name.nil? ? @google_name : librarian.name), class: "form-control" %>
+
+        <% if @without_password == nil %>
+
+          <%= form.label :your_password, nil, class: "center-align" %>
+          <%= form.password_field :password, class: "form-control" %>
+
+          <%= form.label :confirm_password, nil, class: "center-align" %>
+          <%= form.password_field :password_confirmation, class: "form-control" %>
+
         <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if @edit_librarian_errors != nil%>
-    <div id="error_explanation">
-      <h2><%= pluralize(@edit_librarian_errors.count, "error") %> prohibited this librarian from being saved:</h2>
 
-      <ul>
-        <% @edit_librarian_errors.each do |message| %>
-          <li><%= message %></li>
+        <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+
+          <%= form.label :your_library, nil, class: "center-align" %>
+          <%= form.collection_select :library_id, librarian.university.libraries, :id, :name, :include_blank => true, class: "form-control" %>
+
+        <% else %>
+
+          <%= form.label :your_university, nil, class: "center-align" %>
+          <%= form.collection_select :university_id, University.all, :id, :name, {include_blank: true}, {class: "form-control"} %>
+
+          <div id="library_field" style="display: none">
+            <%= form.label :library_id, nil, class: "center-align" %>
+            <%= form.collection_select :library_id, Library.all, :id, :name, {include_blank: true}, {class: "form-control"} %>
+          </div>
+
         <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <% if session[:user_id] == nil %>
-    <%= link_to "Sign up with Google", set_google_signup_user_type_url(:google_signup_user_type => 2) %>
-    <br>
-    -----------or-----------
-    <br>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, value: (librarian.email.nil? ? @google_email : librarian.email)%>
-  </div>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, value: (librarian.name.nil? ? @google_name : librarian.name)%>
-  </div>
-  <% if @without_password == nil %>
-    <div class="field">
-      <%= form.label :password %>
-      <%= form.password_field :password %>
-    </div>
-
-    <div class="field">
-      <%= form.label :password_confirmation %>
-      <%= form.password_field :password_confirmation %>
-    </div>
-  <% end %>
-
-  <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-    <div class="field">
-      <%= form.label :library_id %>
-      <%= form.collection_select :library_id, librarian.university.libraries, :id, :name, :include_blank => true %>
-    </div>
-  <% else %>
-      <div class="field">
-        <%= form.label :university_id %>
-        <%= form.collection_select :university_id, University.all, :id, :name, :include_blank => true %>
       </div>
-      <div class="field" id="library_field" style="display: none">
-        <%= form.label :library_id %>
-        <%= form.collection_select :library_id, Library.all, :id, :name, :include_blank => true %>
+
+      <div class="actions">
+        <%= form.submit nil, class: "btn btn-primary btn-block" %>
       </div>
+    </div>
   <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+  <input type="hidden" id="library_id" value="<%= @library_id.to_i %>">
 
-<input type="hidden" id="library_id" value="<%= @library_id.to_i %>">
 </div>

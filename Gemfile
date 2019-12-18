@@ -83,6 +83,9 @@ gem 'omniauth-google-oauth2'
 # Adding this for image uploads
 gem 'carrierwave', '~> 0.11.2'
 
+# Boostrap
+gem 'bootstrap-sass'
+
 #Adding for RSpec testing
 gem 'rspec-rails', ">= 2.0.0.beta"
 gem 'mocha', '~> 1.2', '>= 1.2.1'
