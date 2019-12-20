@@ -1,6 +1,10 @@
-<h1>Editing Librarian</h1>
+<h2 align="center">Editing Librarian</h2>
 
 <%= render 'form', librarian: @librarian, without_password: @without_password %>
 
-
-<%= link_to 'Show', @librarian %>
+<div class="login-margins-30" style="margin-top: -2em;">
+  <%= link_to 'Show',
+              @librarian,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>

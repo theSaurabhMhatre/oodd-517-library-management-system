@@ -1,35 +1,43 @@
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30 card" style="margin-top: 0">
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<p>
-  <strong>Email:</strong>
-  <%= @student.email %>
-</p>
+  <h4>
+    <strong>Email:</strong>
+    <%= @student.email %>
+  </h4>
 
-<p>
-  <strong>Name:</strong>
-  <%= @student.name %>
-</p>
-<% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-  <p>
-    <strong>Password:</strong>
-    <%= @student.password %>
-  </p>
-<% end %>
+  <h4>
+    <strong>Name:</strong>
+    <%= @student.name %>
+  </h4>
 
-<p>
-  <strong>University:</strong>
-  <% @university = University.find(@student.university_id) %>
-  <%= @university.name %>
-</p>
+  <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+    <h4>
+      <strong>Password:</strong>
+      <%= @student.password %>
+    </h4>
+  <% end %>
 
-<p>
-  <strong>Edu level:</strong>
-  <%= @student.edu_level %>
-</p>
+  <h4>
+    <strong>University:</strong>
+    <% University.find(@student.university_id).name %>
+  </h4>
 
-<p>
-  <strong>Book limit:</strong>
-  <%= @student.book_limit %>
-</p>
+  <h4>
+    <strong>Edu level:</strong>
+    <%= @student.edu_level %>
+  </h4>
 
-<%= link_to 'Edit', edit_student_path(@student) %> |
+  <h4>
+    <strong>Book limit:</strong>
+    <%= @student.book_limit %>
+  </h4>
+
+  <%= link_to 'Edit',
+              edit_student_path(@student),
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+
+</div>

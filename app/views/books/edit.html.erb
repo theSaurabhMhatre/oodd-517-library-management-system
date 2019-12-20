@@ -1,5 +1,10 @@
-<h1>Editing Book</h1>
+<h2 align="center">Editing Book</h2>
 
 <%= render 'form', book: @book %>
 
-<%= link_to 'Show', @book %>
+<div class="login-margins-15" style="margin-top: -2em;">
+  <%= link_to 'Show',
+              @book,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>

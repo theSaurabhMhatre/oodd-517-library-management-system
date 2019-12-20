@@ -13,14 +13,12 @@
         </ul>
       <% end %>
       <% if @edit_librarian_errors != nil %>
-        <div id="error_explanation">
           <h2 align="center"><%= pluralize(@edit_librarian_errors.count, "error") %></h2>
           <ul class="list-group">
             <% @edit_librarian_errors.each do |message| %>
               <li id="alert" class="list-group-item list-group-item-danger" style="text-align: center"><%= message %></li>
             <% end %>
           </ul>
-        </div>
       <% end %>
 
       <% if session[:user_id] == nil %>
@@ -35,25 +33,20 @@
         <%= form.label :your_email, nil, class: "center-align" %>
         <%= form.text_field :email, value: (librarian.email.nil? ? @google_email : librarian.email), class: "form-control" %>
 
-
         <%= form.label :your_name, nil, class: "center-align" %>
         <%= form.text_field :name, value: (librarian.name.nil? ? @google_name : librarian.name), class: "form-control" %>
 
         <% if @without_password == nil %>
-
           <%= form.label :your_password, nil, class: "center-align" %>
           <%= form.password_field :password, class: "form-control" %>
 
           <%= form.label :confirm_password, nil, class: "center-align" %>
           <%= form.password_field :password_confirmation, class: "form-control" %>
-
         <% end %>
 
         <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-
           <%= form.label :your_library, nil, class: "center-align" %>
-          <%= form.collection_select :library_id, librarian.university.libraries, :id, :name, :include_blank => true, class: "form-control" %>
-
+          <%= form.collection_select :library_id, librarian.university.libraries, :id, :name, {include_blank: true}, {class: "form-control"} %>
         <% else %>
 
           <%= form.label :your_university, nil, class: "center-align" %>

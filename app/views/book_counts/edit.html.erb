@@ -1,5 +1,10 @@
-<h1>Editing Book Count</h1>
+<h1 align="center">Editing Book Count</h1>
 
 <%= render 'form', book_count: @book_count %>
 
-<%= link_to 'Show', @book_count %>
+<div class="login-margins-30" style="margin-top: -2em;">
+  <%= link_to 'Show',
+              @book_count,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>

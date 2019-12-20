@@ -1,5 +1,8 @@
 <h2 align="center">Create an account</h2>
 
-<p id="notice"><%= notice %></p>
+<%# TODO: is this required here? %>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+<% end %>
 
 <%= render 'form', student: @student %>

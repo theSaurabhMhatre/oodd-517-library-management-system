@@ -65,6 +65,7 @@ class LibrariansController < ApplicationController
         flash[:notice] =  "You are not authorised to perform this action"
         redirect_to root_path
       end
+      @edit_librarian_errors = params[:edit_librarian_errors]
       @library_id = Librarian.find(params[:id]).library_id
     when ApplicationController::TYPE_STUDENT
       flash[:notice] =  "You are not authorised to perform this action"

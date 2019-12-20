@@ -21,11 +21,27 @@
   margin-right: 15%;
 }
 
+@media screen and (max-width: 992px) {
+  .margins {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
 .login-margins-15 {
   margin-top: 8%;
   margin-left: 15%;
   margin-right: 15%;
   padding: 1em;
+}
+
+@media screen and (max-width: 992px) {
+  .login-margins-15 {
+    margin-top: 8%;
+    margin-left: 0%;
+    margin-right: 0%;
+    padding: 1em;
+  }
 }
 
 .login-margins-30 {

@@ -1,5 +1,10 @@
-<h1>Editing Admin</h1>
+<h2 align="center">Editing Admin</h2>
 
 <%= render 'form', admin: @admin %>
 
-<%= link_to 'Show', @admin %>
+<div class="login-margins-30" style="margin-top: -2em;">
+  <%= link_to 'Show',
+              @admin,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>

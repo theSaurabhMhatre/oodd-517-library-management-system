@@ -1,5 +1,10 @@
-<h1>Editing Student</h1>
+<h1 align="center">Editing Student</h1>
 
 <%= render 'form', student: @student %>
 
-<%= link_to 'Show', @student %>
+<div class="login-margins-30" style="margin-top: -2em;">
+  <%= link_to 'Show',
+              @student,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>
