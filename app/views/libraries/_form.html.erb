@@ -1,48 +1,38 @@
 <%= form_with(model: library, local: true) do |form| %>
-  <% if library.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(library.errors.count, "error") %> prohibited this library from being saved:</h2>
-
-      <ul>
+  <div class="login-margins-30" style="margin-top: 0%">
+    <% if library.errors.any? %>
+      <h2 align="center"><%= pluralize(library.errors.count, "error") %></h2>
+      <ul class="list-group">
         <% library.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <li id="alert" class="list-group-item list-group-item-danger" style="text-align: center"><%= message %></li>
         <% end %>
       </ul>
+    <% end %>
+
+    <div class="form-group card">
+
+      <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+        <%= form.label :library_name, nil, class: "center-align" %>
+        <%= form.text_field :name, class: "form-control" %>
+
+        <%= form.label :library_location, nil, class: "center-align" %>
+        <%= form.text_field :location, class: "form-control" %>
+      <% end %>
+
+      <%= form.label :library_max_days, nil, class: "center-align" %>
+      <%= form.number_field :max_days, class: "form-control" %>
+
+      <%= form.label :library_overdue_fine, nil, class: "center-align" %>
+      <%= form.text_field :overdue_fine, class: "form-control" %>
+
+      <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
+        <%= form.label :library_university, nil, class: "center-align" %>
+        <%= form.collection_select :university_id, University.all, :id, :name, {}, {class: "form-control"} %>
+      <% end %>
+
     </div>
-  <% end %>
-
-  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-    <div class="field">
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+    <div class="actions">
+      <%= form.submit nil, class: "btn btn-primary btn-block" %>
     </div>
-  <% end %>
-
-  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-    <div class="field">
-      <%= form.label :location %>
-      <%= form.text_field :location %>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :max_days %>
-    <%= form.number_field :max_days %>
-  </div>
-
-  <div class="field">
-    <%= form.label :overdue_fine %>
-    <%= form.text_field :overdue_fine %>
-  </div>
-
-  <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-    <div class="field">
-      <%= form.label :university %>
-      <%= form.collection_select :university_id, University.all, :id, :name %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
   </div>
 <% end %>

@@ -26,18 +26,15 @@
       <%= form.text_field :name, value: (student.name.nil? ? @google_name : student.name), class: "form-control" %>
 
       <% if @without_password == nil %>
-
         <%= form.label :your_password, nil, class: "center-align" %>
         <%= form.password_field :password, class: "form-control" %>
 
         <%= form.label :confirm_password, nil, class: "center-align" %>
         <%= form.password_field :password_confirmation, class: "form-control" %>
-
       <% end %>
 
       <!--Show only to admin and when creating profile-->
       <% if session[:user_id] == nil || session[:user_type] == ApplicationController::TYPE_ADMIN %>
-
         <%# TODO: create this dynamically using form tags %>
         <%= form.label :your_education_level, nil, class: "center-align" %>
         <select name="student[edu_level]" class="form-control">
@@ -49,7 +46,6 @@
 
         <%= form.label :your_university, nil, class: "center-align" %>
         <%= form.collection_select :university_id, University.all, :id, :name, {include_blank: true}, {class: "form-control"} %>
-
       <% end %>
 
     </div>

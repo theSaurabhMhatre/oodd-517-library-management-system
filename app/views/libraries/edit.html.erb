@@ -1,9 +1,14 @@
 <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-  <%= render html: ("<h1>Changing "+@library.name+" Policies</h1>").html_safe %>
+  <%= render html: ("<h1 align='center'>Changing " + @library.name + " Policies</h1>").html_safe %>
 <% else %>
-  <h1>Editing Library</h1>
+  <h1 align="center">Editing Library</h1>
 <% end %>
 
 <%= render 'form', library: @library %>
 
-<%= link_to 'Show', @library %>
+<div class="login-margins-30" style="margin-top: -2em;">
+  <%= link_to 'Show',
+              @library,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>

@@ -1,41 +1,40 @@
 <%= form_with(model: admin, local: true) do |form| %>
-  <% if admin.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this admin from being saved:</h2>
-
-      <ul>
+  <div class="login-margins-30" style="margin-top: 0%">
+    <% if admin.errors.any? %>
+      <h2><%= pluralize(admin.errors.count, "error") %></h2>
+      <ul class="list-group">
         <% admin.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <li id="alert" class="list-group-item list-group-item-danger" style="text-align: center"><%= message %></li>
         <% end %>
       </ul>
+    <% end %>
+
+    <!--
+    <div class="field">
+      <%# form.label :email %>
+      <%# form.text_field :email %>
     </div>
-  <% end %>
+    -->
 
-  <!--
-  <div class="field">
-    <%# form.label :email %>
-    <%# form.text_field :email %>
-  </div>
-  -->
+    <div class="form-group card">
+      <%= form.label :name, nil, class: "center-align" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+    <!--
+    <div class="field">
+      <%# form.label :password %>
+      <%# form.password_field :password %>
+    </div>
 
-  <!--
-  <div class="field">
-    <%# form.label :password %>
-    <%# form.password_field :password %>
-  </div>
+    <div class="field">
+      <%# form.label :password_confirmation %>
+      <%# form.password_field :password_confirmation %>
+    </div>
+    -->
 
-  <div class="field">
-    <%# form.label :password_confirmation %>
-    <%# form.password_field :password_confirmation %>
-  </div>
-   -->
-
-  <div class="actions">
-    <%= form.submit %>
+    <div class="actions">
+      <%= form.submit nil, class: "btn btn-primary btn-block" %>
+    </div>
   </div>
 <% end %>

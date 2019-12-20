@@ -44,23 +44,19 @@
 
       <%# TODO: create the following fields dynamically %>
       <% if @is_special == nil %>
-
         <%= form.label :special_book?, nil, class: "center-align" %>
         <select name="book[is_special]" class="form-control">
           <option value=""></option>
           <option value="no">No</option>
           <option value="yes">Yes</option>
         </select>
-
       <% else %>
-
         <%= form.label :special_book?, nil, class: "center-align" %>
         <select name="book[is_special]" class="form-control">
           <option value=""></option>
           <option value="no" <%= @is_special == "no" ? "selected" : "" %>>No</option>
           <option value="yes" <%= @is_special == "yes" ? "selected" : "" %>>Yes</option>
         </select>
-
       <% end %>
 
     </div>

@@ -1,13 +1,20 @@
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30 card" style="margin-top: 0">
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<p>
-  <strong>Email:</strong>
-  <%= @admin.email %>
-</p>
+  <h4>
+    <strong>Email:</strong>
+    <%= @admin.email %>
+  </h4>
 
-<p>
-  <strong>Name:</strong>
-  <%= @admin.name %>
-</p>
+  <h4>
+    <strong>Name:</strong>
+    <%= @admin.name %>
+  </h4>
 
-<%= link_to 'Edit', edit_admin_path(@admin) %> |
+  <%= link_to 'Edit',
+              edit_admin_path(@admin),
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>

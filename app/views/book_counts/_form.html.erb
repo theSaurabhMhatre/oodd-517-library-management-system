@@ -15,17 +15,13 @@
       <%= form.collection_select :book_id, Book.all, :id, :title, {include_blank: true}, {class: "form-control"} %>
 
       <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-
         <%= form.label :library_to_add_the_book_to, nil, class: "center-align" %>
         <%= form.collection_select :library_id, Library.all, :id, :name, {include_blank: true}, {class: "form-control"} %>
-
       <% end %>
 
       <% if session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-
         <%= form.label :library_to_add_the_book_to, nil, class: "center-align" %>
         <%= form.collection_select :library_id, Library.where(:id => current_user.library_id), :id, :name, {include_blank: true}, {class: "form-control"} %>
-
       <% end %>
 
       <%= form.label :number_of_books, nil, class: "center-align" %>
