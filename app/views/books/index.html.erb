@@ -1,71 +1,113 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Books</h1>
-
-<h3>Filters</h3>
-
-<%= form_with(url: filter_books_path, method: "get", :local => true) do %>
-  <%= label_tag(:book_title, "Title:") %>
-  <%= text_field_tag(:book_title) %>
-  <%= label_tag(:book_author, "Author:") %>
-  <%= text_field_tag(:book_author) %>
-  <%= label_tag(:book_subject, "Subject:") %>
-  <%= text_field_tag(:book_subject) %>
-  <%= label_tag(:pub_date_start, "Published from:") %>
-  <%= date_field_tag(:pub_date_start) %>
-  <%= label_tag(:pub_date_end, "Published to:") %>
-  <%= date_field_tag(:pub_date_end) %>
-  <%= hidden_field_tag(:library_id, value = params[:library_id]) %>
-  <br><br>
-  <%= submit_tag("Search") %>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
 <% end %>
 
-<table>
-  <thead>
-  <tr>
-    <th>Isbn</th>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Language</th>
-    <th>Published</th>
-    <th>Edition</th>
-    <th>Subject</th>
-    <th>Summary</th>
-    <th>Is special</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+<h4 align="center">Browse books</h4>
 
-  <tbody>
-  <% @books.each do |book| %>
-    <tr>
-      <td><%= book.isbn %></td>
-      <td><%= book.title %></td>
-      <td><%= book.author %></td>
-      <td><%= book.language %></td>
-      <td><%= book.published %></td>
-      <td><%= book.edition %></td>
-      <td><%= book.subject %></td>
-      <td><%= book.summary %></td>
-      <td><%= book.is_special %></td>
-      <td><%= link_to 'Show', book %></td>
-      <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: {confirm: 'This will delete the book from all libraries and associated data. Are you sure?'} %></td>
-      <% else %>
-        <td><%= link_to 'Issue book', new_book_request_url(:request_type => BookRequest::IS_NORMAL, :book_id => book.id, :library_id => params[:library_id]) %></td>
-        <td><%= link_to 'Bookmark book', new_book_request_url(:request_type => BookRequest::IS_BOOKMARK, :book_id => book.id, :library_id => params[:library_id]) %></td>
-      <% end %>
-      <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-        <td><%= link_to 'View history', book_histories_url(:book_id => book.id) %></td>
-      <% end %>
-    </tr>
+<div class="row"
+     style="border: #BBBBBB 0.5em solid; padding: 1em 1.5em 1em 1.5em; margin: 0 0.2em 0 0.2em;">
+  <%= form_with(url: filter_books_path, method: "get", :local => true) do %>
+    <div class="row form-group">
+      <div class="col-lg-4" style="padding-left: 4px; padding-right: 4px">
+        <%= label_tag(:book_title, "Title", class: "center-align") %>
+        <%= text_field_tag(:book_title, "", class: "form-control") %>
+      </div>
+      <div class="col-lg-4" style="padding-left: 4px; padding-right: 4px">
+        <%= label_tag(:book_author, "Author", class: "center-align") %>
+        <%= text_field_tag(:book_author, "", class: "form-control") %>
+      </div>
+      <div class="col-lg-4" style="padding-left: 4px; padding-right: 4px">
+        <%= label_tag(:book_subject, "Subject", class: "center-align") %>
+        <%= text_field_tag(:book_subject, "", class: "form-control") %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-lg-4" style="padding-left: 4px; padding-right: 4px">
+        <%= label_tag(:pub_date_start, "Published from", class: "center-align") %>
+        <%= date_field_tag(:pub_date_start, "", class: "form-control") %>
+      </div>
+      <div class="col-lg-4" style="padding-left: 4px; padding-right: 4px">
+        <%= label_tag(:pub_date_end, "Published to", class: "center-align") %>
+        <%= date_field_tag(:pub_date_end, "", class: "form-control") %>
+      </div>
+      <div class="col-lg-4" style="padding-left: 4px; padding-right: 4px">
+        <%= label_tag(:search_message, "Enter criteria and press search!", class: "center-align") %>
+        <%= submit_tag("Search", class: "btn btn-primary btn-block") %>
+      </div>
+    </div>
+    <%= hidden_field_tag(:library_id, value = params[:library_id]) %>
   <% end %>
-  </tbody>
-</table>
+</div>
+
+<br>
+
+<div class="card-scrollable">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Isbn</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Language</th>
+      <th>Published</th>
+      <th>Edition</th>
+      <th>Subject</th>
+      <th>Summary</th>
+      <th>Special?</th>
+      <th colspan="3">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.isbn %></td>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.language %></td>
+        <td><%= book.published %></td>
+        <td><%= book.edition %></td>
+        <td><%= book.subject %></td>
+        <td><%= book.summary %></td>
+        <td><%= book.is_special %></td>
+        <td>
+          <%= link_to book do %>
+            <i class="glyphicon glyphicon-fullscreen"></i>&nbsp;
+          <% end %>
+          <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+            <%= link_to edit_book_path(book) do %>
+              <i class="glyphicon glyphicon-edit"></i>&nbsp;
+            <% end %>
+            <%= link_to book, method: :delete, data: {confirm: 'This will delete the book from all libraries and associated data. Are you sure?'} do %>
+              <i class="glyphicon glyphicon-trash"></i>&nbsp;
+            <% end %>
+          <% else %>
+            <%= link_to new_book_request_url(:request_type => BookRequest::IS_NORMAL, :book_id => book.id, :library_id => params[:library_id]) do %>
+              <i class="glyphicon glyphicon-ok-sign"></i>&nbsp;
+            <% end %>
+            <%= link_to new_book_request_url(:request_type => BookRequest::IS_BOOKMARK, :book_id => book.id, :library_id => params[:library_id]) do %>
+              <i class="glyphicon glyphicon-paperclip"></i>&nbsp;
+            <% end %>
+          <% end %>
+          <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
+            <%= link_to book_histories_url(:book_id => book.id) do %>
+              <i class="glyphicon glyphicon-align-justify"></i>&nbsp;
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
 <% if session[:user_type] == ApplicationController::TYPE_ADMIN or session[:user_type] == ApplicationController::TYPE_LIBRARIAN %>
-  <%= link_to 'New Book', new_book_path %>
+  <%= link_to 'New Book',
+              new_book_path,
+              class: "btn btn-primary pull-right",
+              style: "color: #ffffff; margin-right: 0;" %>
 <% end %>
+
+<br>
