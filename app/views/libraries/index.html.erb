@@ -1,39 +1,58 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+<% end %>
 
-<h1>Libraries</h1>
+<h4 align="center">Libraries</h4>
 
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Location</th>
-    <th>Max days</th>
-    <th>Overdue fine</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @libraries.each do |library| %>
+<div class="card-scrollable">
+  <table class="table table-hover">
+    <thead>
     <tr>
-      <td><%= library.name %></td>
-      <td><%= library.location %></td>
-      <td><%= library.max_days %></td>
-      <td><%= library.overdue_fine %></td>
-      <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-        <td><%= link_to 'Browse books', books_path(:library_id => library.id) %></td>
-      <% else %>
-        <td><%= link_to 'Show', library %></td>
-        <td><%= link_to 'Edit', edit_library_path(library) %></td>
-        <td><%= link_to 'Destroy', library, method: :delete, data: {confirm: 'This will delete all data associated with the library. Are you sure?'} %></td>
-      <% end %>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Max days</th>
+      <th>Overdue fine</th>
+      <th colspan="3">Actions</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+    <% @libraries.each do |library| %>
+      <tr>
+        <td><%= library.name %></td>
+        <td><%= library.location %></td>
+        <td><%= library.max_days %></td>
+        <td><%= library.overdue_fine %></td>
+        <td>
+          <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
+            <%= link_to books_path(:library_id => library.id) do %>
+              <i class="glyphicon glyphicon-align-justify" data-toggle="tooltip" title="Browse books"></i>&nbsp;
+            <% end %>
+          <% else %>
+            <%= link_to library do %>
+              <i class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" title="Library details"></i>&nbsp;
+            <% end %>
+            <%= link_to edit_library_path(library) do %>
+              <i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit library"></i>&nbsp;
+            <% end %>
+            <%= link_to library, method: :delete, data: {confirm: 'This will delete all data associated with the library. Are you sure?'} do %>
+              <i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete library"></i>&nbsp;
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
 <% if session[:user_type] == ApplicationController::TYPE_ADMIN %>
-  <%= link_to 'New Library', new_library_path %>
+  <%= link_to 'Add a new library',
+              new_library_path,
+              class: "btn btn-primary pull-right",
+              style: "color: #ffffff; margin-right: 0;" %>
 <% end %>
+
+<br>

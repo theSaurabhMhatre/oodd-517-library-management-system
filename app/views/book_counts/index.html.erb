@@ -1,31 +1,48 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+<% end %>
 
-<h1>Book Counts</h1>
+<h4 align="center">Books present in libraries</h4>
 
-<table>
-  <thead>
-  <tr>
-    <th>Book</th>
-    <th>Library</th>
-    <th>Count</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @book_counts.each do |book_count| %>
+<div class="card-scrollable">
+  <table class="table table-hover">
+    <thead>
     <tr>
-      <td><%= book_count.book.title %></td>
-      <td><%= book_count.library.name %></td>
-      <td><%= book_count.book_copies %></td>
-      <td><%= link_to 'Show', book_count %></td>
-      <td><%= link_to 'Edit', edit_book_count_path(book_count) %></td>
-      <td><%= link_to 'Destroy', book_count, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <th>Book</th>
+      <th>Library</th>
+      <th>Count</th>
+      <th colspan="3">Actions</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+    <% @book_counts.each do |book_count| %>
+      <tr>
+        <td><%= book_count.book.title %></td>
+        <td><%= book_count.library.name %></td>
+        <td><%= book_count.book_copies %></td>
+        <td>
+          <%= link_to book_count do %>
+            <i class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" title="View details"></i>&nbsp;
+          <% end %>
+          <%= link_to edit_book_count_path(book_count) do %>
+            <i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit details"></i>&nbsp;
+          <% end %>
+          <%= link_to book_count, method: :delete, data: {confirm: 'Are you sure?'} do %>
+            <i class="glyphicon glyphicon-trash" data-toggle="tooltip" title="Delete book from library"></i>&nbsp;
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
-<%= link_to 'New Book Count', new_book_count_path %>
+<%= link_to 'Add a book to library',
+            new_book_count_path,
+            class: "btn btn-primary pull-right",
+            style: "color: #ffffff; margin-right: 0;" %>
+
+<br>

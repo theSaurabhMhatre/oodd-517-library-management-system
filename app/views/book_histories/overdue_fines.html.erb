@@ -1,8 +1,11 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+<% end %>
 
-<h1>Overdue Details</h1>
+<h4 align="center">Overdue Details</h4>
 
-<table>
+<div class="card-scrollable">
+<table class="table table-hover">
   <thead>
   <tr>
     <th>Library</th>
@@ -12,7 +15,6 @@
     <% end %>
     <th>Overdue days</th>
     <th>Overdue Fine</th>
-    <th colspan="3"></th>
   </tr>
   </thead>
 
@@ -30,3 +32,6 @@
     <% end %>
   </tbody>
 </table>
+</div>
+
+<br>
