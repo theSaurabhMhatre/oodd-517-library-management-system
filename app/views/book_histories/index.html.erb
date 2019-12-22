@@ -1,37 +1,47 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+<% end %>
 
-<h1>Book Histories</h1>
+<h4 align="center">Book Histories</h4>
 
-<table>
-  <thead>
-  <tr>
-    <th>Book</th>
-    <th>Library</th>
-    <th>Student</th>
-    <th>Issued on</th>
-    <th>Returned on</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @book_histories.each do |book_history| %>
+<div class="card-scrollable">
+  <table class="table table-hover">
+    <thead>
     <tr>
-      <td><%= book_history.book.title %></td>
-      <td><%= book_history.library.name %></td>
-      <td><%= book_history.student.email %></td>
-      <td><%= book_history.created_at %></td>
-      <td><%= book_history.action == BookHistory::ISSUED ? "Not yet returned" : book_history.updated_at %></td>
-      <% if (session[:user_type] == ApplicationController::TYPE_STUDENT and params[:request_type] == BookHistory::ISSUED) %>
-        <td><%= link_to 'Return book', "/book_histories/#{book_history.id}/return", data: {confirm: 'Are you sure?'} %></td>
-      <% else %>
-        <td><%= link_to 'Show', book_history %></td>
-        <!--<td><%# link_to 'Edit', edit_book_history_path(book_history) %></td>-->
-        <!--<td><%# link_to 'Destroy', book_history, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
-      <% end %>
+      <th>Book</th>
+      <th>Library</th>
+      <th>Student</th>
+      <th>Issued on</th>
+      <th>Returned on</th>
+      <th colspan="3">Actions</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+    <% @book_histories.each do |book_history| %>
+      <tr>
+        <td><%= book_history.book.title %></td>
+        <td><%= book_history.library.name %></td>
+        <td><%= book_history.student.email %></td>
+        <td><%= book_history.created_at %></td>
+        <td><%= book_history.action == BookHistory::ISSUED ? "Not yet returned" : book_history.updated_at %></td>
+        <td>
+          <% if (session[:user_type] == ApplicationController::TYPE_STUDENT and params[:request_type] == BookHistory::ISSUED) %>
+            <%= link_to "/book_histories/#{book_history.id}/return", data: {confirm: 'Are you sure?'} do %>
+              <i class="glyphicon glyphicon-remove-sign" data-toggle="tooltip" title="Return book"></i>&nbsp;
+            <% end %>
+          <% else %>
+            <%= link_to book_history do %>
+              <i class="glyphicon glyphicon-fullscreen" data-toggle="tooltip" title="View details"></i>&nbsp;
+            <% end %>
+            <!--<td><%# link_to 'Edit', edit_book_history_path(book_history) %></td>-->
+            <!--<td><%# link_to 'Destroy', book_history, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
