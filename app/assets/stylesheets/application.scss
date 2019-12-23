@@ -113,3 +113,16 @@
   text-align: center;
   background-color: #444444;
 }
+
+.border-wrapper {
+  border-radius: 1em;
+  border: #BBBBBB 0.5em solid;
+}
+
+.div-custom {
+  display: block;
+  text-align: center;
+  border-radius: 0.2em;
+  background-color: white;
+  padding: 0.5em 0em 0.5em 0em;
+}
