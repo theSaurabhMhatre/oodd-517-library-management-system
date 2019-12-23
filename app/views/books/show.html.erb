@@ -1,53 +1,47 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+<% end %>
 
-<p>
-  <strong>Isbn:</strong>
-  <%= @book.isbn %>
-</p>
+<div class="row login-margins-15">
+  <div class="col-lg-6">
+    <%= image_tag @book.image_url, class: "border-wrapper", height: 450, width: 300 if @book.image? %>
+  </div>
+  <div class="col-lg-6 card" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+    <h4 class="div-custom">
+      <strong>Isbn: <%= @book.isbn %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Title: <%= @book.title %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Author: <%= @book.author %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Language: <%= @book.language %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Published: <%= @book.published %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Edition: <%= @book.edition %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Subject: <%= @book.subject %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Summary: <%= @book.summary %></strong>
+    </h4>
+    <h4 class="div-custom">
+      <strong>Is special: <%= @book.is_special %></strong>
+    </h4>
+  </div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @book.title %>
-</p>
+  <br>
 
-<p>
-  <strong>Author:</strong>
-  <%= @book.author %>
-</p>
+  <%= link_to 'Edit book', edit_book_path(@book),
+              class: "btn btn-primary pull-right",
+              style: "color: #ffffff; margin-right: 0; margin-top: 1em;" %>
 
-<p>
-  <strong>Language:</strong>
-  <%= @book.language %>
-</p>
+  <br>
 
-<p>
-  <strong>Published:</strong>
-  <%= @book.published %>
-</p>
-
-<p>
-  <strong>Edition:</strong>
-  <%= @book.edition %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @book.image_url, :height => 250, :width => 175 if @book.image? %>
-</p>
-
-<p>
-  <strong>Subject:</strong>
-  <%= @book.subject %>
-</p>
-
-<p>
-  <strong>Summary:</strong>
-  <%= @book.summary %>
-</p>
-
-<p>
-  <strong>Is special:</strong>
-  <%= @book.is_special %>
-</p>
-
-<%= link_to 'Edit', edit_book_path(@book) %> |
+</div>
