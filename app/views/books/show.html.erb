@@ -1,12 +1,13 @@
-<% if notice != nil %>
-  <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
-<% end %>
+<div class="row login-margins-15" align="center">
 
-<div class="row login-margins-15">
-  <div class="col-lg-6">
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
+
+  <div class="col-lg-6" style="margin-top: 1em;">
     <%= image_tag @book.image_url, class: "border-wrapper", height: 450, width: 300 if @book.image? %>
   </div>
-  <div class="col-lg-6 card" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+  <div class="col-lg-6 card" style="margin-top: 1em; padding-top: 0.5em; padding-bottom: 0.5em; border-radius: 1em;">
     <h4 class="div-custom">
       <strong>Isbn: <%= @book.isbn %></strong>
     </h4>

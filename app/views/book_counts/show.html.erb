@@ -1,18 +1,24 @@
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30 card">
 
-<p>
-  <strong>Book:</strong>
-  <%= @book_count.book.title %>
-</p>
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<p>
-  <strong>Library:</strong>
-  <%= @book_count.library.name %>
-</p>
+  <h4 class="div-custom">
+    <strong>Book: <%= @book_count.book.title %></strong>
+  </h4>
 
-<p>
-  <strong>Count:</strong>
-  <%= @book_count.book_copies %>
-</p>
+  <h4 class="div-custom">
+    <strong>Library: <%= @book_count.library.name %></strong>
+  </h4>
 
-<%= link_to 'Edit', edit_book_count_path(@book_count) %> |
+  <h4 class="div-custom">
+    <strong>Count: <%= @book_count.book_copies %></strong>
+  </h4>
+
+  <%= link_to 'Edit',
+              edit_book_count_path(@book_count),
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+
+</div>

@@ -1,23 +1,28 @@
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30 card">
 
-<p>
-  <strong>Name:</strong>
-  <%= @library.name %>
-</p>
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<p>
-  <strong>Location:</strong>
-  <%= @library.location %>
-</p>
+  <h4 class="div-custom">
+    <strong>Name: <%= @library.name %></strong>
+  </h4>
 
-<p>
-  <strong>Max days:</strong>
-  <%= @library.max_days %>
-</p>
+  <h4 class="div-custom">
+    <strong>Location: <%= @library.location %></strong>
+  </h4>
 
-<p>
-  <strong>Overdue fine:</strong>
-  <%= @library.overdue_fine %>
-</p>
+  <h4 class="div-custom">
+    <strong>Max days: <%= @library.max_days %></strong>
+  </h4>
 
-<%= link_to 'Edit', edit_library_path(@library) %> |
+  <h4 class="div-custom">
+    <strong>Overdue fine: <%= @library.overdue_fine %></strong>
+  </h4>
+
+  <%= link_to 'Edit',
+              edit_library_path(@library),
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+
+</div>
