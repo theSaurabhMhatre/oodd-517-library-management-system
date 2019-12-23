@@ -1,38 +1,33 @@
 <div class="login-margins-30 card" style="margin-top: 0">
+
   <% if notice != nil %>
     <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
   <% end %>
 
-  <h4>
-    <strong>Email:</strong>
-    <%= @student.email %>
+  <h4 class="div-custom">
+    <strong>Email: <%= @student.email %></strong>
   </h4>
 
-  <h4>
-    <strong>Name:</strong>
-    <%= @student.name %>
+  <h4 class="div-custom">
+    <strong>Name: <%= @student.name %></strong>
   </h4>
 
   <% if session[:user_type] == ApplicationController::TYPE_STUDENT %>
-    <h4>
-      <strong>Password:</strong>
-      <%= @student.password %>
+    <h4 class="div-custom">
+      <strong>Password: <%= @student.password %></strong>
     </h4>
   <% end %>
 
-  <h4>
-    <strong>University:</strong>
-    <% University.find(@student.university_id).name %>
+  <h4 class="div-custom">
+    <strong>University: <%= University.find(@student.university_id).name %></strong>
   </h4>
 
-  <h4>
-    <strong>Edu level:</strong>
-    <%= @student.edu_level %>
+  <h4 class="div-custom">
+    <strong>Edu level: <%= @student.edu_level %></strong>
   </h4>
 
-  <h4>
-    <strong>Book limit:</strong>
-    <%= @student.book_limit %>
+  <h4 class="div-custom">
+    <strong>Book limit: <%= @student.book_limit %></strong>
   </h4>
 
   <%= link_to 'Edit',

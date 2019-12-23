@@ -1,23 +1,25 @@
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30 card">
 
-<p>
-  <strong>Book:</strong>
-  <%= @book_history.book.title %>
-</p>
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<p>
-  <strong>Library:</strong>
-  <%= @book_history.library.name %>
-</p>
+  <h4 class="div-custom">
+    <strong>Book: <%= @book_history.book.title %></strong>
+  </h4>
 
-<p>
-  <strong>Student:</strong>
-  <%= @book_history.student.email %>
-</p>
+  <h4 class="div-custom">
+    <strong>Library: <%= @book_history.library.name %></strong>
+  </h4>
 
-<p>
-  <strong>Action:</strong>
-  <%= @book_history.action %>
-</p>
+  <h4 class="div-custom">
+    <strong>Student: <%= @book_history.student.email %></strong>
+  </h4>
 
-<!--<%# link_to 'Edit', edit_book_history_path(@book_history) %> |-->
+  <h4 class="div-custom">
+    <strong>Action: <%= @book_history.action %></strong>
+  </h4>
+
+  <!--<%# link_to 'Edit', edit_book_history_path(@book_history) %> |-->
+
+</div>

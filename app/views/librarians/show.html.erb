@@ -1,37 +1,38 @@
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30 card">
 
-<p>
-  <strong>Email:</strong>
-  <%= @librarian.email %>
-</p>
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @librarian.name %>
-</p>
+  <h4 class="div-custom">
+    <strong>Email: <%= @librarian.email %></strong>
+  </h4>
 
-<p>
-  <strong>Is approved:</strong>
-  <%= @librarian.is_approved %>
-</p>
+  <h4 class="div-custom">
+    <strong>Name: <%= @librarian.name %></strong>
+  </h4>
 
-<p>
-  <strong> Library: </strong>
-  <% @library = Library.find(@librarian.library_id) %>
-  <%= @library.name %>
-</p>
+  <h4 class="div-custom">
+    <strong>Is approved: <%= @librarian.is_approved %></strong>
+  </h4>
 
-<p>
-  <strong>Library ID:</strong>
-  <%= @librarian.library_id %>
-</p>
+  <h4 class="div-custom">
+    <strong>Library:
+      <%= Library.find(@librarian.library_id).name %></strong>
+  </h4>
 
-<p>
-  <strong> University: </strong>
-  <% @university = University.find(@librarian.university_id)
-  %>
-  <%= @university.name %>
-</p>
+  <h4 class="div-custom">
+    <strong>Library ID: <%= @librarian.library_id %></strong>
+  </h4>
 
+  <h4 class="div-custom">
+    <strong>University:
+      <%= University.find(@librarian.university_id).name %></strong>
+  </h4>
 
-<%= link_to 'Edit', edit_librarian_path(@librarian) %> |
+  <%= link_to 'Edit',
+              edit_librarian_path(@librarian),
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+
+</div>
