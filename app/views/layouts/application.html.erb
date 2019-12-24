@@ -9,7 +9,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
-<body>
+<body style="position: relative; min-height: 100vh; padding-bottom: 4em;">
 <% if @current_user %>
   <nav class="navbar navbar-inverse" style="background: #444444; border: #444444; border-radius: 0;">
     <div class="container-fluid">
@@ -46,8 +46,10 @@
 
 <% if @current_user %>
 <%# TODO: fix this, make sure it stays at the bottom of the page %>
-  <div class="footer">
-    <strong>Library Management System</strong>
+  <div align="center" class="footer">
+    <div style="color: white; padding: 1em;">
+      <strong>Library Management System</strong>
+    </div>
   </div>
 <% end %>
 
