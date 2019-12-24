@@ -1,5 +1,13 @@
 <h2 align="center">Create an account</h2>
 
-<p id="notice"><%= notice %></p>
+<div class="login-margins-30" style="padding: 0em 1em 0em 1em">
+  <% if notice != nil %>
+    <h6 id="alert" class="alert alert-info" style="text-align: center; margin-top: 0;"><%= notice %></h6>
+  <% end %>
+  <%= link_to "Homepage",
+              home_index_path,
+              class: "btn btn-primary btn-block",
+              style: "color: #ffffff;" %>
+</div>
 
 <%= render 'form', librarian: @librarian %>
