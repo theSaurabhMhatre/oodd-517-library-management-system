@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
 
   #This method is called after a user has authenticated with google.
   #It checks whether the gmail address matches with either of the Admin, Librarian and Student tables.
-  #If there is a match, it logs in the user as the correspoding user_type.
+  #If there is a match, it logs in the user as the corresponding user_type.
   #If there is no match, it flashes an error and redirects the user to the login page.
   def googleAuth
     if session[:google_signup_user_type] == '3'
@@ -90,41 +90,6 @@ class SessionsController < ApplicationController
     else
       render "new"
     end
-    # if Student.exists?(email: request.env["omniauth.auth"]["info"]["email"])
-    #   if session[:google_signup_user_type] == '1' or session[:google_signup_user_type]==nil
-    #     user = Student.find_by_email(request.env["omniauth.auth"]["info"]["email"])
-    #     session[:user_id] = user.id
-    #     session[:user_type] = TYPE_STUDENT
-    #     if session[:google_signup_user_type]==nil
-    #       redirect_to root_url, notice: "You already have an account!"
-    #     else
-    #       redirect_to root_url, notice: "Logged in!"
-    #   else
-    #     redirect_to new_librarian_url, notice: "Students cannot create a Librarian account"
-    #
-    # elsif Librarian.exists?(email: request.env["omniauth.auth"]["info"]["email"])
-    #   user = Librarian.find_by_email(request.env["omniauth.auth"]["info"]["email"])
-    #   if (user.is_approved == 0)
-    #     flash.now[:alert] = "You have not been approved by the admin yet"
-    #     render "new"
-    #   else
-    #     session[:user_id] = user.id
-    #     session[:user_type] = TYPE_LIBRARIAN
-    #     redirect_to root_url, notice: "Logged in!"
-    #   end
-    # elsif Admin.exists?(email: request.env["omniauth.auth"]["info"]["email"])
-    #   user = Admin.find_by_email(request.env["omniauth.auth"]["info"]["email"])
-    #   session[:user_id] = user.id
-    #   session[:user_type] = TYPE_ADMIN
-    #   redirect_to root_url, notice: "Logged in!"
-    # elsif session[:google_signup_user_type] == '1'
-    #   redirect_to new_student_url(:name => request.env["omniauth.auth"]["info"]["name"], :email => request.env["omniauth.auth"]["info"]["email"], :without_password => 1)
-    # elsif session[:google_signup_user_type] == '2'
-    #   redirect_to new_librarian_url(:name => request.env["omniauth.auth"]["info"]["name"], :email => request.env["omniauth.auth"]["info"]["email"], :without_password => 1)
-    # else
-    #     flash.now[:alert] = "Our system does not recognize your Google account. Try signing up."
-    #     render "new"
-    # end
   end
 
   def set_google_signup_user_type

@@ -6,6 +6,9 @@
 
   <div class="col-lg-6" style="margin-top: 1em;">
     <%= image_tag @book.image_url, class: "border-wrapper", height: 450, width: 300 if @book.image? %>
+    <% if !@book.image_url.include?(".png") and !@book.image_url.include?(".jpg") %>
+      <%= image_tag("/unavailable.jpg", class: "border-wrapper", height: 450, width: 300) %>
+    <% end %>
   </div>
   <div class="col-lg-6 card" style="margin-top: 1em; padding-top: 0.5em; padding-bottom: 0.5em; border-radius: 1em;">
     <h4 class="div-custom">

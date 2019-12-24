@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
   get '/privacy' => "privacy#show"
 
-    # Routes for Google authentication
+  # Routes for Google authentication
   get 'auth/:provider/callback', to: 'sessions#googleAuth'
   get 'auth/failure', to: redirect('/')
 
