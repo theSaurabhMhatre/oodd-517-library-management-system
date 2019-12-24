@@ -1,5 +1,5 @@
 class LibraryMailer < ApplicationMailer
-  default from: 'libraryooddlib@gmail.com'
+  default from: 'simplelibrary.manager@gmail.com'
 
   def success_mail
     @student = params[:student]

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'libraryooddlib@gmail.com'
+  default from: 'simplelibrary.manager@gmail.com'
   layout 'mailer'
 end

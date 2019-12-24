@@ -68,7 +68,11 @@ class BookRequest < ApplicationRecord
         # decrementing the book count and book limit
         BookCount.book_count_decrement(book_id, library_id)
         Student.decrement_book_limit(user_id)
-        LibraryMailer.with(:student => Student.find(user_id)).success_mail.deliver_now
+        begin
+          LibraryMailer.with(:student => Student.find(user_id)).success_mail.deliver_now
+        rescue
+          # doing nothing for now
+        end
         # if the book was on hold, remove it from the hold list
         on_hold = BookRequest.where(:book_id => book_id, :library_id => library_id, :student_id => user_id, :request_type => BookRequest::IS_HOLD).count
         if (on_hold > 0)
@@ -96,7 +100,11 @@ class BookRequest < ApplicationRecord
       check = BookRequest.checkout_book(book_request.student_id, book_request.book_id, book_request.library_id)
       if(check == 2)
         # TODO: change mail template
-        LibraryMailer.with(:student => Student.find(user_id)).success_mail.deliver_now
+        begin
+          LibraryMailer.with(:student => Student.find(user_id)).success_mail.deliver_now
+        rescue
+          # doing nothing for now
+        end
         break
       end
     end
@@ -135,7 +143,11 @@ class BookRequest < ApplicationRecord
       BookHistory.issue_book(book_request.book_id, book_request.library_id, book_request.student_id)
       BookCount.book_count_decrement(book_request.book_id, book_request.library_id)
       Student.decrement_book_limit(book_request.student_id)
-      LibraryMailer.with(:student => Student.find(book_request.student_id)).success_mail.deliver_now
+      begin
+        LibraryMailer.with(:student => Student.find(book_request.student_id)).success_mail.deliver_now
+      rescue
+        # doing nothing for now
+      end
       return 1
     else
       return 0
