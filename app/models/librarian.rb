@@ -13,7 +13,8 @@ class Librarian < ApplicationRecord
   validates :password,
             :presence => true,
             :format => {:with => /\A(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[[:^alnum:]])/,
-                        :message => "must contain at least one lowercase alphabet, one uppercase alphabet, one digit and one special character and the minimum length should be 8 characters"},
+                        :message => "must contain at least one lowercase alphabet, one uppercase alphabet, " +
+                            "one digit and one special character and the minimum length should be 8 characters"},
             :on => :create
   # 0: not approved; 1: approved
   validates :is_approved,

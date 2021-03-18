@@ -10,7 +10,7 @@ class LibrariansController < ApplicationController
     when ApplicationController::TYPE_ADMIN
       @librarians = Librarian.all
     else
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
@@ -21,11 +21,11 @@ class LibrariansController < ApplicationController
     user_type = session[:user_type]
     case user_type
     when ApplicationController::TYPE_STUDENT
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     when ApplicationController::TYPE_LIBRARIAN
-      if(current_user.id != params[:id].to_i)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (current_user.id != params[:id].to_i)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     when ApplicationController::TYPE_ADMIN
@@ -47,7 +47,7 @@ class LibrariansController < ApplicationController
       @librarian = Librarian.new
       @librarian.is_approved = 0
     else
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
@@ -61,14 +61,14 @@ class LibrariansController < ApplicationController
       @edit_librarian_errors = params[:edit_librarian_errors]
       @library_id = Librarian.find(params[:id]).library_id
     when ApplicationController::TYPE_LIBRARIAN
-      if(current_user.id != params[:id].to_i)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (current_user.id != params[:id].to_i)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
       @edit_librarian_errors = params[:edit_librarian_errors]
       @library_id = Librarian.find(params[:id]).library_id
     when ApplicationController::TYPE_STUDENT
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
@@ -97,7 +97,8 @@ class LibrariansController < ApplicationController
         format.html { redirect_to root_url, notice: 'Librarian was successfully updated.' }
         format.json { render :show, status: :ok, location: @librarian }
       else
-        format.html { redirect_to edit_librarian_path(@librarian,:edit_librarian_errors => @librarian.errors.full_messages) }
+        format.html { redirect_to edit_librarian_path(@librarian,
+                                                      :edit_librarian_errors => @librarian.errors.full_messages) }
         format.json { render json: @librarian.errors, status: :unprocessable_entity }
       end
     end
@@ -128,6 +129,7 @@ class LibrariansController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def librarian_params
-    params.require(:librarian).permit(:email, :name, :password, :password_confirmation, :is_approved, :university_id, :library_id)
+    params.require(:librarian).permit(:email, :name, :password, :password_confirmation,
+                                      :is_approved, :university_id, :library_id)
   end
 end

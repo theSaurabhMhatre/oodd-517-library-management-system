@@ -54,11 +54,12 @@ class Book < ApplicationRecord
     pub_date_end = params[:pub_date_end].empty? ? Time.now : params[:pub_date_end]
     book_author = params[:book_author].nil? ? "" : params[:book_author]
     check = Book.dates_valid?(pub_date_start, pub_date_end)
-    if(check == false)
+    if (check == false)
       return nil
     end
     if (library_id.nil? || library_id.empty?)
-      books = Book.where("lower(title) like :title and lower(author) like :author and lower(subject) like :subject and published >= :start and published <= :end",
+      books = Book.where("lower(title) like :title and lower(author) like :author and " +
+                             "lower(subject) like :subject and published >= :start and published <= :end",
                          :title => "%#{book_title.downcase}%",
                          :author => "%#{book_author.downcase}%",
                          :subject => "%#{book_subject.downcase}%",
@@ -66,7 +67,8 @@ class Book < ApplicationRecord
                          :end => pub_date_end)
     else
       book_ids = BookCount.where(:library_id => library_id).map { |x| x.book_id };
-      books = Book.where("id in (:book_ids) and lower(title) like :title and lower(author) like :author and lower(subject) like :subject and published >= :start and published <= :end",
+      books = Book.where("id in (:book_ids) and lower(title) like :title and lower(author) like :author and " +
+                             "lower(subject) like :subject and published >= :start and published <= :end",
                          :book_ids => book_ids,
                          :title => "%#{book_title.downcase}%",
                          :author => "%#{book_author.downcase}%",

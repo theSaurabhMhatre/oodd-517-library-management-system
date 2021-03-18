@@ -29,14 +29,14 @@ class BookRequestsController < ApplicationController
     case user_type
     when ApplicationController::TYPE_STUDENT
       check = BookRequest.check_if_authorised?(user_type, current_user.id, params[:id])
-      if(check == false)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (check == false)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     when ApplicationController::TYPE_LIBRARIAN
       check = BookRequest.check_if_authorised?(user_type, current_user.library_id, params[:id])
-      if(check == false)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (check == false)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     when ApplicationController::TYPE_ADMIN
@@ -64,21 +64,29 @@ class BookRequestsController < ApplicationController
         respond_to do |format|
           case check
           when 0
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Max number of books already issued' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Max number of books already issued' }
           when 1
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book request pending with librarian' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book request pending with librarian' }
           when 2
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book checked out' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book checked out' }
           when 3
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book unavailable, created a hold request' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book unavailable, created a hold request' }
           when 4
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already checked out' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book already checked out' }
           when 5
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book is on hold' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book is on hold' }
           when 6
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book bookmarked' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book bookmarked' }
           when 7
-            format.html { redirect_to books_path(:library_id => params[:library_id]), notice: 'Book already bookmarked' }
+            format.html { redirect_to books_path(:library_id => params[:library_id]),
+                                      notice: 'Book already bookmarked' }
           end
         end
       else
@@ -87,7 +95,7 @@ class BookRequestsController < ApplicationController
       end
     else
       # book requests can only be created by students
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
@@ -95,7 +103,7 @@ class BookRequestsController < ApplicationController
   # GET /book_requests/1/edit
   def edit
     # nobody should be able to edit a book request
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
@@ -140,11 +148,14 @@ class BookRequestsController < ApplicationController
       respond_to do |format|
         case request_type
         when BookRequest::IS_BOOKMARK
-          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_BOOKMARK), notice: 'Book request was successfully destroyed.' }
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_BOOKMARK),
+                                    notice: 'Book request was successfully destroyed.' }
         when BookRequest::IS_HOLD
-          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_HOLD), notice: 'Book request was successfully destroyed.' }
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_HOLD),
+                                    notice: 'Book request was successfully destroyed.' }
         when BookRequest::IS_SPECIAL
-          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_SPECIAL), notice: 'Book request was successfully destroyed.' }
+          format.html { redirect_to book_requests_url(:request_type => BookRequest::IS_SPECIAL),
+                                    notice: 'Book request was successfully destroyed.' }
         end
       end
     else
@@ -164,7 +175,8 @@ class BookRequestsController < ApplicationController
       when 1
         format.html { redirect_to book_requests_path, :notice => "Book request accepted" }
       when 2
-        format.html { redirect_to book_requests_path, :notice => "Student has issued max allowed books, cannot approve now" }
+        format.html { redirect_to book_requests_path,
+                                  :notice => "Student has issued max allowed books, cannot approve now" }
       end
     end
   end

@@ -23,14 +23,14 @@ class BookHistoriesController < ApplicationController
     case user_type
     when ApplicationController::TYPE_STUDENT
       check = BookHistory.check_if_authorised?(user_type, current_user.id, params[:id])
-      if(check == false)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (check == false)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     when ApplicationController::TYPE_LIBRARIAN
       check = BookHistory.check_if_authorised?(user_type, current_user.library_id, params[:id])
-      if(check == false)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (check == false)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     when ApplicationController::TYPE_ADMIN
@@ -42,14 +42,14 @@ class BookHistoriesController < ApplicationController
   def new
     # nobody should be able to create a book history but students, via UI
     # @book_history = BookHistory.new
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
   # GET /book_histories/1/edit
   def edit
     # nobody should be able to edit a book history
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
@@ -107,7 +107,8 @@ class BookHistoriesController < ApplicationController
     # check if there are any holds for this book
     BookRequest.check_hold(book_id, library_id)
     respond_to do |format|
-      format.html { redirect_to book_histories_url(:request_type => BookHistory::ISSUED), notice: 'Book returned successfully.' }
+      format.html { redirect_to book_histories_url(:request_type => BookHistory::ISSUED),
+                                notice: 'Book returned successfully.' }
       format.json { head :no_content }
     end
   end

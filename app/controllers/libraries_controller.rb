@@ -11,7 +11,7 @@ class LibrariesController < ApplicationController
       @libraries = Library.where(:university_id => current_user.university_id)
     when ApplicationController::TYPE_LIBRARIAN
       # TODO: what exactly needs to be done here?
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     when ApplicationController::TYPE_ADMIN
       @libraries = Library.all
@@ -27,8 +27,8 @@ class LibrariesController < ApplicationController
       # admin can see any library
     else
       check = Library.check_if_authorised?(user_type, current_user.id, params[:id]);
-      if(check == false)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (check == false)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     end
@@ -41,7 +41,7 @@ class LibrariesController < ApplicationController
     when ApplicationController::TYPE_ADMIN
       @library = Library.new
     else
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     end
   end
@@ -51,12 +51,12 @@ class LibrariesController < ApplicationController
     user_type = session[:user_type]
     case user_type
     when ApplicationController::TYPE_STUDENT
-      flash[:notice] =  "You are not authorised to perform this action"
+      flash[:notice] = "You are not authorised to perform this action"
       redirect_to root_path
     when ApplicationController::TYPE_LIBRARIAN
       check = Library.check_if_authorised?(user_type, current_user.id, params[:id]);
-      if(check == false)
-        flash[:notice] =  "You are not authorised to perform this action"
+      if (check == false)
+        flash[:notice] = "You are not authorised to perform this action"
         redirect_to root_path
       end
     when ApplicationController::TYPE_ADMIN

@@ -5,27 +5,27 @@ class UniversitiesController < ApplicationController
   # GET /universities
   # GET /universities.json
   def index
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
   # GET /universities/1
   # GET /universities/1.json
   def show
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
   # GET /universities/new
   def new
     # @university = University.new
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
   # GET /universities/1/edit
   def edit
-    flash[:notice] =  "You are not authorised to perform this action"
+    flash[:notice] = "You are not authorised to perform this action"
     redirect_to root_path
   end
 
