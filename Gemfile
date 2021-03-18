@@ -81,7 +81,7 @@ gem 'jquery-rails'
 gem 'omniauth-google-oauth2'
 
 # Adding this for image uploads
-gem 'carrierwave', '~> 0.11.2'
+gem 'carrierwave', '~> 1.3.2'
 
 # Boostrap
 gem 'bootstrap-sass'
